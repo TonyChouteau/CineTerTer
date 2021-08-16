@@ -17,11 +17,7 @@ function SearchPage(props) {
 			return response.json();
 		}).then(function (data) {
 			if (data.results) {
-				var dataList = [];
-				for (var i in data.results) {
-					dataList.push(data.results[i]);
-				}
-				setData(dataList);
+				setData(data.results);
 				console.log("x");
 			}
 		});
