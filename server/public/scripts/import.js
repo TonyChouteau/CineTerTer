@@ -24,4 +24,5 @@ var _MaterialUI = MaterialUI,
     AppBar = _MaterialUI.AppBar,
     Toolbar = _MaterialUI.Toolbar,
     IconButton = _MaterialUI.IconButton,
-    MenuIcon = _MaterialUI.MenuIcon;
+    MenuIcon = _MaterialUI.MenuIcon,
+    InputBase = _MaterialUI.InputBase;
