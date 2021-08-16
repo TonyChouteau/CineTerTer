@@ -9,11 +9,7 @@ function SearchPage(props) {
 		.then(response => response.json())
 		.then(data => {
 			if (data.results) {
-				let dataList = [];
-				for (let i in data.results) {
-					dataList.push(data.results[i]);
-				}
-				setData(dataList);
+				setData(data.results);
 				console.log("x")
 			}
 		})
