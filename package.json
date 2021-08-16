@@ -1,0 +1,25 @@
+{
+  "name": "cineterter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx babel --watch src --out-dir server/public/scripts --presets react-app/prod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TonyChouteau/CineTerTer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TonyChouteau/CineTerTer/issues"
+  },
+  "homepage": "https://github.com/TonyChouteau/CineTerTer#readme",
+  "keywords": [],
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  }
+}
