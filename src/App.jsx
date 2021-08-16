@@ -1,13 +1,22 @@
 function App() {
-		return (
-				<ReactRouterDOM.HashRouter>
-						<Menu></Menu>
+  
+  const [query, setQuery] = React.useState("");
 
-						<Route path="/" exact component={SearchPage}></Route>
-						<Route path="/info" component={InfoPage}></Route>
-						<Route path="/login" component={LoginPage}></Route>
-				</ReactRouterDOM.HashRouter>
-		);
+  const searchPage = () => <SearchPage query={query}></SearchPage>
+  const infoPage = () => <StatsPage></StatsPage>
+
+  function onSearch(newQuery) {
+    setQuery(newQuery);
+  }
+
+  return (
+    <ReactRouterDOM.HashRouter>
+      <Menu onSearch={onSearch}></Menu>
+      <Route path="/" exact component={searchPage}></Route>
+      <Route path="/stats" component={infoPage}></Route>
+      <Route path="/login" component={LoginPage}></Route>
+    </ReactRouterDOM.HashRouter>
+  );
 }
 
 // Add ReactApp to DOM

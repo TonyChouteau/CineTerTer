@@ -25,4 +25,5 @@ const {
 		Toolbar,
 		IconButton,
 		MenuIcon,
+		InputBase,
 } = MaterialUI;
