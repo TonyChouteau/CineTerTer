@@ -1,7 +1,7 @@
-function List() {
+function StatsPage() {
   return React.createElement(
     "div",
     null,
-    "list"
+    "StatsPage"
   );
 }

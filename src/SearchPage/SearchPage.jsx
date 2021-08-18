@@ -1,25 +1,24 @@
 function SearchPage(props) {
+  const [query, setQuery] = React.useState("");
+  const [data, setData] = React.useState([]);
 
-	const [query, setQuery] = React.useState("");
-	const [data, setData] = React.useState([]);
+  if (query != props.query) {
+    setQuery(props.query);
+    fetch(API_URL + SEARCH_MOVIE + API_KEY_PARAM + QUERY_PARAM + props.query)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.results) {
+          setData(data.results);
+          console.log(data.results);
+        }
+      });
+  }
 
-	if (query != props.query) {
-		setQuery(props.query);
-		fetch("https://api.themoviedb.org/3/search/movie?api_key="+API_KEY+"&query="+props.query)
-		.then(response => response.json())
-		.then(data => {
-			if (data.results) {
-				setData(data.results);
-				console.log("x")
-			}
-		})
-	}
-
-	return <div className="list">
-		{data.map(data => 
-			<div>
-				{data.title}
-			</div>
-		)}
-	</div>
+  return (
+    <div className="list">
+      {data.map((data, id) => (
+        <Item key={id} data={data}></Item>
+      ))}
+    </div>
+  );
 }
