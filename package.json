@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx babel --watch src --out-dir server/public/scripts --presets react-app/prod"
+    "build": "npx babel --watch src --out-dir server/public/scripts --presets react-app/prod",
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "keywords": [],
   "dependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-react-app": "^3.1.2"
+    "babel-preset-react-app": "^3.1.2",
+    "prettier": "^2.3.2"
   }
 }

@@ -1,4 +1,3 @@
-
 // ReactRouter
 
 var Route = ReactRouterDOM.Route;
@@ -25,4 +24,6 @@ var _MaterialUI = MaterialUI,
     Toolbar = _MaterialUI.Toolbar,
     IconButton = _MaterialUI.IconButton,
     MenuIcon = _MaterialUI.MenuIcon,
-    InputBase = _MaterialUI.InputBase;
+    InputBase = _MaterialUI.InputBase,
+    Paper = _MaterialUI.Paper,
+    Grid = _MaterialUI.Grid;
