@@ -9,6 +9,12 @@ var searchStyles = makeStyles(function (theme) {
     },
     margin: {
       margin: "10px"
+    },
+    noResult: {
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
     }
   };
 });
@@ -52,8 +58,6 @@ function SearchPage(props) {
     getList();
   }
 
-  console.log(data);
-
   $(window).off().on("scroll", function () {
     if (window.pageYOffset + document.body.clientHeight > $("#app").height() - 50 && g_pageLoaded && data.page < data.total_pages) {
       g_pageLoaded = false;
@@ -85,9 +89,13 @@ function SearchPage(props) {
       return "";
     } else {
       return React.createElement(
-        Typography,
-        null,
-        "No result"
+        "div",
+        { className: makeClass(classes.root, classes.noResult) },
+        React.createElement(
+          Typography,
+          null,
+          "No result"
+        )
       );
     }
   }
