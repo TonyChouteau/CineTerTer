@@ -2,8 +2,8 @@ var footerStyles = makeStyles(function (theme) {
   return {
     root: {
       background: THEME.palette.third.background,
-      height: THEME.size.footer
-    }
+      height: THEME.size.footer,
+    },
   };
 });
 
