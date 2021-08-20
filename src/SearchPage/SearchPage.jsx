@@ -4,7 +4,7 @@ const searchStyles = makeStyles((theme) => ({
   },
   margin: {
     margin: "10px",
-  }
+  },
 }));
 
 function SearchPage(props) {
@@ -47,10 +47,11 @@ function SearchPage(props) {
       if (
         window.pageYOffset + document.body.clientHeight >
           $("#app").height() - 50 &&
-        g_pageLoaded && data.page < data.total_pages
+        g_pageLoaded &&
+        data.page < data.total_pages
       ) {
         g_pageLoaded = false;
-        getList(data.page+1);
+        getList(data.page + 1);
       }
     });
 
@@ -59,7 +60,10 @@ function SearchPage(props) {
       const plural = data.total_results > 1;
       return (
         <div>
-          <Typography className={classes.margin}>{data.total_results} result{plural ? "s" : ""} found ({data.results.length} displayed).</Typography>
+          <Typography className={classes.margin}>
+            {data.total_results} result{plural ? "s" : ""} found (
+            {data.results.length} displayed).
+          </Typography>
           {data.results.map((data, id) => (
             <Item key={id} data={data}></Item>
           ))}

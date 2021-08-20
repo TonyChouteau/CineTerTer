@@ -3,15 +3,15 @@ var ratingStyles = makeStyles(function (theme) {
     flex: {
       display: "flex",
       flexDirection: "row",
-      alignItems: "center"
+      alignItems: "center",
     },
     icon: {
       width: "20px",
-      margin: "1px"
+      margin: "1px",
     },
     margin: {
-      marginLeft: "10px"
-    }
+      marginLeft: "10px",
+    },
   };
 });
 
@@ -30,7 +30,11 @@ function Rating(props) {
     }
     var url = "resources/Rating/" + type_url + "star.svg";
 
-    return React.createElement("img", { className: classes.icon, src: url, key: key });
+    return React.createElement("img", {
+      className: classes.icon,
+      src: url,
+      key: key,
+    });
   }
 
   var stars = [];
@@ -50,11 +54,7 @@ function Rating(props) {
       return React.createElement(
         "div",
         { className: classes.flex },
-        React.createElement(
-          "div",
-          { className: classes.margin },
-          stars
-        ),
+        React.createElement("div", { className: classes.margin }, stars),
         React.createElement(
           Typography,
           { className: classes.margin },

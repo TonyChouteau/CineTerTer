@@ -28,18 +28,18 @@ var THEME = {
     primary: {
       main: "#b71c1c",
       background: "#333",
-      text: "#fff"
+      text: "#fff",
     },
     secondary: {
       main: "#c2185b",
-      background: "#424242"
+      background: "#424242",
     },
     third: {
-      background: "#222"
-    }
+      background: "#222",
+    },
   },
   size: {
     appBar: "70px",
-    footer: "200px"
-  }
+    footer: "200px",
+  },
 };
