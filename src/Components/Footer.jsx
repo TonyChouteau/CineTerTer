@@ -32,7 +32,8 @@ function Footer() {
         Api
       </Typography>
       <Typography>
-        <Link className={classes.link} target="_blank" rel="noreferrer" href="https://github.com/TonyChouteau">
+        The project on {" "}
+        <Link className={classes.link} target="_blank" rel="noreferrer" href="https://github.com/TonyChouteau/CineTerTer">
           Github
         </Link>
       </Typography>
