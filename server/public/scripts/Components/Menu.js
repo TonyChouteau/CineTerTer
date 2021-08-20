@@ -5,8 +5,8 @@ var menuStyles = makeStyles(function (theme) {
     root: {
       flexGrow: 1
     },
-    menuButton: {
-      marginRight: theme.spacing(2)
+    appBar: {
+      minHeight: THEME.size.appBar
     },
     title: {
       flexGrow: 1
@@ -76,7 +76,7 @@ function Menu(props) {
       { position: "static" },
       React.createElement(
         Toolbar,
-        null,
+        { className: classes.appBar },
         React.createElement(
           IconButton,
           {

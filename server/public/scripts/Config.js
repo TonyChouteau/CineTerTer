@@ -3,10 +3,14 @@
 var API_URL = "https://api.themoviedb.org/3";
 var IMG_URL = "https://image.tmdb.org/t/p";
 
+var IMG_ERROR = "resources/images/error.png";
+
 // API Params
 
 var API_KEY_PARAM = "?api_key=" + API_KEY;
 var QUERY_PARAM = "&query=";
+
+var PAGE_PARAM = "&page=";
 
 // API URLs
 
@@ -29,6 +33,13 @@ var THEME = {
     secondary: {
       main: "#c2185b",
       background: "#424242"
+    },
+    third: {
+      background: "#222"
     }
+  },
+  size: {
+    appBar: "70px",
+    footer: "200px"
   }
 };

@@ -1,14 +1,21 @@
+let g_pageLoaded = false;
+
 const appStyles = makeStyles((theme) => ({
   root: {
     background: THEME.palette.primary.background,
     color: THEME.palette.primary.text,
+    minHeight: "100vh",
+  },
+  bottomMargin: {
+    height: "1px",
+    background: "transparent",
   },
 }));
 
 function App() {
   const classes = appStyles();
 
-  const [query, setQuery] = React.useState("Star Wars");
+  const [query, setQuery] = React.useState("sda");
 
   const searchPage = () => <SearchPage query={query}></SearchPage>;
   const infoPage = () => <InfosPage></InfosPage>;
@@ -24,6 +31,7 @@ function App() {
         <Route path="/" exact component={searchPage}></Route>
         <Route path="/stats" component={infoPage}></Route>
         <Route path="/login" component={LoginPage}></Route>
+        <Footer></Footer>
       </ReactRouterDOM.HashRouter>
     </div>
   );

@@ -4,20 +4,19 @@ var itemStyles = makeStyles(function (theme) {
       padding: theme.spacing(2),
       height: "fit-content",
       background: THEME.palette.secondary.background,
-      color: THEME.palette.primary.text
+      color: THEME.palette.primary.text,
     },
     img_grid: {
       width: "200px",
-      minHeight: "300px"
     },
     img: {
       margin: "auto",
       display: "block",
-      maxWidth: "200px"
+      maxWidth: "calc(200px - 16px)",
     },
     margin: {
-      margin: "10px"
-    }
+      margin: "10px",
+    },
   };
 });
 
@@ -28,7 +27,7 @@ function Item(props) {
 
   return React.createElement(
     Paper,
-    { className: classes.paper + " " + classes.margin },
+    { className: makeClass(classes.paper, classes.margin) },
     React.createElement(
       Grid,
       { container: true, spacing: 2 },
@@ -37,8 +36,8 @@ function Item(props) {
         { item: true, className: classes.img_grid },
         React.createElement("img", {
           className: classes.img,
-          alt: "complex",
-          src: IMG_URL + SIZE_w500 + data.poster_path
+          alt: "Error loading the image",
+          src: getImage(SIZE_w500, data.poster_path),
         })
       ),
       React.createElement(
@@ -54,7 +53,11 @@ function Item(props) {
           { className: classes.margin },
           data.release_date
         ),
-        React.createElement(Rating, { className: classes.margin, value: data.vote_average }),
+        React.createElement(Rating, {
+          className: classes.margin,
+          value: data.vote_average,
+          count: data.vote_count,
+        }),
         React.createElement(
           Typography,
           { className: classes.margin },

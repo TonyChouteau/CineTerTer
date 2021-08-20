@@ -7,12 +7,11 @@ const itemStyles = makeStyles((theme) => ({
   },
   img_grid: {
     width: "200px",
-    minHeight: "300px",
   },
   img: {
     margin: "auto",
     display: "block",
-    maxWidth: "200px",
+    maxWidth: "calc(200px - 16px)",
   },
   margin: {
     margin: "10px",
@@ -25,13 +24,13 @@ function Item(props) {
   const data = props.data;
 
   return (
-    <Paper className={classes.paper + " " + classes.margin}>
+    <Paper className={makeClass(classes.paper, classes.margin)}>
       <Grid container spacing={2}>
         <Grid item className={classes.img_grid}>
           <img
             className={classes.img}
-            alt="complex"
-            src={IMG_URL + SIZE_w500 + data.poster_path}
+            alt="Error loading the image"
+            src={getImage(SIZE_w500, data.poster_path)}
           />
         </Grid>
         <Grid item xs={12} sm className={classes.grid}>
@@ -41,7 +40,11 @@ function Item(props) {
           <Typography className={classes.margin}>
             {data.release_date}
           </Typography>
-          <Rating className={classes.margin} value={data.vote_average}></Rating>
+          <Rating
+            className={classes.margin}
+            value={data.vote_average}
+            count={data.vote_count}
+          ></Rating>
           <Typography className={classes.margin}>{data.overview}</Typography>
         </Grid>
       </Grid>

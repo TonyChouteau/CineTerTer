@@ -10,7 +10,7 @@ const ratingStyles = makeStyles((theme) => ({
   },
   margin: {
     marginLeft: "10px",
-  }
+  },
 }));
 
 function Rating(props) {
@@ -43,12 +43,23 @@ function Rating(props) {
     }
   }
 
-  console.log(stars);
+  function DisplayRating() {
+    if (props.count > 0) {
+      return (
+        <div className={classes.flex}>
+          <div className={classes.margin}>{stars}</div>
+          <Typography className={classes.margin}>{props.value}</Typography>
+          <Typography className={classes.margin}>({props.count})</Typography>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Typography className={classes.margin}>No review</Typography>
+        </div>
+      );
+    }
+  }
 
-  return (
-    <div className={classes.flex}>
-      <div className={classes.margin}>{stars}</div>
-      <Typography className={classes.margin}>{props.value}</Typography>
-    </div>
-  );
+  return <DisplayRating></DisplayRating>;
 }
