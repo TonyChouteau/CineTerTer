@@ -68,33 +68,35 @@ function Menu(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar className={classes.appBar}>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <span className="material-icons">menu</span>
-          </IconButton>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <span className="material-icons">search</span>
+      <ThemeProvider theme={createTheme(THEME)}>
+        <AppBar position="static" color="primary">
+          <Toolbar className={classes.appBar}>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <span className="material-icons">menu</span>
+            </IconButton>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <span className="material-icons">search</span>
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+                onChange={onKeyPress}
+                value={props.query}
+              />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-              onChange={onKeyPress}
-              value={props.query}
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
+          </Toolbar>
+        </AppBar>
+      </ThemeProvider>
     </div>
   );
 }

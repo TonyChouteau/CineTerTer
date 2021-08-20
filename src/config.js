@@ -26,12 +26,12 @@ const SIZE_original = "/original";
 const THEME = {
   palette: {
     primary: {
-      main: "#b71c1c",
+      main: "#5970f3",
       background: "#333",
       text: "#fff",
     },
     secondary: {
-      main: "#c2185b",
+      main: "#b71c1c",
       background: "#424242",
     },
     third: {

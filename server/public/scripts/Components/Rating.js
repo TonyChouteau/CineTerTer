@@ -12,6 +12,10 @@ var ratingStyles = makeStyles(function (theme) {
     margin: {
       marginLeft: "10px",
     },
+    text: {
+      color: THEME.palette.primary.main,
+      fontWeight: "bold",
+    },
   };
 });
 
@@ -57,13 +61,9 @@ function Rating(props) {
         React.createElement("div", { className: classes.margin }, stars),
         React.createElement(
           Typography,
-          { className: classes.margin },
-          props.value
-        ),
-        React.createElement(
-          Typography,
-          { className: classes.margin },
-          "(",
+          { className: makeClass(classes.margin, classes.text) },
+          props.value,
+          " (",
           props.count,
           ")"
         )

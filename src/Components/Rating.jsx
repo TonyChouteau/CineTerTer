@@ -11,6 +11,10 @@ const ratingStyles = makeStyles((theme) => ({
   margin: {
     marginLeft: "10px",
   },
+  text: {
+    color: THEME.palette.primary.main,
+    fontWeight: "bold",
+  },
 }));
 
 function Rating(props) {
@@ -48,8 +52,9 @@ function Rating(props) {
       return (
         <div className={classes.flex}>
           <div className={classes.margin}>{stars}</div>
-          <Typography className={classes.margin}>{props.value}</Typography>
-          <Typography className={classes.margin}>({props.count})</Typography>
+          <Typography className={makeClass(classes.margin, classes.text)}>
+            {props.value} ({props.count})
+          </Typography>
         </div>
       );
     } else {

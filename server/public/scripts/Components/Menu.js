@@ -92,43 +92,47 @@ function Menu(props) {
     "div",
     { className: classes.root },
     React.createElement(
-      AppBar,
-      { position: "static" },
+      ThemeProvider,
+      { theme: createTheme(THEME) },
       React.createElement(
-        Toolbar,
-        { className: classes.appBar },
+        AppBar,
+        { position: "static", color: "primary" },
         React.createElement(
-          IconButton,
-          {
-            edge: "start",
-            className: classes.menuButton,
-            color: "inherit",
-            "aria-label": "menu",
-          },
-          React.createElement("span", { className: "material-icons" }, "menu")
-        ),
-        React.createElement(
-          "div",
-          { className: classes.search },
+          Toolbar,
+          { className: classes.appBar },
+          React.createElement(
+            IconButton,
+            {
+              edge: "start",
+              className: classes.menuButton,
+              color: "inherit",
+              "aria-label": "menu",
+            },
+            React.createElement("span", { className: "material-icons" }, "menu")
+          ),
           React.createElement(
             "div",
-            { className: classes.searchIcon },
+            { className: classes.search },
             React.createElement(
-              "span",
-              { className: "material-icons" },
-              "search"
-            )
-          ),
-          React.createElement(InputBase, {
-            placeholder: "Search\u2026",
-            classes: {
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            },
-            inputProps: { "aria-label": "search" },
-            onChange: onKeyPress,
-            value: props.query,
-          })
+              "div",
+              { className: classes.searchIcon },
+              React.createElement(
+                "span",
+                { className: "material-icons" },
+                "search"
+              )
+            ),
+            React.createElement(InputBase, {
+              placeholder: "Search\u2026",
+              classes: {
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              },
+              inputProps: { "aria-label": "search" },
+              onChange: onKeyPress,
+              value: props.query,
+            })
+          )
         )
       )
     )

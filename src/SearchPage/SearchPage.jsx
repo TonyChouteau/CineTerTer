@@ -5,6 +5,12 @@ const searchStyles = makeStyles((theme) => ({
   margin: {
     margin: "10px",
   },
+  noResult: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 function SearchPage(props) {
@@ -39,8 +45,6 @@ function SearchPage(props) {
     getList();
   }
 
-  console.log(data);
-
   $(window)
     .off()
     .on("scroll", () => {
@@ -72,7 +76,11 @@ function SearchPage(props) {
     } else if (!g_pageLoaded || props.query === "") {
       return "";
     } else {
-      return <Typography>No result</Typography>;
+      return (
+        <div className={makeClass(classes.root, classes.noResult)}>
+          <Typography>No result</Typography>
+        </div>
+      );
     }
   }
 
