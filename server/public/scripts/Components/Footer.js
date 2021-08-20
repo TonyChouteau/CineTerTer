@@ -48,9 +48,11 @@ function Footer() {
     React.createElement(
       Typography,
       null,
+      "The project on ",
+      " ",
       React.createElement(
         Link,
-        { className: classes.link, target: "_blank", rel: "noreferrer", href: "https://github.com/TonyChouteau" },
+        { className: classes.link, target: "_blank", rel: "noreferrer", href: "https://github.com/TonyChouteau/CineTerTer" },
         "Github"
       )
     )
