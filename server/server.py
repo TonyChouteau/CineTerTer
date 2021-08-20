@@ -11,5 +11,9 @@ def index(filename):
 
     return jsonify(request.data)
 
+@app.route('/api')
+def api():
+    return "Hello world"
+
 if __name__ == "__main__":
     app.run()

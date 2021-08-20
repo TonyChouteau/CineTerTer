@@ -45,20 +45,41 @@ function Rating(props) {
     }
   }
 
-  console.log(stars);
+  function DisplayRating() {
+    if (props.count > 0) {
+      return React.createElement(
+        "div",
+        { className: classes.flex },
+        React.createElement(
+          "div",
+          { className: classes.margin },
+          stars
+        ),
+        React.createElement(
+          Typography,
+          { className: classes.margin },
+          props.value
+        ),
+        React.createElement(
+          Typography,
+          { className: classes.margin },
+          "(",
+          props.count,
+          ")"
+        )
+      );
+    } else {
+      return React.createElement(
+        "div",
+        null,
+        React.createElement(
+          Typography,
+          { className: classes.margin },
+          "No review"
+        )
+      );
+    }
+  }
 
-  return React.createElement(
-    "div",
-    { className: classes.flex },
-    React.createElement(
-      "div",
-      { className: classes.margin },
-      stars
-    ),
-    React.createElement(
-      Typography,
-      { className: classes.margin },
-      props.value
-    )
-  );
+  return React.createElement(DisplayRating, null);
 }

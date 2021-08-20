@@ -2,8 +2,8 @@ const menuStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  appBar: {
+    minHeight: THEME.size.appBar,
   },
   title: {
     flexGrow: 1,
@@ -69,7 +69,7 @@ function Menu(props) {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className={classes.appBar}>
           <IconButton
             edge="start"
             className={classes.menuButton}
