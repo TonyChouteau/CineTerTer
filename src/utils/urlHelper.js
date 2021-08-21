@@ -42,5 +42,6 @@ function getParam(splitter, param) {
     (urlArray.length >= 2
       ? urlArray[urlArray.length - 2].replace("#", "")
       : "");
+      
   return new URLSearchParams(urlParams).get(param);
 }
