@@ -1,12 +1,5 @@
 function getApi(query, page) {
-  return (
-    API_URL +
-    SEARCH_MOVIE +
-    API_KEY_PARAM +
-    QUERY_PARAM +
-    query +
-    (page ? PAGE_PARAM + page : "")
-  );
+  return API_URL + SEARCH_MOVIE + API_KEY_PARAM + QUERY_PARAM + query + (page ? PAGE_PARAM + page : "");
 }
 
 function getApiMovie(id) {
