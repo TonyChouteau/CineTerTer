@@ -29,8 +29,11 @@ function Results(props) {
     return (
       <div className={classes.flex}>
         <Typography className={classes.margin}>
-          {data.total_results} result{plural ? "s" : ""} found (
-          {data.results.length} displayed).
+          {translateSearchPage("results_count", props.lang, [
+            data.total_results,
+            plural ? "s" : "",
+            data.results.length,
+          ])}
         </Typography>
         <List className={makeClass(classes.item, classes.noPadding)}>
           {data.results.map((data, id) => (

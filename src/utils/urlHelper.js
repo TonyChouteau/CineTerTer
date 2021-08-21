@@ -6,7 +6,23 @@ function goToUrl(url, ...params) {
   window.location.href = url + makeParams(...params);
 }
 
-function getApi(query, page) {
+function getLangParam(lang) {
+  if (lang) {
+    return (
+      LANGUAGE_PARAM +
+      lang +
+      "-" +
+      lang.toUpperCase() +
+      "&" +
+      REGION_PARAM +
+      lang.toUpperCase()
+    );
+  } else {
+    return "";
+  }
+}
+
+function getApi(query, page, lang) {
   return (
     API_URL +
     SEARCH_MOVIE +
@@ -14,14 +30,23 @@ function getApi(query, page) {
       API_KEY_PARAM,
       QUERY_PARAM + query,
       page ? PAGE_PARAM + page : "",
-      LANGUAGE_PARAM + "fr-FR",
-      REGION_PARAM + "FR"
+      getLangParam(lang)
     )
   );
 }
 
-function getApiMovie(id) {
-  return API_URL + MOVIE_URL + "/" + id + makeParams(API_KEY_PARAM);
+function getApiMovie(id, lang) {
+  return (
+    API_URL +
+    MOVIE_URL +
+    "/" +
+    id +
+    makeParams(
+      API_KEY_PARAM,
+      getLangParam(lang),
+      "append_to_response=" + "credits"
+    )
+  );
 }
 
 function getImage(size, path) {

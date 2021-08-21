@@ -1,4 +1,5 @@
 let g_pageLoaded = false;
+let g_lastMovieData = null;
 
 const appStyles = makeStyles((theme) => ({
   root: {
@@ -17,10 +18,11 @@ function App() {
 
   let queryParam = getParam("/", "query");
   const [query, setQuery] = React.useState(queryParam || "");
+  const [lang, setLang] = React.useState(LANGUAGE_AVAILABLE[0]);
 
-  const searchPage = () => <SearchPage query={query}></SearchPage>;
-  const infoPage = () => <InfosPage></InfosPage>;
-  const moviePage = () => <MoviePage></MoviePage>;
+  const searchPage = () => <SearchPage query={query} lang={lang}></SearchPage>;
+  const infoPage = () => <InfosPage lang={lang}></InfosPage>;
+  const moviePage = () => <MoviePage lang={lang}></MoviePage>;
 
   function onSearch(event) {
     if (event.key === "Enter" && window.location.hash !== "#/") {
@@ -33,7 +35,12 @@ function App() {
   return (
     <div className={classes.root}>
       <HashRouter>
-        <Menu onSearch={onSearch} query={query}></Menu>
+        <Menu
+          onSearch={onSearch}
+          query={query}
+          lang={lang}
+          onLanguageChange={setLang}
+        ></Menu>
         <Route path="/movie" component={moviePage}></Route>
         <Route path="/stats" component={infoPage}></Route>
         <Route path="/" exact component={searchPage}></Route>

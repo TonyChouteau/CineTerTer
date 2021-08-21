@@ -125,6 +125,28 @@ var menuStyles = makeStyles(function (theme) {
         width: "20ch",
       }
     ),
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    whiteText: {
+      color: THEME.palette.primary.text,
+      "& label.Mui-focused": {
+        color: THEME.palette.primary.text,
+      },
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+      "&:before": {
+        borderColor: THEME.palette.primary.text,
+      },
+      "&:hover:not(.Mui-disabled):before": {
+        borderColor: THEME.palette.primary.text,
+      },
+    },
+    icon: {
+      fill: THEME.palette.primary.text,
+    },
   };
 });
 
@@ -140,6 +162,10 @@ function Menu(props) {
     props.onSearch(event);
   }
 
+  function onLanguageChange(event) {
+    props.onLanguageChange(event.target.value);
+  }
+
   return React.createElement(
     "div",
     { className: classes.root },
@@ -151,6 +177,7 @@ function Menu(props) {
         closeDrawer: function closeDrawer() {
           return setOpenDrawer(false);
         },
+        lang: props.lang,
       }),
       React.createElement(
         AppBar,
@@ -191,7 +218,7 @@ function Menu(props) {
                 )
               ),
               React.createElement(InputBase, {
-                placeholder: "Search\u2026",
+                placeholder: translateMenu("search", props.lang) + "...",
                 classes: {
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -203,7 +230,43 @@ function Menu(props) {
               })
             )
           ),
-          React.createElement("div", null, "Test")
+          React.createElement(
+            "div",
+            null,
+            React.createElement(
+              FormControl,
+              {
+                className: makeClass(classes.formControl, classes.whiteText),
+              },
+              React.createElement(
+                InputLabel,
+                {
+                  shrink: true,
+                  id: "input-language-label",
+                  className: classes.whiteText,
+                },
+                translateMenu("lang", props.lang)
+              ),
+              React.createElement(
+                Select,
+                {
+                  labelId: "input-language-label",
+                  id: "select-language",
+                  value: props.lang,
+                  onChange: onLanguageChange,
+                  className: makeClass(classes.selectEmpty, classes.whiteText),
+                  label: "Language",
+                },
+                LANGUAGE_AVAILABLE.map(function (lang) {
+                  return React.createElement(
+                    MenuItem,
+                    { value: lang, key: lang },
+                    React.createElement("em", null, getLanguage(lang).name)
+                  );
+                })
+              )
+            )
+          )
         )
       )
     )

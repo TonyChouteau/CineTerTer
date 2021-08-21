@@ -39,6 +39,7 @@ var _slicedToArray = (function () {
 })();
 
 var g_pageLoaded = false;
+var g_lastMovieData = null;
 
 var appStyles = makeStyles(function (theme) {
   return {
@@ -64,14 +65,19 @@ function App() {
     query = _React$useState2[0],
     setQuery = _React$useState2[1];
 
+  var _React$useState3 = React.useState(LANGUAGE_AVAILABLE[0]),
+    _React$useState4 = _slicedToArray(_React$useState3, 2),
+    lang = _React$useState4[0],
+    setLang = _React$useState4[1];
+
   var searchPage = function searchPage() {
-    return React.createElement(SearchPage, { query: query });
+    return React.createElement(SearchPage, { query: query, lang: lang });
   };
   var infoPage = function infoPage() {
-    return React.createElement(InfosPage, null);
+    return React.createElement(InfosPage, { lang: lang });
   };
   var moviePage = function moviePage() {
-    return React.createElement(MoviePage, null);
+    return React.createElement(MoviePage, { lang: lang });
   };
 
   function onSearch(event) {
@@ -88,7 +94,12 @@ function App() {
     React.createElement(
       HashRouter,
       null,
-      React.createElement(Menu, { onSearch: onSearch, query: query }),
+      React.createElement(Menu, {
+        onSearch: onSearch,
+        query: query,
+        lang: lang,
+        onLanguageChange: setLang,
+      }),
       React.createElement(Route, { path: "/movie", component: moviePage }),
       React.createElement(Route, { path: "/stats", component: infoPage }),
       React.createElement(Route, {

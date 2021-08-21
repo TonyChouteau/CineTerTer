@@ -22,12 +22,12 @@ function AppDrawer(props) {
   const menu = [
     {
       icon: "search",
-      text: "Search",
+      text: "search",
       url: "/",
     },
     {
       icon: "insert_chart",
-      text: "Stats",
+      text: "stats",
       url: "/stats",
     },
   ];
@@ -52,7 +52,7 @@ function AppDrawer(props) {
               <span className="material-icons">{item.icon}</span>
             </ListItemIcon>
             <ListItemText className={classes.itemText}>
-              <Typography>{item.text}</Typography>
+              <Typography>{translateMenu(item.text, props.lang)}</Typography>
             </ListItemText>
           </ListItem>
         ))}

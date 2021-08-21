@@ -63,6 +63,28 @@ const menuStyles = makeStyles((theme) => ({
       width: "20ch",
     },
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  whiteText: {
+    color: THEME.palette.primary.text,
+    "& label.Mui-focused": {
+      color: THEME.palette.primary.text,
+    },
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+    "&:before": {
+      borderColor: THEME.palette.primary.text,
+    },
+    "&:hover:not(.Mui-disabled):before": {
+      borderColor: THEME.palette.primary.text,
+    },
+  },
+  icon: {
+    fill: THEME.palette.primary.text,
+  },
 }));
 
 function Menu(props) {
@@ -74,12 +96,17 @@ function Menu(props) {
     props.onSearch(event);
   }
 
+  function onLanguageChange(event) {
+    props.onLanguageChange(event.target.value);
+  }
+
   return (
     <div className={classes.root}>
       <ThemeProvider theme={createTheme(THEME)}>
         <AppDrawer
           open={openDrawer}
           closeDrawer={() => setOpenDrawer(false)}
+          lang={props.lang}
         ></AppDrawer>
         <AppBar position="static" color="primary">
           <Toolbar className={classes.appBar}>
@@ -98,7 +125,7 @@ function Menu(props) {
                   <span className="material-icons">search</span>
                 </div>
                 <InputBase
-                  placeholder="Search…"
+                  placeholder={translateMenu("search", props.lang) + "..."}
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,
@@ -110,7 +137,33 @@ function Menu(props) {
                 />
               </div>
             </div>
-            <div>Test</div>
+            <div>
+              <FormControl
+                className={makeClass(classes.formControl, classes.whiteText)}
+              >
+                <InputLabel
+                  shrink={true}
+                  id="input-language-label"
+                  className={classes.whiteText}
+                >
+                  {translateMenu("lang", props.lang)}
+                </InputLabel>
+                <Select
+                  labelId="input-language-label"
+                  id="select-language"
+                  value={props.lang}
+                  onChange={onLanguageChange}
+                  className={makeClass(classes.selectEmpty, classes.whiteText)}
+                  label={"Language"}
+                >
+                  {LANGUAGE_AVAILABLE.map((lang) => (
+                    <MenuItem value={lang} key={lang}>
+                      <em>{getLanguage(lang).name}</em>
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
           </Toolbar>
         </AppBar>
       </ThemeProvider>

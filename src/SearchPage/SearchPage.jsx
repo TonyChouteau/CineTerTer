@@ -12,9 +12,10 @@ const SearchPage = React.memo(function SearchPage(props) {
 
   function getList(page) {
     const _data = data;
-    fetch(getApi(query || props.query, page || 1))
+    fetch(getApi(query || props.query, page || 1, props.lang))
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         g_pageLoaded = true;
         if (data.results) {
           if (page !== 1 && page !== undefined && page !== null) {
@@ -52,7 +53,7 @@ const SearchPage = React.memo(function SearchPage(props) {
 
   return (
     <div className={classes.root}>
-      <Results data={data} query={props.query}></Results>
+      <Results data={data} query={props.query} lang={props.lang}></Results>
     </div>
   );
 });

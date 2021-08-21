@@ -8,6 +8,11 @@ const movieStyles = makeStyles((theme) => ({
     margin: "10px",
     color: THEME.palette.primary.text,
   },
+  titlePaper: {
+    background: THEME.palette.secondary.background,
+    color: THEME.palette.primary.text,
+    padding: "5px 0",
+  },
   img: {
     width: "200px",
   },
@@ -24,22 +29,51 @@ const movieStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
   },
+  paperList: {
+    margin: "10px",
+    width: "calc(100% - 20px)",
+  },
+  centerText: {
+    textAlign: "center",
+  },
 }));
 
 function MoviePage(props) {
   const classes = movieStyles();
 
-  const [data, setData] = React.useState({});
+  const [_data, setData] = React.useState({});
 
   let id = getParam(MOVIE_URL, "id");
 
-  if (JSON.stringify(data) === "{}") {
-    fetch(getApiMovie(id))
+  if (JSON.stringify(_data) === "{}") {
+    fetch(getApiMovie(id, props.lang))
       .then((response) => response.json())
       .then((data) => {
         setData(data);
-        console.log(data);
+        g_lastMovieData = data;
       });
+  }
+
+  // Prevent the display from reloading during a search (fucking disgusting but it works)
+  let data = JSON.stringify(_data) !== "{}" ? _data : g_lastMovieData || {};
+
+  let crew = [];
+  let cast = [];
+  if (data.credits) {
+    cast = data.credits.cast.sortBy("popularity");
+
+    const credits = {};
+    for (let i in data.credits.crew) {
+      const credit = data.credits.crew[i];
+      const job = credit.job;
+      if (credits[credit.name]) {
+        credits[credit.name].job.push(job);
+      } else {
+        credits[credit.name] = credit;
+        credits[credit.name].job = [job];
+      }
+    }
+    crew = Object.values(credits).sortBy("popularity");
   }
 
   return (
@@ -47,22 +81,56 @@ function MoviePage(props) {
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item>
-            <img
-              className={classes.img}
-              alt="Error loading the image"
-              src={getImage(SIZE_w500, data.poster_path)}
-            />
+            {data.poster_path ? (
+              <img
+                className={classes.img}
+                alt="Error loading the image"
+                src={getImage(SIZE_w500, data.poster_path)}
+              />
+            ) : (
+              <CircularProgress></CircularProgress>
+            )}
           </Grid>
           <Grid item container xs={12} sm>
             <Grid item>
-              <Typography className={classes.margin} variant="h5">
-                {data.title} ({getYear(data.release_date)})
-              </Typography>
-              <Typography
-                className={makeClass(classes.margin, classes.greyText)}
+              <Grid
+                className={makeClass(classes.rightMargin, classes.row)}
+                item
+                xs={12}
+                sm
               >
-                {data.release_date}
-              </Typography>
+                <Typography className={classes.margin} variant="h5">
+                  {data.title} ({getYear(data.release_date)})
+                </Typography>
+                <Typography
+                  className={makeClass(classes.margin, classes.greyText)}
+                  variant="h5"
+                >
+                  {getCollection(data.belongs_to_collection)}
+                </Typography>
+              </Grid>
+              <Grid
+                className={makeClass(classes.margin, classes.row)}
+                item
+                xs={12}
+                sm
+              >
+                <Typography
+                  className={makeClass(classes.rightMargin, classes.greyText)}
+                >
+                  {data.release_date}
+                </Typography>
+                <Typography
+                  className={makeClass(classes.rightMargin, classes.greyText)}
+                >
+                  {getDuration(data.runtime)}
+                </Typography>
+                <Typography
+                  className={makeClass(classes.rightMargin, classes.greyText)}
+                >
+                  {getGenre(data.genres)}
+                </Typography>
+              </Grid>
               <Rating
                 className={classes.margin}
                 value={data.vote_average}
@@ -80,15 +148,12 @@ function MoviePage(props) {
                 <Typography
                   className={makeClass(classes.rightMargin, classes.greyText)}
                 >
-                  Duration : {getDuration(data.runtime)}
-                </Typography>
-                <Typography
-                  className={makeClass(classes.rightMargin, classes.greyText)}
-                >
-                  Status : {data.status}
+                  {translateMoviePage("status", props.lang)}{" "}
+                  {translateMoviePage(data.status, props.lang)}
                 </Typography>
                 <Typography className={classes.greyText}>
-                  Language : {getLanguage(data.original_language).name} (
+                  {translateMoviePage("lang", props.lang)}{" "}
+                  {getLanguage(data.original_language).name} (
                   {getLanguage(data.original_language).nativeName})
                 </Typography>
               </Grid>
@@ -101,16 +166,50 @@ function MoviePage(props) {
                 <Typography
                   className={makeClass(classes.rightMargin, classes.greyText)}
                 >
-                  Budget : {getRevenue(data.budget)}
+                  {translateMoviePage("budget", props.lang)}{" "}
+                  {getMoney(data.budget)}
                 </Typography>
                 <Typography className={classes.greyText}>
-                  Revenue : {getRevenue(data.revenue)}
+                  {translateMoviePage("revenue", props.lang)}{" "}
+                  {getMoney(data.revenue)}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Paper>
+      <div className={classes.paperList}>
+        <Paper className={classes.titlePaper}>
+          <Typography
+            className={makeClass(classes.margin, classes.centerText)}
+            variant="h5"
+          >
+            Crew
+          </Typography>
+          <ScrollableCardList
+            image={(item) => getImage(SIZE_w500, item.profile_path)}
+            title={(item) => item.name}
+            content={(item) => item.job.join(" - ")}
+            data={crew}
+          ></ScrollableCardList>
+        </Paper>
+      </div>
+      <div className={classes.paperList}>
+        <Paper className={classes.titlePaper}>
+          <Typography
+            className={makeClass(classes.margin, classes.centerText)}
+            variant="h5"
+          >
+            Cast
+          </Typography>
+        </Paper>
+        <ScrollableCardList
+          image={(item) => getImage(SIZE_w500, item.profile_path)}
+          title={(item) => item.name}
+          content={(item) => item.character}
+          data={cast}
+        ></ScrollableCardList>
+      </div>
     </div>
   );
 }

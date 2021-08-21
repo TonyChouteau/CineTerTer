@@ -736,3 +736,57 @@ function getLanguage(code) {
     return {};
   }
 }
+
+const LANGUAGE_AVAILABLE = ["fr", "en", "es"];
+
+const APP_CONTENT = {
+  menu: {
+    search: ["Rechercher", "Search", "Buscar"],
+    lang: ["Langue", "Language", "Idioma"],
+    stats: ["Statistiques", "Statistics", "Estadísticas"],
+  },
+  search_page: {
+    results_count: [
+      "{0} resultat{1} trouvé{1} ({2} visible{1}).",
+      "{0} result{1} found ({2} shown).",
+      "{0} resultado{1} encontrado{1} ({2} mostrado{1}).",
+    ],
+  },
+  movie_page: {
+    status: ["Statut :", "Status:", "Estado:"],
+    Rumored: ["Rumeur", "Rumored", "Rumor"],
+    Planned: ["Prévu", "Planned", "Planificado"],
+    "In Production": ["En Production", "In Production", "En producción"],
+    "Post Production": ["Post-production", "Post Production", "Postproducción"],
+    Released: ["Publié", "Released", "Publicado"],
+    Canceled: ["Annulé", "Canceled", "Cancelado"],
+    lang: ["Langue :", "Language:", "Idioma:"],
+    revenue: ["Revenu :", "Revenue:", "Ingresos:"],
+    budget: ["Budget :", "Budget:", "Presupuesto:"],
+  },
+};
+
+function translate(component, element, lang, variables) {
+  if (element) {
+    let translation =
+      APP_CONTENT[component][element][LANGUAGE_AVAILABLE.indexOf(lang)];
+    if (variables) {
+      translation = translation.format(...variables);
+    }
+    return translation;
+  } else {
+    return "";
+  }
+}
+
+function translateMenu(element, lang, variables) {
+  return translate("menu", element, lang, variables);
+}
+
+function translateSearchPage(element, lang, variables) {
+  return translate("search_page", element, lang, variables);
+}
+
+function translateMoviePage(element, lang, variables) {
+  return translate("movie_page", element, lang, variables);
+}

@@ -16,12 +16,20 @@ function goToUrl(url) {
   window.location.href = url + makeParams.apply(undefined, params);
 }
 
-function getApi(query, page) {
-  return API_URL + SEARCH_MOVIE + makeParams(API_KEY_PARAM, QUERY_PARAM + query, page ? PAGE_PARAM + page : "", LANGUAGE_PARAM + "fr-FR", REGION_PARAM + "FR");
+function getLangParam(lang) {
+  if (lang) {
+    return LANGUAGE_PARAM + lang + "-" + lang.toUpperCase() + "&" + REGION_PARAM + lang.toUpperCase();
+  } else {
+    return "";
+  }
 }
 
-function getApiMovie(id) {
-  return API_URL + MOVIE_URL + "/" + id + makeParams(API_KEY_PARAM);
+function getApi(query, page, lang) {
+  return API_URL + SEARCH_MOVIE + makeParams(API_KEY_PARAM, QUERY_PARAM + query, page ? PAGE_PARAM + page : "", getLangParam(lang));
+}
+
+function getApiMovie(id, lang) {
+  return API_URL + MOVIE_URL + "/" + id + makeParams(API_KEY_PARAM, getLangParam(lang), "append_to_response=" + "credits");
 }
 
 function getImage(size, path) {
@@ -38,6 +46,5 @@ function getMoviePage(id, query) {
 function getParam(splitter, param) {
   var urlArray = window.location.href.split(splitter);
   var urlParams = urlArray[urlArray.length - 1] || (urlArray.length >= 2 ? urlArray[urlArray.length - 2].replace("#", "") : "");
-
   return new URLSearchParams(urlParams).get(param);
 }

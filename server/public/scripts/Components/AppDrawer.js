@@ -24,12 +24,12 @@ function AppDrawer(props) {
   var menu = [
     {
       icon: "search",
-      text: "Search",
+      text: "search",
       url: "/",
     },
     {
       icon: "insert_chart",
-      text: "Stats",
+      text: "stats",
       url: "/stats",
     },
   ];
@@ -67,7 +67,11 @@ function AppDrawer(props) {
           React.createElement(
             ListItemText,
             { className: classes.itemText },
-            React.createElement(Typography, null, item.text)
+            React.createElement(
+              Typography,
+              null,
+              translateMenu(item.text, props.lang)
+            )
           )
         );
       })
