@@ -2,41 +2,44 @@ var drawerStyles = makeStyles(function (theme) {
   return {
     root: {
       background: THEME.palette.primary.background,
-      color: THEME.palette.primary.text
+      color: THEME.palette.primary.text,
     },
     item: {
       "&:hover": {
-        background: THEME.palette.secondary.background
-      }
+        background: THEME.palette.secondary.background,
+      },
     },
     itemIcon: {
-      color: THEME.palette.primary.text
+      color: THEME.palette.primary.text,
     },
     itemText: {
-      width: "150px"
-    }
+      width: "150px",
+    },
   };
 });
 
 function AppDrawer(props) {
   var classes = drawerStyles();
 
-  var menu = [{
-    icon: "search",
-    text: "Search",
-    url: "/"
-  }, {
-    icon: "insert_chart",
-    text: "Stats",
-    url: "/stats"
-  }];
+  var menu = [
+    {
+      icon: "search",
+      text: "Search",
+      url: "/",
+    },
+    {
+      icon: "insert_chart",
+      text: "Stats",
+      url: "/stats",
+    },
+  ];
 
   return React.createElement(
     Drawer,
     {
       open: props.open,
       onClose: props.closeDrawer,
-      classes: { paperAnchorLeft: classes.root }
+      classes: { paperAnchorLeft: classes.root },
     },
     React.createElement(
       List,
@@ -50,7 +53,7 @@ function AppDrawer(props) {
             onClick: props.closeDrawer,
             component: "a",
             href: item.url,
-            key: item.text
+            key: item.text,
           },
           React.createElement(
             ListItemIcon,
@@ -64,11 +67,7 @@ function AppDrawer(props) {
           React.createElement(
             ListItemText,
             { className: classes.itemText },
-            React.createElement(
-              Typography,
-              null,
-              item.text
-            )
+            React.createElement(Typography, null, item.text)
           )
         );
       })

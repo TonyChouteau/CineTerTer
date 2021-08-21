@@ -2,23 +2,23 @@ var itemStyles = makeStyles(function (theme) {
   return {
     paper: {
       background: THEME.palette.secondary.background,
-      color: THEME.palette.primary.text
+      color: THEME.palette.primary.text,
     },
     listItem: {
       padding: theme.spacing(2),
-      height: "fit-content"
+      height: "fit-content",
     },
     img_grid: {
-      width: "200px"
+      width: "200px",
     },
     img: {
       margin: "auto",
       display: "block",
-      maxWidth: "calc(200px - 16px)"
+      maxWidth: "calc(200px - 16px)",
     },
     margin: {
-      margin: "10px"
-    }
+      margin: "10px",
+    },
   };
 });
 
@@ -36,7 +36,7 @@ function Item(props) {
         button: true,
         component: "a",
         href: getMoviePage(data.id),
-        className: classes.listItem
+        className: classes.listItem,
       },
       React.createElement(
         Grid,
@@ -47,7 +47,7 @@ function Item(props) {
           React.createElement("img", {
             className: classes.img,
             alt: "Error loading the image",
-            src: getImage(SIZE_w500, data.poster_path)
+            src: getImage(SIZE_w500, data.poster_path),
           })
         ),
         React.createElement(
@@ -69,7 +69,7 @@ function Item(props) {
           React.createElement(Rating, {
             className: classes.margin,
             value: data.vote_average,
-            count: data.vote_count
+            count: data.vote_count,
           }),
           React.createElement(
             Typography,
