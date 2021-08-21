@@ -270,20 +270,20 @@ function MoviePage(props) {
             variant: "h5"
           },
           "Cast"
-        )
-      ),
-      React.createElement(ScrollableCardList, {
-        image: function image(item) {
-          return getImage(SIZE_w500, item.profile_path);
-        },
-        title: function title(item) {
-          return item.name;
-        },
-        content: function content(item) {
-          return item.character;
-        },
-        data: cast
-      })
+        ),
+        React.createElement(ScrollableCardList, {
+          image: function image(item) {
+            return getImage(SIZE_w500, item.profile_path);
+          },
+          title: function title(item) {
+            return item.name;
+          },
+          content: function content(item) {
+            return item.character;
+          },
+          data: cast
+        })
+      )
     )
   );
 }

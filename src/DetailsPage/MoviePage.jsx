@@ -202,13 +202,13 @@ function MoviePage(props) {
           >
             Cast
           </Typography>
+          <ScrollableCardList
+            image={(item) => getImage(SIZE_w500, item.profile_path)}
+            title={(item) => item.name}
+            content={(item) => item.character}
+            data={cast}
+          ></ScrollableCardList>
         </Paper>
-        <ScrollableCardList
-          image={(item) => getImage(SIZE_w500, item.profile_path)}
-          title={(item) => item.name}
-          content={(item) => item.character}
-          data={cast}
-        ></ScrollableCardList>
       </div>
     </div>
   );
