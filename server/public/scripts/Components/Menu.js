@@ -1,3 +1,43 @@
+var _slicedToArray = (function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+    try {
+      for (
+        var _i = arr[Symbol.iterator](), _s;
+        !(_n = (_s = _i.next()).done);
+        _n = true
+      ) {
+        _arr.push(_s.value);
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+    return _arr;
+  }
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if (Symbol.iterator in Object(arr)) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError(
+        "Invalid attempt to destructure non-iterable instance"
+      );
+    }
+  };
+})();
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -82,10 +122,17 @@ var menuStyles = makeStyles(function (theme) {
 function Menu(props) {
   var classes = menuStyles();
 
+  var _React$useState = React.useState(false),
+    _React$useState2 = _slicedToArray(_React$useState, 2),
+    openDrawer = _React$useState2[0],
+    setOpenDrawer = _React$useState2[1];
+
   function onKeyPress(event) {
-    // if (event.key === "Enter") {
-    props.onSearch(event.target.value);
-    // }
+    if (event.key === "Enter" && window.location.pathname !== "/") {
+      window.location.replace("/?query=" + event.target.value);
+    } else {
+      props.onSearch(event.target.value);
+    }
   }
 
   return React.createElement(
@@ -94,6 +141,12 @@ function Menu(props) {
     React.createElement(
       ThemeProvider,
       { theme: createTheme(THEME) },
+      React.createElement(AppDrawer, {
+        open: openDrawer,
+        closeDrawer: function closeDrawer() {
+          return setOpenDrawer(false);
+        },
+      }),
       React.createElement(
         AppBar,
         { position: "static", color: "primary" },
@@ -107,6 +160,9 @@ function Menu(props) {
               className: classes.menuButton,
               color: "inherit",
               "aria-label": "menu",
+              onClick: function onClick() {
+                return setOpenDrawer(true);
+              },
             },
             React.createElement("span", { className: "material-icons" }, "menu")
           ),
@@ -130,6 +186,7 @@ function Menu(props) {
               },
               inputProps: { "aria-label": "search" },
               onChange: onKeyPress,
+              onKeyPress: onKeyPress,
               value: props.query,
             })
           )

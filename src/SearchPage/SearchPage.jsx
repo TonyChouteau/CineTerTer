@@ -2,18 +2,9 @@ const searchStyles = makeStyles((theme) => ({
   root: {
     minHeight: `calc(100vh - ${THEME.size.appBar} - ${THEME.size.footer})`,
   },
-  margin: {
-    margin: "10px",
-  },
-  noResult: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
 }));
 
-function SearchPage(props) {
+const SearchPage = React.memo(function SearchPage(props) {
   const classes = searchStyles();
 
   const [query, setQuery] = React.useState("");
@@ -59,34 +50,9 @@ function SearchPage(props) {
       }
     });
 
-  function DisplayList() {
-    if (data.results && data.results.length) {
-      const plural = data.total_results > 1;
-      return (
-        <div>
-          <Typography className={classes.margin}>
-            {data.total_results} result{plural ? "s" : ""} found (
-            {data.results.length} displayed).
-          </Typography>
-          {data.results.map((data, id) => (
-            <Item key={id} data={data}></Item>
-          ))}
-        </div>
-      );
-    } else if (!g_pageLoaded || props.query === "") {
-      return "";
-    } else {
-      return (
-        <div className={makeClass(classes.root, classes.noResult)}>
-          <Typography>No result</Typography>
-        </div>
-      );
-    }
-  }
-
   return (
     <div className={classes.root}>
-      <DisplayList></DisplayList>
+      <Results data={data}></Results>
     </div>
   );
-}
+});

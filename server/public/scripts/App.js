@@ -57,7 +57,9 @@ var appStyles = makeStyles(function (theme) {
 function App() {
   var classes = appStyles();
 
-  var _React$useState = React.useState("sda"),
+  var queryParam = getParam("/", "query");
+
+  var _React$useState = React.useState(queryParam || ""),
     _React$useState2 = _slicedToArray(_React$useState, 2),
     query = _React$useState2[0],
     setQuery = _React$useState2[1];
@@ -68,6 +70,9 @@ function App() {
   var infoPage = function infoPage() {
     return React.createElement(InfosPage, null);
   };
+  var moviePage = function moviePage() {
+    return React.createElement(MoviePage, null);
+  };
 
   function onSearch(newQuery) {
     setQuery(newQuery);
@@ -77,7 +82,7 @@ function App() {
     "div",
     { className: classes.root },
     React.createElement(
-      ReactRouterDOM.HashRouter,
+      Router,
       null,
       React.createElement(Menu, { onSearch: onSearch, query: query }),
       React.createElement(Route, {
@@ -86,7 +91,7 @@ function App() {
         component: searchPage,
       }),
       React.createElement(Route, { path: "/stats", component: infoPage }),
-      React.createElement(Route, { path: "/login", component: LoginPage }),
+      React.createElement(Route, { path: "/movie", component: moviePage }),
       React.createElement(Footer, null)
     )
   );

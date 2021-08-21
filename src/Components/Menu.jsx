@@ -60,15 +60,23 @@ const menuStyles = makeStyles((theme) => ({
 function Menu(props) {
   const classes = menuStyles();
 
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+
   function onKeyPress(event) {
-    // if (event.key === "Enter") {
-    props.onSearch(event.target.value);
-    // }
+    if (event.key === "Enter" && window.location.pathname !== "/") {
+      window.location.replace("/?query=" + event.target.value);
+    } else {
+      props.onSearch(event.target.value);
+    }
   }
 
   return (
     <div className={classes.root}>
       <ThemeProvider theme={createTheme(THEME)}>
+        <AppDrawer
+          open={openDrawer}
+          closeDrawer={() => setOpenDrawer(false)}
+        ></AppDrawer>
         <AppBar position="static" color="primary">
           <Toolbar className={classes.appBar}>
             <IconButton
@@ -76,6 +84,7 @@ function Menu(props) {
               className={classes.menuButton}
               color="inherit"
               aria-label="menu"
+              onClick={() => setOpenDrawer(true)}
             >
               <span className="material-icons">menu</span>
             </IconButton>
@@ -91,6 +100,7 @@ function Menu(props) {
                 }}
                 inputProps={{ "aria-label": "search" }}
                 onChange={onKeyPress}
+                onKeyPress={onKeyPress}
                 value={props.query}
               />
             </div>
