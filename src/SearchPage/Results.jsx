@@ -34,7 +34,7 @@ function Results(props) {
         </Typography>
         <List className={makeClass(classes.item, classes.noPadding)}>
           {data.results.map((data, id) => (
-            <Item key={id} data={data}></Item>
+            <Item key={id} data={data} query={props.query}></Item>
           ))}
         </List>
       </div>

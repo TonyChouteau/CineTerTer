@@ -53,12 +53,21 @@ function _defineProperty(obj, key, value) {
 }
 
 var menuStyles = makeStyles(function (theme) {
+  var _search;
+
   return {
     root: {
       flexGrow: 1,
     },
     appBar: {
       minHeight: THEME.size.appBar,
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    appBarSide: {
+      display: "flex",
     },
     title: {
       flexGrow: 1,
@@ -73,8 +82,8 @@ var menuStyles = makeStyles(function (theme) {
       textDecoration: "none",
       color: "white",
     },
-    search: _defineProperty(
-      {
+    search:
+      ((_search = {
         position: "relative",
         borderRadius: theme.shape.borderRadius,
         backgroundColor: "#ffffff22",
@@ -84,13 +93,13 @@ var menuStyles = makeStyles(function (theme) {
         marginRight: theme.spacing(2),
         marginLeft: 0,
         width: "100%",
-      },
-      theme.breakpoints.up("sm"),
-      {
+      }),
+      _defineProperty(_search, theme.breakpoints.up("sm"), {
         marginLeft: theme.spacing(3),
         width: "auto",
-      }
-    ),
+      }),
+      _defineProperty(_search, "display", "flex"),
+      _search),
     searchIcon: {
       padding: theme.spacing(0, 2),
       height: "100%",
@@ -128,11 +137,7 @@ function Menu(props) {
     setOpenDrawer = _React$useState2[1];
 
   function onKeyPress(event) {
-    if (event.key === "Enter" && window.location.pathname !== "/") {
-      window.location.replace("/?query=" + event.target.value);
-    } else {
-      props.onSearch(event.target.value);
-    }
+    props.onSearch(event);
   }
 
   return React.createElement(
@@ -154,42 +159,51 @@ function Menu(props) {
           Toolbar,
           { className: classes.appBar },
           React.createElement(
-            IconButton,
-            {
-              edge: "start",
-              className: classes.menuButton,
-              color: "inherit",
-              "aria-label": "menu",
-              onClick: function onClick() {
-                return setOpenDrawer(true);
-              },
-            },
-            React.createElement("span", { className: "material-icons" }, "menu")
-          ),
-          React.createElement(
             "div",
-            { className: classes.search },
+            { className: classes.appBarSide },
             React.createElement(
-              "div",
-              { className: classes.searchIcon },
+              IconButton,
+              {
+                edge: "start",
+                className: classes.menuButton,
+                color: "inherit",
+                "aria-label": "menu",
+                onClick: function onClick() {
+                  return setOpenDrawer(true);
+                },
+              },
               React.createElement(
                 "span",
                 { className: "material-icons" },
-                "search"
+                "menu"
               )
             ),
-            React.createElement(InputBase, {
-              placeholder: "Search\u2026",
-              classes: {
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              },
-              inputProps: { "aria-label": "search" },
-              onChange: onKeyPress,
-              onKeyPress: onKeyPress,
-              value: props.query,
-            })
-          )
+            React.createElement(
+              "div",
+              { className: classes.search },
+              React.createElement(
+                "div",
+                { className: classes.searchIcon },
+                React.createElement(
+                  "span",
+                  { className: "material-icons" },
+                  "search"
+                )
+              ),
+              React.createElement(InputBase, {
+                placeholder: "Search\u2026",
+                classes: {
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                },
+                inputProps: { "aria-label": "search" },
+                onChange: onKeyPress,
+                onKeyPress: onKeyPress,
+                value: props.query,
+              })
+            )
+          ),
+          React.createElement("div", null, "Test")
         )
       )
     )

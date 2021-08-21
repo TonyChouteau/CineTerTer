@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/', defaults=dict(filename=None))
 @app.route('/<path:filename>', methods=['GET', 'POST'])
 def index(filename):
-    filename = re.sub("^movie", "", filename or "")
+    filename = re.sub("^movie/", "", filename or "")
     print(filename)
     filename = ('public/' + filename) if filename else 'public/index.html'
     if request.method == 'GET':

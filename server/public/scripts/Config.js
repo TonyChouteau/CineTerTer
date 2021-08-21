@@ -3,16 +3,18 @@
 var API_URL = "https://api.themoviedb.org/3";
 var IMG_URL = "https://image.tmdb.org/t/p";
 
-var MOVIE_URL = "/movie";
+var MOVIE_URL = "/movie/";
 
 // API Params
 
-var API_KEY_PARAM = "?api_key=" + API_KEY;
-var QUERY_PARAM = "&query=";
+var API_KEY_PARAM = "api_key=" + API_KEY;
+var QUERY_PARAM = "query=";
+var LANGUAGE_PARAM = "language=";
+var REGION_PARAM = "region=";
 
-var PAGE_PARAM = "&page=";
+var PAGE_PARAM = "page=";
 
-var ID_PARAM = "?id=";
+var ID_PARAM = "id=";
 
 // API URLs
 

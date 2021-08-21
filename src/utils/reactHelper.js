@@ -21,7 +21,6 @@ function getDuration(duration) {
 }
 
 function getRevenue(revenue) {
-  console.log(revenue);
   if (revenue) {
     return ("" + revenue).replace(/\d(?=(?:\d{3})+$)/g, "$&.") + "$";
   } else {

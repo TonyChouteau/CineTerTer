@@ -22,19 +22,23 @@ function App() {
   const infoPage = () => <InfosPage></InfosPage>;
   const moviePage = () => <MoviePage></MoviePage>;
 
-  function onSearch(newQuery) {
-    setQuery(newQuery);
+  function onSearch(event) {
+    if (event.key === "Enter" && window.location.hash !== "#/") {
+      goToUrl("/", QUERY_PARAM + event.target.value);
+    } else {
+      setQuery(event.target.value);
+    }
   }
 
   return (
     <div className={classes.root}>
-      <Router>
+      <HashRouter>
         <Menu onSearch={onSearch} query={query}></Menu>
-        <Route path="/" exact component={searchPage}></Route>
-        <Route path="/stats" component={infoPage}></Route>
         <Route path="/movie" component={moviePage}></Route>
+        <Route path="/stats" component={infoPage}></Route>
+        <Route path="/" exact component={searchPage}></Route>
         <Footer></Footer>
-      </Router>
+      </HashRouter>
     </div>
   );
 }

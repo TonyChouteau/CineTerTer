@@ -116,6 +116,6 @@ var SearchPage = React.memo(function SearchPage(props) {
   return React.createElement(
     "div",
     { className: classes.root },
-    React.createElement(Results, { data: data })
+    React.createElement(Results, { data: data, query: props.query })
   );
 });

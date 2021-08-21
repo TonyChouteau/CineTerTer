@@ -77,7 +77,7 @@ function MoviePage(props) {
     data = _React$useState2[0],
     setData = _React$useState2[1];
 
-  var id = getParam("/movie", "id");
+  var id = getParam(MOVIE_URL, "id");
 
   if (JSON.stringify(data) === "{}") {
     fetch(getApiMovie(id))
@@ -129,6 +129,11 @@ function MoviePage(props) {
               },
               data.release_date
             ),
+            React.createElement(Rating, {
+              className: classes.margin,
+              value: data.vote_average,
+              count: data.vote_count,
+            }),
             React.createElement(
               Typography,
               { className: classes.margin },

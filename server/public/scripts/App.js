@@ -74,24 +74,28 @@ function App() {
     return React.createElement(MoviePage, null);
   };
 
-  function onSearch(newQuery) {
-    setQuery(newQuery);
+  function onSearch(event) {
+    if (event.key === "Enter" && window.location.hash !== "#/") {
+      goToUrl("/", QUERY_PARAM + event.target.value);
+    } else {
+      setQuery(event.target.value);
+    }
   }
 
   return React.createElement(
     "div",
     { className: classes.root },
     React.createElement(
-      Router,
+      HashRouter,
       null,
       React.createElement(Menu, { onSearch: onSearch, query: query }),
+      React.createElement(Route, { path: "/movie", component: moviePage }),
+      React.createElement(Route, { path: "/stats", component: infoPage }),
       React.createElement(Route, {
         path: "/",
         exact: true,
         component: searchPage,
       }),
-      React.createElement(Route, { path: "/stats", component: infoPage }),
-      React.createElement(Route, { path: "/movie", component: moviePage }),
       React.createElement(Footer, null)
     )
   );

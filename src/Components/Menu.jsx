@@ -4,6 +4,13 @@ const menuStyles = makeStyles((theme) => ({
   },
   appBar: {
     minHeight: THEME.size.appBar,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  appBarSide: {
+    display: "flex",
   },
   title: {
     flexGrow: 1,
@@ -32,6 +39,7 @@ const menuStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(3),
       width: "auto",
     },
+    display: "flex",
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -63,11 +71,7 @@ function Menu(props) {
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
   function onKeyPress(event) {
-    if (event.key === "Enter" && window.location.pathname !== "/") {
-      window.location.replace("/?query=" + event.target.value);
-    } else {
-      props.onSearch(event.target.value);
-    }
+    props.onSearch(event);
   }
 
   return (
@@ -79,31 +83,34 @@ function Menu(props) {
         ></AppDrawer>
         <AppBar position="static" color="primary">
           <Toolbar className={classes.appBar}>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={() => setOpenDrawer(true)}
-            >
-              <span className="material-icons">menu</span>
-            </IconButton>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <span className="material-icons">search</span>
+            <div className={classes.appBarSide}>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="menu"
+                onClick={() => setOpenDrawer(true)}
+              >
+                <span className="material-icons">menu</span>
+              </IconButton>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <span className="material-icons">search</span>
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                  onChange={onKeyPress}
+                  onKeyPress={onKeyPress}
+                  value={props.query}
+                />
               </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-                onChange={onKeyPress}
-                onKeyPress={onKeyPress}
-                value={props.query}
-              />
             </div>
+            <div>Test</div>
           </Toolbar>
         </AppBar>
       </ThemeProvider>
