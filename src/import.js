@@ -2,7 +2,8 @@
 
 const Route = ReactRouterDOM.Route;
 const RLink = ReactRouterDOM.Link;
-const Router = ReactRouterDOM.BrowserRouter;
+const HashRouter = ReactRouterDOM.HashRouter;
+const Redirect = ReactRouterDOM.Redirect;
 
 // Material UI
 

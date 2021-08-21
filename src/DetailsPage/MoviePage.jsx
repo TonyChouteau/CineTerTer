@@ -31,7 +31,7 @@ function MoviePage(props) {
 
   const [data, setData] = React.useState({});
 
-  let id = getParam("/movie", "id");
+  let id = getParam(MOVIE_URL, "id");
 
   if (JSON.stringify(data) === "{}") {
     fetch(getApiMovie(id))
@@ -63,6 +63,11 @@ function MoviePage(props) {
               >
                 {data.release_date}
               </Typography>
+              <Rating
+                className={classes.margin}
+                value={data.vote_average}
+                count={data.vote_count}
+              ></Rating>
               <Typography className={classes.margin}>
                 {data.overview}
               </Typography>

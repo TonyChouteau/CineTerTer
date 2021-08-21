@@ -46,7 +46,11 @@ function Results(props) {
         List,
         { className: makeClass(classes.item, classes.noPadding) },
         data.results.map(function (data, id) {
-          return React.createElement(Item, { key: id, data: data });
+          return React.createElement(Item, {
+            key: id,
+            data: data,
+            query: props.query,
+          });
         })
       )
     );

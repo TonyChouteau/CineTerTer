@@ -52,7 +52,7 @@ const SearchPage = React.memo(function SearchPage(props) {
 
   return (
     <div className={classes.root}>
-      <Results data={data}></Results>
+      <Results data={data} query={props.query}></Results>
     </div>
   );
 });

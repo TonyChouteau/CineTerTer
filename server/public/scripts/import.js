@@ -2,7 +2,8 @@
 
 var Route = ReactRouterDOM.Route;
 var RLink = ReactRouterDOM.Link;
-var Router = ReactRouterDOM.BrowserRouter;
+var HashRouter = ReactRouterDOM.HashRouter;
+var Redirect = ReactRouterDOM.Redirect;
 
 // Material UI
 

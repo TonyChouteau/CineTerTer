@@ -4,6 +4,13 @@ var itemStyles = makeStyles(function (theme) {
       background: THEME.palette.secondary.background,
       color: THEME.palette.primary.text,
     },
+    rLink: {
+      textDecoration: "none",
+      color: "inherit",
+      "&:hover": {
+        color: "inherit",
+      },
+    },
     listItem: {
       padding: theme.spacing(2),
       height: "fit-content",
@@ -31,50 +38,49 @@ function Item(props) {
     Paper,
     { className: makeClass(classes.paper, classes.margin) },
     React.createElement(
-      ListItem,
-      {
-        button: true,
-        component: "a",
-        href: getMoviePage(data.id),
-        className: classes.listItem,
-      },
+      RLink,
+      { className: classes.rLink, to: getMoviePage(data.id, props.query) },
       React.createElement(
-        Grid,
-        { container: true, spacing: 2 },
+        ListItem,
+        { className: classes.listItem },
         React.createElement(
           Grid,
-          { item: true, className: classes.img_grid },
-          React.createElement("img", {
-            className: classes.img,
-            alt: "Error loading the image",
-            src: getImage(SIZE_w500, data.poster_path),
-          })
-        ),
-        React.createElement(
-          Grid,
-          { item: true, xs: 12, sm: true, className: classes.grid },
+          { container: true, spacing: 2 },
           React.createElement(
-            Typography,
-            { className: classes.margin, variant: "h5" },
-            data.title,
-            " (",
-            getYear(data.release_date),
-            ")"
+            Grid,
+            { item: true, className: classes.img_grid },
+            React.createElement("img", {
+              className: classes.img,
+              alt: "Error loading the image",
+              src: getImage(SIZE_w500, data.poster_path),
+            })
           ),
           React.createElement(
-            Typography,
-            { className: classes.margin },
-            data.release_date
-          ),
-          React.createElement(Rating, {
-            className: classes.margin,
-            value: data.vote_average,
-            count: data.vote_count,
-          }),
-          React.createElement(
-            Typography,
-            { className: classes.margin },
-            data.overview
+            Grid,
+            { item: true, xs: 12, sm: true, className: classes.grid },
+            React.createElement(
+              Typography,
+              { className: classes.margin, variant: "h5" },
+              data.title,
+              " (",
+              getYear(data.release_date),
+              ")"
+            ),
+            React.createElement(
+              Typography,
+              { className: classes.margin },
+              data.release_date
+            ),
+            React.createElement(Rating, {
+              className: classes.margin,
+              value: data.vote_average,
+              count: data.vote_count,
+            }),
+            React.createElement(
+              Typography,
+              { className: classes.margin },
+              data.overview
+            )
           )
         )
       )
