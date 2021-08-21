@@ -111,7 +111,9 @@ function MoviePage(props) {
               ),
               React.createElement(
                 Typography,
-                { className: makeClass(classes.rightMargin, classes.greyText) },
+                {
+                  className: makeClass(classes.rightMargin, classes.greyText)
+                },
                 "Status : ",
                 data.status
               ),

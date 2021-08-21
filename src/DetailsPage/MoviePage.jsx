@@ -77,7 +77,9 @@ function MoviePage(props) {
                 >
                   Duration : {getDuration(data.runtime)}
                 </Typography>
-                <Typography className={makeClass(classes.rightMargin, classes.greyText)}>
+                <Typography
+                  className={makeClass(classes.rightMargin, classes.greyText)}
+                >
                   Status : {data.status}
                 </Typography>
                 <Typography className={classes.greyText}>
