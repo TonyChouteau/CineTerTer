@@ -37,6 +37,10 @@ function getMoviePage(id, query) {
 
 function getParam(splitter, param) {
   const urlArray = window.location.href.split(splitter);
-  const urlParams = urlArray[urlArray.length - 1] || (urlArray.length >= 2 ? urlArray[urlArray.length - 2].replace("#", "") : "");
+  const urlParams =
+    urlArray[urlArray.length - 1] ||
+    (urlArray.length >= 2
+      ? urlArray[urlArray.length - 2].replace("#", "")
+      : "");
   return new URLSearchParams(urlParams).get(param);
 }
