@@ -53,9 +53,7 @@ function Item(props) {
               value={data.vote_average}
               count={data.vote_count}
             ></Rating>
-            <Typography className={classes.margin}>
-              {data.overview}
-            </Typography>
+            <Typography className={classes.margin}>{data.overview}</Typography>
           </Grid>
         </Grid>
       </ListItem>

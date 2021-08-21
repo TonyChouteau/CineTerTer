@@ -730,9 +730,9 @@ var isoLangs = {
 };
 
 function getLanguage(code) {
-	if (code) {
-		return isoLangs[code];
-	} else {
-		return {};
-	}
+  if (code) {
+    return isoLangs[code];
+  } else {
+    return {};
+  }
 }
