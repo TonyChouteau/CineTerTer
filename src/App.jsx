@@ -15,10 +15,12 @@ const appStyles = makeStyles((theme) => ({
 function App() {
   const classes = appStyles();
 
-  const [query, setQuery] = React.useState("sda");
+  let queryParam = getParam("/", "query");
+  const [query, setQuery] = React.useState(queryParam || "");
 
   const searchPage = () => <SearchPage query={query}></SearchPage>;
   const infoPage = () => <InfosPage></InfosPage>;
+  const moviePage = () => <MoviePage></MoviePage>;
 
   function onSearch(newQuery) {
     setQuery(newQuery);
@@ -26,13 +28,13 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <ReactRouterDOM.HashRouter>
+      <Router>
         <Menu onSearch={onSearch} query={query}></Menu>
         <Route path="/" exact component={searchPage}></Route>
         <Route path="/stats" component={infoPage}></Route>
-        <Route path="/login" component={LoginPage}></Route>
+        <Route path="/movie" component={moviePage}></Route>
         <Footer></Footer>
-      </ReactRouterDOM.HashRouter>
+      </Router>
     </div>
   );
 }

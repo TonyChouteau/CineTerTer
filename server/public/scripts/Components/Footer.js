@@ -6,12 +6,12 @@ var footerStyles = makeStyles(function (theme) {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     },
     link: {
       textDecoration: "none",
-      color: THEME.palette.primary.main
-    }
+      color: THEME.palette.primary.main,
+    },
   };
 });
 
@@ -28,7 +28,12 @@ function Footer() {
       " ",
       React.createElement(
         Link,
-        { className: classes.link, target: "_blank", rel: "noreferrer", href: "https://www.tonychouteau.fr" },
+        {
+          className: classes.link,
+          target: "_blank",
+          rel: "noreferrer",
+          href: "https://www.tonychouteau.fr",
+        },
         "Tony Chouteau"
       )
     ),
@@ -39,7 +44,12 @@ function Footer() {
       " ",
       React.createElement(
         Link,
-        { className: classes.link, target: "_blank", rel: "noreferrer", href: "https://www.themoviedb.org/" },
+        {
+          className: classes.link,
+          target: "_blank",
+          rel: "noreferrer",
+          href: "https://www.themoviedb.org/",
+        },
         "The Movie DB"
       ),
       " ",
@@ -48,11 +58,16 @@ function Footer() {
     React.createElement(
       Typography,
       null,
-      "The project on ",
+      "The project on",
       " ",
       React.createElement(
         Link,
-        { className: classes.link, target: "_blank", rel: "noreferrer", href: "https://github.com/TonyChouteau/CineTerTer" },
+        {
+          className: classes.link,
+          target: "_blank",
+          rel: "noreferrer",
+          href: "https://github.com/TonyChouteau/CineTerTer",
+        },
         "Github"
       )
     )

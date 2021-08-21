@@ -20,20 +20,35 @@ function Footer() {
     <div className={classes.root}>
       <Typography>
         Made by{" "}
-        <Link className={classes.link} target="_blank" rel="noreferrer" href="https://www.tonychouteau.fr">
+        <Link
+          className={classes.link}
+          target="_blank"
+          rel="noreferrer"
+          href="https://www.tonychouteau.fr"
+        >
           Tony Chouteau
         </Link>
       </Typography>
       <Typography>
         Using{" "}
-        <Link className={classes.link} target="_blank" rel="noreferrer" href="https://www.themoviedb.org/">
+        <Link
+          className={classes.link}
+          target="_blank"
+          rel="noreferrer"
+          href="https://www.themoviedb.org/"
+        >
           The Movie DB
         </Link>{" "}
         Api
       </Typography>
       <Typography>
-        The project on {" "}
-        <Link className={classes.link} target="_blank" rel="noreferrer" href="https://github.com/TonyChouteau/CineTerTer">
+        The project on{" "}
+        <Link
+          className={classes.link}
+          target="_blank"
+          rel="noreferrer"
+          href="https://github.com/TonyChouteau/CineTerTer"
+        >
           Github
         </Link>
       </Typography>
