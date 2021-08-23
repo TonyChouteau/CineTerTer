@@ -1,5 +1,9 @@
 function makeClass() {
-  for (var _len = arguments.length, classes = Array(_len), _key = 0; _key < _len; _key++) {
+  for (
+    var _len = arguments.length, classes = Array(_len), _key = 0;
+    _key < _len;
+    _key++
+  ) {
     classes[_key] = arguments[_key];
   }
 
@@ -17,7 +21,8 @@ function getYear(date) {
 function getCollection(collection) {
   if (collection) {
     return collection.name;
-  } else {}
+  } else {
+  }
 }
 
 function getDuration(duration) {
@@ -32,9 +37,11 @@ function getDuration(duration) {
 
 function getGenre(genres) {
   if (genres) {
-    return genres.map(function (genre) {
-      return genre.name;
-    }).join(", ");
+    return genres
+      .map(function (genre) {
+        return genre.name;
+      })
+      .join(", ");
   } else {
     return "N/A";
   }
