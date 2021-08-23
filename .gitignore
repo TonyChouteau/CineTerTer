@@ -330,3 +330,4 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/python,flask,node
 
 .api_key.js
+.login_secret.json
