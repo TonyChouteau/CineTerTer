@@ -7,7 +7,7 @@ const API_URL = THE_MOVIE_DB_BASE_URL + "/data";
 const IMG_URL = THE_MOVIE_DB_BASE_URL + "/image";
 
 const MOVIE_URL = "/movie/";
-const LOGIN_URL = "/login"
+const LOGIN_URL = "/login";
 
 // API Params
 

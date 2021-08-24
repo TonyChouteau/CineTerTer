@@ -13,13 +13,13 @@ const footerStyles = makeStyles((theme) => ({
   },
 }));
 
-function Footer() {
+function Footer(props) {
   const classes = footerStyles();
 
   return (
     <div className={classes.root}>
       <Typography>
-        Made by{" "}
+        {translateFooter("made_by", props.lang)}{" "}
         <Link
           className={classes.link}
           target="_blank"
@@ -30,7 +30,7 @@ function Footer() {
         </Link>
       </Typography>
       <Typography>
-        Using{" "}
+        {translateFooter("using", props.lang)}{" "}
         <Link
           className={classes.link}
           target="_blank"
@@ -42,7 +42,7 @@ function Footer() {
         Api
       </Typography>
       <Typography>
-        The project on{" "}
+        {translateFooter("github", props.lang)}{" "}
         <Link
           className={classes.link}
           target="_blank"

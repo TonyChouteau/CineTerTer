@@ -33,15 +33,15 @@ function App() {
       setQuery(event.target.value);
     }
   }
-  
+
   function RedirectIf401() {
     if (isLogged === false && !getCurrentUrl().includes("login")) {
       React.useEffect(() => {
         setIsLogged("logging");
       }, []);
-      return <Redirect to="/login"></Redirect>
+      return <Redirect to="/login"></Redirect>;
     } else {
-      return ""
+      return "";
     }
   }
 
@@ -59,7 +59,7 @@ function App() {
         <Route path="/stats" component={infoPage}></Route>
         <Route path="/login" component={loginPage}></Route>
         <Route path="/" exact component={searchPage}></Route>
-        <Footer></Footer>
+        <Footer lang={lang}></Footer>
       </HashRouter>
     </div>
   );

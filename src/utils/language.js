@@ -764,6 +764,11 @@ const APP_CONTENT = {
     revenue: ["Revenu :", "Revenue:", "Ingresos:"],
     budget: ["Budget :", "Budget:", "Presupuesto:"],
   },
+  footer: {
+    made_by: ["Fait par", "Made by", "Hecho por"],
+    using: ["Utilisant", "Using", "Utilizando"],
+    github: ["Le projet sur", "The project on", "El proyecto en"],
+  },
 };
 
 function translate(component, element, lang, variables) {
@@ -781,6 +786,10 @@ function translate(component, element, lang, variables) {
 
 function translateMenu(element, lang, variables) {
   return translate("menu", element, lang, variables);
+}
+
+function translateFooter(element, lang, variables) {
+  return translate("footer", element, lang, variables);
 }
 
 function translateSearchPage(element, lang, variables) {

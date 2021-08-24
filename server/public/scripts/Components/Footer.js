@@ -15,7 +15,7 @@ var footerStyles = makeStyles(function (theme) {
   };
 });
 
-function Footer() {
+function Footer(props) {
   var classes = footerStyles();
 
   return React.createElement(
@@ -24,7 +24,7 @@ function Footer() {
     React.createElement(
       Typography,
       null,
-      "Made by",
+      translateFooter("made_by", props.lang),
       " ",
       React.createElement(
         Link,
@@ -40,7 +40,7 @@ function Footer() {
     React.createElement(
       Typography,
       null,
-      "Using",
+      translateFooter("using", props.lang),
       " ",
       React.createElement(
         Link,
@@ -58,7 +58,7 @@ function Footer() {
     React.createElement(
       Typography,
       null,
-      "The project on",
+      translateFooter("github", props.lang),
       " ",
       React.createElement(
         Link,

@@ -75,5 +75,5 @@ function getParam(splitter, param) {
 }
 
 function getLoginUrl() {
-  return API_BASE_URL + LOGIN_URL
+  return API_BASE_URL + LOGIN_URL;
 }

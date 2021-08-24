@@ -86,7 +86,7 @@ function App() {
       React.createElement(Route, { path: "/stats", component: infoPage }),
       React.createElement(Route, { path: "/login", component: loginPage }),
       React.createElement(Route, { path: "/", exact: true, component: searchPage }),
-      React.createElement(Footer, null)
+      React.createElement(Footer, { lang: lang })
     )
   );
 }
