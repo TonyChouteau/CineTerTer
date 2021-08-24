@@ -19,16 +19,14 @@ def to_dict(user):
 class UserHandler(MethodView):
 
   def get(self, id):
-    body = request.get_json()
+    if not OAuthHandler.isAuthorized():
+      return "You need to be logged to see this", 401
 
     if not id.isnumeric():
-      return self.getByName(id, body)
+      return self.getByName(id)
 
     with session_scope() as session:
       user = session.execute(select(User).filter_by(id=id)).scalar_one_or_none()
-
-      if body is None or not OAuthHandler.isAuthorized(body["token"]):
-        return "You need to be logged to see this", 401
       
       if user is None:
         return "", 404
@@ -38,12 +36,9 @@ class UserHandler(MethodView):
   def patch(self, id):
     return "patch"
 
-  def getByName(self, username, body):
+  def getByName(self, username):
     with session_scope() as session:
       user = session.execute(select(User).filter_by(name=username)).scalar_one_or_none()
-
-      if body is None or not OAuthHandler.isAuthorized(body["token"]):
-        return "You need to be logged to see this", 401
 
       if user is None:
         return "", 404

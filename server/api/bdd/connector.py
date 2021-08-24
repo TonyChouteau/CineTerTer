@@ -24,16 +24,3 @@ def session_scope():
     raise
   finally:
     session.close()
-
-# class Connector():
-#   def session(self):
-#     with session_scope() as session:
-#       hash, salt = Hash("password").get()
-#       user = User(
-#           create_time=datetime.now(),
-#           update_time=datetime.now(),
-#           name="Tony",
-#           password=hash,
-#           salt=salt)
-#       session.add(user)
-

@@ -26,7 +26,7 @@ class Hash():
     return "".join(chars)
 
   def makeToken():
-    return Hash.randomString(45)
+    return Hash.randomString(25)
 
   def makeSalt():
     return Hash.randomString(10)
