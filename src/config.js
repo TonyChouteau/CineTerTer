@@ -1,13 +1,17 @@
 // Base URLs
 
-const API_URL = "https://api.themoviedb.org/3";
-const IMG_URL = "https://image.tmdb.org/t/p";
+const API_BASE_URL = "/api";
+const THE_MOVIE_DB_BASE_URL = API_BASE_URL + "/themoviedb";
+
+const API_URL = THE_MOVIE_DB_BASE_URL + "/data";
+const IMG_URL = THE_MOVIE_DB_BASE_URL + "/image";
 
 const MOVIE_URL = "/movie/";
+const LOGIN_URL = "/login"
 
 // API Params
 
-const API_KEY_PARAM = "api_key=" + API_KEY;
+const API_KEY_PARAM = "api_key=API_KEY";
 const QUERY_PARAM = "query=";
 const LANGUAGE_PARAM = "language=";
 const REGION_PARAM = "region=";

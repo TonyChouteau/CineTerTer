@@ -6,6 +6,10 @@ function goToUrl(url, ...params) {
   window.location.href = url + makeParams(...params);
 }
 
+function getCurrentUrl() {
+  return window.location.href;
+}
+
 function getLangParam(lang) {
   if (lang) {
     return (
@@ -68,4 +72,8 @@ function getParam(splitter, param) {
       ? urlArray[urlArray.length - 2].replace("#", "")
       : "");
   return new URLSearchParams(urlParams).get(param);
+}
+
+function getLoginUrl() {
+  return API_BASE_URL + LOGIN_URL
 }

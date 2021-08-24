@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ciné TerTer</title>
+	<link href="./styles/index.css" rel="stylesheet">
+	
+	<!-- ReactJs -->
+	<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@5.0.0/umd/react-router-dom.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+	<!-- Material UI -->
+	<script src="https://unpkg.com/@material-ui/core@latest/umd/material-ui.development.js" crossorigin="anonymous"></script>
+	<!-- Fonts to support Material Design -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <!-- Icons to support Material Design -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+</head>
+<body style="background: #333;">
+	<script>
+		let g_is_logged = {{isLogged}};
+	</script>
+
+	<div id="app"></div>
+
+	<!-- Config & Import -->
+	<script src="./scripts/import.js" type="text/javascript"></script>
+	<script src="./scripts/config.js" type="text/javascript"></script>
+
+	<!-- Utils -->
+	<script src="./scripts/utils/tool.js" type="text/javascript"></script>
+	<script src="./scripts/utils/urlHelper.js" type="text/javascript"></script>
+	<script src="./scripts/utils/reactHelper.js" type="text/javascript"></script>
+	<script src="./scripts/utils/language.js" type="text/javascript"></script>
+
+	<!-- Components-->
+	<script src="./scripts/Components/AppDrawer.js" type="text/javascript"></script>
+	<script src="./scripts/Components/Menu.js" type="text/javascript"></script>
+	<script src="./scripts/Components/Footer.js" type="text/javascript"></script>
+
+	<script src="./scripts/Components/Rating.js" type="text/javascript"></script>
+	
+
+	<!-- Pages -->
+	<script src="./scripts/DetailsPage/ScrollableCardList.js" type="text/javascript"></script>
+	<script src="./scripts/DetailsPage/MoviePage.js" type="text/javascript"></script>
+
+	<script src="./scripts/InfosPage/InfosPage.js" type="text/javascript"></script>
+
+	<script src="./scripts/SearchPage/Item.js" type="text/javascript"></script>
+	<script src="./scripts/SearchPage/Results.js" type="text/javascript"></script>
+	<script src="./scripts/SearchPage/SearchPage.js" type="text/javascript"></script>
+
+	<script src="./scripts/LoginPage/LoginPage.js" type="text/javascript"></script>
+
+	<!-- Entry Point -->
+	<script src="./scripts/App.js" type="text/javascript"></script>
+</body>
+</html>
