@@ -752,6 +752,11 @@ const APP_CONTENT = {
       "{0} resultado{1} encontrado{1} ({2} mostrado{1}).",
     ],
   },
+  footer: {
+    made_by: ["Fait par", "Made by", "Hecho por"],
+    using: ["Utilisant", "Using", "Utilizando"],
+    github: ["Le projet sur", "The project on", "El proyecto en"],
+  },
   movie_page: {
     status: ["Statut :", "Status:", "Estado:"],
     Rumored: ["Rumeur", "Rumored", "Rumor"],
@@ -764,10 +769,11 @@ const APP_CONTENT = {
     revenue: ["Revenu :", "Revenue:", "Ingresos:"],
     budget: ["Budget :", "Budget:", "Presupuesto:"],
   },
-  footer: {
-    made_by: ["Fait par", "Made by", "Hecho por"],
-    using: ["Utilisant", "Using", "Utilizando"],
-    github: ["Le projet sur", "The project on", "El proyecto en"],
+  login: {
+    login: ["Connexion", "Login", "Inicio de sesión"],
+    signout: ["Signout", "Déconnexion", "Desconexión"],
+    username: ["Nom d'utilisateur", "Username", "Nombre de usuario"],
+    password: ["Mot de passe", "Password", "Contraseña"],
   },
 };
 
@@ -798,4 +804,8 @@ function translateSearchPage(element, lang, variables) {
 
 function translateMoviePage(element, lang, variables) {
   return translate("movie_page", element, lang, variables);
+}
+
+function translateLogin(element, lang, variables) {
+  return translate("login", element, lang, variables);
 }

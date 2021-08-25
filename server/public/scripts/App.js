@@ -32,23 +32,16 @@ function App() {
       lang = _React$useState4[0],
       setLang = _React$useState4[1];
 
-  var _React$useState5 = React.useState(g_is_logged),
+  var _React$useState5 = React.useState({
+    username: "$",
+    password: "",
+    error: false,
+    logged: g_is_logged,
+    logging: false
+  }),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
-      isLogged = _React$useState6[0],
-      setIsLogged = _React$useState6[1];
-
-  var searchPage = function searchPage() {
-    return React.createElement(SearchPage, { query: query, lang: lang });
-  };
-  var infoPage = function infoPage() {
-    return React.createElement(InfosPage, { lang: lang });
-  };
-  var moviePage = function moviePage() {
-    return React.createElement(MoviePage, { lang: lang });
-  };
-  var loginPage = function loginPage() {
-    return React.createElement(LoginPage, { lang: lang });
-  };
+      logInfo = _React$useState6[0],
+      setLogInfo = _React$useState6[1];
 
   function onSearch(event) {
     if (event.key === "Enter" && window.location.hash !== "#/") {
@@ -58,10 +51,32 @@ function App() {
     }
   }
 
+  //==================
+  // RENDER
+  //==================
+
+  var loginPage = function loginPage() {
+    return React.createElement(LoginPage, {
+      lang: lang,
+      setLogInfo: setLogInfo,
+      logInfo: logInfo
+    });
+  };
+  var searchPage = function searchPage() {
+    return React.createElement(SearchPage, { query: query, lang: lang });
+  };
+  var moviePage = function moviePage() {
+    return React.createElement(MoviePage, { lang: lang });
+  };
+  var infoPage = function infoPage() {
+    return React.createElement(InfosPage, { lang: lang });
+  };
+
   function RedirectIf401() {
-    if (isLogged === false && !getCurrentUrl().includes("login")) {
+    if (logInfo.logged === false && !getCurrentUrl().includes("login")) {
       React.useEffect(function () {
-        setIsLogged("logging");
+        var newLogInfo = Object.assign({}, logInfo, { logging: true });
+        setLogInfo(newLogInfo);
       }, []);
       return React.createElement(Redirect, { to: "/login" });
     } else {
@@ -73,20 +88,24 @@ function App() {
     "div",
     { className: classes.root },
     React.createElement(
-      HashRouter,
-      null,
-      React.createElement(RedirectIf401, null),
-      React.createElement(Menu, {
-        onSearch: onSearch,
-        query: query,
-        lang: lang,
-        onLanguageChange: setLang
-      }),
-      React.createElement(Route, { path: "/movie", component: moviePage }),
-      React.createElement(Route, { path: "/stats", component: infoPage }),
-      React.createElement(Route, { path: "/login", component: loginPage }),
-      React.createElement(Route, { path: "/", exact: true, component: searchPage }),
-      React.createElement(Footer, { lang: lang })
+      ThemeProvider,
+      { theme: createTheme(THEME) },
+      React.createElement(
+        HashRouter,
+        null,
+        React.createElement(RedirectIf401, null),
+        React.createElement(Menu, {
+          onSearch: onSearch,
+          query: query,
+          lang: lang,
+          onLanguageChange: setLang
+        }),
+        React.createElement(Route, { path: "/movie", component: moviePage }),
+        React.createElement(Route, { path: "/stats", component: infoPage }),
+        React.createElement(Route, { path: "/login", render: loginPage }),
+        React.createElement(Route, { path: "/", exact: true, component: searchPage }),
+        React.createElement(Footer, { lang: lang })
+      )
     )
   );
 }

@@ -6,6 +6,7 @@ from sqlalchemy.sql.expression import select
 from api.bdd.connector import session_scope
 from api.bdd.definitions.User import User
 from api.handler.OAuthHandler import OAuthHandler
+from api.handler.utils import makeResponse
 
 def to_dict(user):
   return {
@@ -20,7 +21,7 @@ class UserHandler(MethodView):
 
   def get(self, id):
     if not OAuthHandler.isAuthorized():
-      return "You need to be logged to see this", 401
+      return makeResponse("You need to be logged to see this", 401, True)
 
     if not id.isnumeric():
       return self.getByName(id)
@@ -31,7 +32,7 @@ class UserHandler(MethodView):
       if user is None:
         return "", 404
 
-      return jsonify(to_dict(user)), 200
+      return makeResponse(to_dict(user), 200)
 
   def patch(self, id):
     return "patch"
@@ -43,7 +44,7 @@ class UserHandler(MethodView):
       if user is None:
         return "", 404
 
-      return jsonify(to_dict(user)), 200
+      return makeResponse(to_dict(user), 200)
 
 class UsersHandler(MethodView):
 

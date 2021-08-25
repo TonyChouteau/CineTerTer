@@ -19,12 +19,13 @@ function App() {
   let queryParam = getParam("/", "query");
   const [query, setQuery] = React.useState(queryParam || "");
   const [lang, setLang] = React.useState(LANGUAGE_AVAILABLE[0]);
-  const [isLogged, setIsLogged] = React.useState(g_is_logged);
-
-  const searchPage = () => <SearchPage query={query} lang={lang}></SearchPage>;
-  const infoPage = () => <InfosPage lang={lang}></InfosPage>;
-  const moviePage = () => <MoviePage lang={lang}></MoviePage>;
-  const loginPage = () => <LoginPage lang={lang}></LoginPage>;
+  const [logInfo, setLogInfo] = React.useState({
+    username: "$",
+    password: "",
+    error: false,
+    logged: g_is_logged,
+    logging: false,
+  });
 
   function onSearch(event) {
     if (event.key === "Enter" && window.location.hash !== "#/") {
@@ -34,10 +35,26 @@ function App() {
     }
   }
 
+  //==================
+  // RENDER
+  //==================
+
+  const loginPage = () => (
+    <LoginPage
+      lang={lang}
+      setLogInfo={setLogInfo}
+      logInfo={logInfo}
+    ></LoginPage>
+  );
+  const searchPage = () => <SearchPage query={query} lang={lang}></SearchPage>;
+  const moviePage = () => <MoviePage lang={lang}></MoviePage>;
+  const infoPage = () => <InfosPage lang={lang}></InfosPage>;
+
   function RedirectIf401() {
-    if (isLogged === false && !getCurrentUrl().includes("login")) {
+    if (logInfo.logged === false && !getCurrentUrl().includes("login")) {
       React.useEffect(() => {
-        setIsLogged("logging");
+        let newLogInfo = { ...logInfo, logging: true };
+        setLogInfo(newLogInfo);
       }, []);
       return <Redirect to="/login"></Redirect>;
     } else {
@@ -47,20 +64,22 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <HashRouter>
-        <RedirectIf401></RedirectIf401>
-        <Menu
-          onSearch={onSearch}
-          query={query}
-          lang={lang}
-          onLanguageChange={setLang}
-        ></Menu>
-        <Route path="/movie" component={moviePage}></Route>
-        <Route path="/stats" component={infoPage}></Route>
-        <Route path="/login" component={loginPage}></Route>
-        <Route path="/" exact component={searchPage}></Route>
-        <Footer lang={lang}></Footer>
-      </HashRouter>
+      <ThemeProvider theme={createTheme(THEME)}>
+        <HashRouter>
+          <RedirectIf401></RedirectIf401>
+          <Menu
+            onSearch={onSearch}
+            query={query}
+            lang={lang}
+            onLanguageChange={setLang}
+          ></Menu>
+          <Route path="/movie" component={moviePage}></Route>
+          <Route path="/stats" component={infoPage}></Route>
+          <Route path="/login" render={loginPage}></Route>
+          <Route path="/" exact component={searchPage}></Route>
+          <Footer lang={lang}></Footer>
+        </HashRouter>
+      </ThemeProvider>
     </div>
   );
 }

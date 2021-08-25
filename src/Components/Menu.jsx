@@ -74,13 +74,20 @@ const menuStyles = makeStyles((theme) => ({
     },
   },
   selectEmpty: {
-    marginTop: theme.spacing(2),
     "&:before": {
+      borderColor: THEME.palette.primary.text,
+    },
+    "&:after": {
       borderColor: THEME.palette.primary.text,
     },
     "&:hover:not(.Mui-disabled):before": {
       borderColor: THEME.palette.primary.text,
     },
+  },
+  selectRoot: {
+    padding: "10px",
+    color: "white",
+    borderColor: "white",
   },
   icon: {
     fill: THEME.palette.primary.text,
@@ -102,71 +109,73 @@ function Menu(props) {
 
   return (
     <div className={classes.root}>
-      <ThemeProvider theme={createTheme(THEME)}>
-        <AppDrawer
-          open={openDrawer}
-          closeDrawer={() => setOpenDrawer(false)}
-          lang={props.lang}
-        ></AppDrawer>
-        <AppBar position="static" color="primary">
-          <Toolbar className={classes.appBar}>
-            <div className={classes.appBarSide}>
-              <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="menu"
-                onClick={() => setOpenDrawer(true)}
-              >
-                <span className="material-icons">menu</span>
-              </IconButton>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <span className="material-icons">search</span>
-                </div>
-                <InputBase
-                  placeholder={translateMenu("search", props.lang) + "..."}
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={onKeyPress}
-                  onKeyPress={onKeyPress}
-                  value={props.query}
-                />
+      <AppDrawer
+        open={openDrawer}
+        closeDrawer={() => setOpenDrawer(false)}
+        lang={props.lang}
+      ></AppDrawer>
+      <AppBar position="static" color="primary">
+        <Toolbar className={classes.appBar}>
+          <div className={classes.appBarSide}>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={() => setOpenDrawer(true)}
+            >
+              <span className="material-icons">menu</span>
+            </IconButton>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <span className="material-icons">search</span>
               </div>
+              <InputBase
+                placeholder={translateMenu("search", props.lang) + "..."}
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+                onChange={onKeyPress}
+                onKeyPress={onKeyPress}
+                value={props.query}
+              />
             </div>
-            <div>
-              <FormControl
-                className={makeClass(classes.formControl, classes.whiteText)}
+          </div>
+          <div>
+            <FormControl
+              variant="outlined"
+              className={makeClass(classes.formControl, classes.whiteText)}
+            >
+              <InputLabel
+                shrink={true}
+                id="input-language-label"
+                className={makeClass(classes.whiteText, { padding: "10px" })}
               >
-                <InputLabel
-                  shrink={true}
-                  id="input-language-label"
-                  className={classes.whiteText}
-                >
-                  {translateMenu("lang", props.lang)}
-                </InputLabel>
-                <Select
-                  labelId="input-language-label"
-                  id="select-language"
-                  value={props.lang}
-                  onChange={onLanguageChange}
-                  className={makeClass(classes.selectEmpty, classes.whiteText)}
-                  label={"Language"}
-                >
-                  {LANGUAGE_AVAILABLE.map((lang) => (
-                    <MenuItem value={lang} key={lang}>
-                      <em>{getLanguage(lang).name}</em>
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-          </Toolbar>
-        </AppBar>
-      </ThemeProvider>
+                {translateMenu("lang", props.lang)}
+              </InputLabel>
+              <Select
+                labelId="input-language-label"
+                id="select-language"
+                value={props.lang}
+                onChange={onLanguageChange}
+                className={makeClass(classes.selectEmpty, classes.whiteText)}
+                label={"Language"}
+                classes={{
+                  root: classes.selectRoot,
+                }}
+              >
+                {LANGUAGE_AVAILABLE.map((lang) => (
+                  <MenuItem value={lang} key={lang}>
+                    <em>{getLanguage(lang).name}</em>
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }

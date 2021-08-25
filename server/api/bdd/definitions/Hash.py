@@ -6,11 +6,13 @@ ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 class Hash():
   
   def __init__(self, password):
-    self.salt = Hash.makeSalt()
     self.hash = self.getHash(password)
   
-  def __init__(self, password, salt):
-    self.salt = salt
+  def __init__(self, password, salt = None):
+    if salt is None:
+      self.salt = Hash.makeSalt()
+    else:
+      self.salt = salt
     self.hash = self.getHash(password)
 
   def getHash(self, password):

@@ -14,6 +14,7 @@ class User(Base):
   update_time = Column(DateTime)
 
   name = Column(String(255))
+  email = Column(String(255))
 
   password = Column(String(255))
   salt = Column(String(255))

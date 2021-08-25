@@ -3,12 +3,9 @@ CREATE TABLE User (
     create_time DATETIME COMMENT 'create time',
     update_time DATETIME COMMENT 'update time',
     name VARCHAR(255) NOT NULL,
+    COLUMN email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     salt VARCHAR(255) NOT NULL,
-    movie_count int DEFAULT 0,
-    series_count int DEFAULT 0,
-    anime_count int DEFAULT 0,
-    review_count int DEFAULT 0,
     xp int DEFAULT 0
 );
 

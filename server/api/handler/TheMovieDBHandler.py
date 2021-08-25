@@ -5,6 +5,7 @@ import requests
 
 from api.bdd.connector import session_scope
 from api.handler.OAuthHandler import OAuthHandler
+from api.handler.utils import makeResponse
 
 with open('server/api/handler/.api_key') as f:
   API_KEY = f.readline()
@@ -19,15 +20,15 @@ class TheMovieDBHandler(MethodView):
   def get(self, route, url):
     path = request.url.split("themoviedb")[1]
     if path == "":
-      return "No Path", 400
+      return makeResponse("No Path", 400, True)
 
     url_route = ROUTES[route]
     if not url_route:
-      return "No root", 400
+      return makeResponse("No root", 400, True)
     path = url_route + path.replace("data/", "").replace("image/", "")
     
     if not OAuthHandler.isAuthorized():
-      return "You need to be logged to see this", 401
+      return makeResponse("You need to be logged to see this", 401, True)
     
     real_url = path.replace("API_KEY", API_KEY)
 

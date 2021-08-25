@@ -24,7 +24,7 @@ app.add_url_rule('/api/themoviedb/<route>/<path:url>', view_func=TheMovieDBHandl
 app.add_url_rule('/api/user/<id>', view_func=UserHandler.as_view('user'), methods=['GET', 'PATCH'])
 app.add_url_rule('/api/users', view_func=UsersHandler.as_view('users'), methods=['GET', 'POST'])
 
-app.add_url_rule('/api/login', view_func=OAuthHandler.as_view('login'), methods=['GET', 'POST'])
+app.add_url_rule('/api/login', view_func=OAuthHandler.as_view('login'), methods=['GET', 'POST', 'DELETE'])
 
 if __name__ == "__main__":
     app.run()

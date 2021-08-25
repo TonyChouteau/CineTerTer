@@ -136,13 +136,20 @@ var menuStyles = makeStyles(function (theme) {
       },
     },
     selectEmpty: {
-      marginTop: theme.spacing(2),
       "&:before": {
+        borderColor: THEME.palette.primary.text,
+      },
+      "&:after": {
         borderColor: THEME.palette.primary.text,
       },
       "&:hover:not(.Mui-disabled):before": {
         borderColor: THEME.palette.primary.text,
       },
+    },
+    selectRoot: {
+      padding: "10px",
+      color: "white",
+      borderColor: "white",
     },
     icon: {
       fill: THEME.palette.primary.text,
@@ -169,102 +176,98 @@ function Menu(props) {
   return React.createElement(
     "div",
     { className: classes.root },
+    React.createElement(AppDrawer, {
+      open: openDrawer,
+      closeDrawer: function closeDrawer() {
+        return setOpenDrawer(false);
+      },
+      lang: props.lang,
+    }),
     React.createElement(
-      ThemeProvider,
-      { theme: createTheme(THEME) },
-      React.createElement(AppDrawer, {
-        open: openDrawer,
-        closeDrawer: function closeDrawer() {
-          return setOpenDrawer(false);
-        },
-        lang: props.lang,
-      }),
+      AppBar,
+      { position: "static", color: "primary" },
       React.createElement(
-        AppBar,
-        { position: "static", color: "primary" },
+        Toolbar,
+        { className: classes.appBar },
         React.createElement(
-          Toolbar,
-          { className: classes.appBar },
+          "div",
+          { className: classes.appBarSide },
           React.createElement(
-            "div",
-            { className: classes.appBarSide },
-            React.createElement(
-              IconButton,
-              {
-                edge: "start",
-                className: classes.menuButton,
-                color: "inherit",
-                "aria-label": "menu",
-                onClick: function onClick() {
-                  return setOpenDrawer(true);
-                },
+            IconButton,
+            {
+              edge: "start",
+              className: classes.menuButton,
+              color: "inherit",
+              "aria-label": "menu",
+              onClick: function onClick() {
+                return setOpenDrawer(true);
               },
-              React.createElement(
-                "span",
-                { className: "material-icons" },
-                "menu"
-              )
-            ),
-            React.createElement(
-              "div",
-              { className: classes.search },
-              React.createElement(
-                "div",
-                { className: classes.searchIcon },
-                React.createElement(
-                  "span",
-                  { className: "material-icons" },
-                  "search"
-                )
-              ),
-              React.createElement(InputBase, {
-                placeholder: translateMenu("search", props.lang) + "...",
-                classes: {
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                },
-                inputProps: { "aria-label": "search" },
-                onChange: onKeyPress,
-                onKeyPress: onKeyPress,
-                value: props.query,
-              })
-            )
+            },
+            React.createElement("span", { className: "material-icons" }, "menu")
           ),
           React.createElement(
             "div",
-            null,
+            { className: classes.search },
             React.createElement(
-              FormControl,
-              {
-                className: makeClass(classes.formControl, classes.whiteText),
-              },
+              "div",
+              { className: classes.searchIcon },
               React.createElement(
-                InputLabel,
-                {
-                  shrink: true,
-                  id: "input-language-label",
-                  className: classes.whiteText,
-                },
-                translateMenu("lang", props.lang)
-              ),
-              React.createElement(
-                Select,
-                {
-                  labelId: "input-language-label",
-                  id: "select-language",
-                  value: props.lang,
-                  onChange: onLanguageChange,
-                  className: makeClass(classes.selectEmpty, classes.whiteText),
-                  label: "Language",
-                },
-                LANGUAGE_AVAILABLE.map(function (lang) {
-                  return React.createElement(
-                    MenuItem,
-                    { value: lang, key: lang },
-                    React.createElement("em", null, getLanguage(lang).name)
-                  );
-                })
+                "span",
+                { className: "material-icons" },
+                "search"
               )
+            ),
+            React.createElement(InputBase, {
+              placeholder: translateMenu("search", props.lang) + "...",
+              classes: {
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              },
+              inputProps: { "aria-label": "search" },
+              onChange: onKeyPress,
+              onKeyPress: onKeyPress,
+              value: props.query,
+            })
+          )
+        ),
+        React.createElement(
+          "div",
+          null,
+          React.createElement(
+            FormControl,
+            {
+              variant: "outlined",
+              className: makeClass(classes.formControl, classes.whiteText),
+            },
+            React.createElement(
+              InputLabel,
+              {
+                shrink: true,
+                id: "input-language-label",
+                className: makeClass(classes.whiteText, { padding: "10px" }),
+              },
+              translateMenu("lang", props.lang)
+            ),
+            React.createElement(
+              Select,
+              {
+                labelId: "input-language-label",
+                id: "select-language",
+                value: props.lang,
+                onChange: onLanguageChange,
+                className: makeClass(classes.selectEmpty, classes.whiteText),
+                label: "Language",
+                classes: {
+                  root: classes.selectRoot,
+                },
+              },
+              LANGUAGE_AVAILABLE.map(function (lang) {
+                return React.createElement(
+                  MenuItem,
+                  { value: lang, key: lang },
+                  React.createElement("em", null, getLanguage(lang).name)
+                );
+              })
             )
           )
         )
