@@ -1,13 +1,17 @@
+// Params
+
 function makeParams(...params) {
   return "?" + params.filter((param) => param !== "").join("&");
 }
 
-function goToUrl(url, ...params) {
-  window.location.href = url + makeParams(...params);
-}
-
-function getCurrentUrl() {
-  return window.location.href;
+function getParam(splitter, param) {
+  const urlArray = window.location.href.split(splitter);
+  const urlParams =
+    urlArray[urlArray.length - 1] ||
+    (urlArray.length >= 2
+      ? urlArray[urlArray.length - 2].replace("#", "")
+      : "");
+  return new URLSearchParams(urlParams).get(param);
 }
 
 function getLangParam(lang) {
@@ -25,6 +29,18 @@ function getLangParam(lang) {
     return "";
   }
 }
+
+// Manipulate Url
+
+function goToUrl(url, ...params) {
+  window.location.href = url + makeParams(...params);
+}
+
+function getCurrentUrl() {
+  return window.location.href;
+}
+
+// The Movie DB Api Urls
 
 function getApi(query, page, lang) {
   return (
@@ -60,22 +76,16 @@ function getImage(size, path) {
   return IMG_URL + size + path;
 }
 
-function getLocalImage(path) {
-  return LOCAL_IMG_URL + path;
+// Local api
+
+function getLocalApi(path, id) {
+  return path + "/" + (id || "");
 }
+
+// Page
 
 function getMoviePage(id, query) {
   return MOVIE_URL + makeParams(ID_PARAM + id, QUERY_PARAM + query);
-}
-
-function getParam(splitter, param) {
-  const urlArray = window.location.href.split(splitter);
-  const urlParams =
-    urlArray[urlArray.length - 1] ||
-    (urlArray.length >= 2
-      ? urlArray[urlArray.length - 2].replace("#", "")
-      : "");
-  return new URLSearchParams(urlParams).get(param);
 }
 
 function getLoginUrl() {

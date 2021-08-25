@@ -38,7 +38,7 @@ const LOGIN_URL = "/login";
 //==================
 
 const LOCAL_IMG_URL = API_BASE_URL + "/image";
-const AVATAR_URL = API_BASE_URL + "/avatar";
+const AVATAR_URL = LOCAL_IMG_URL + "/avatar";
 
 const USER_URL = API_BASE_URL + "/user";
 

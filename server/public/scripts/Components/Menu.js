@@ -80,8 +80,8 @@ function Menu(props) {
 
   var _React$useState3 = React.useState(""),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
-      account = _React$useState4[0],
-      setAccount = _React$useState4[1];
+      avatar = _React$useState4[0],
+      setAvatar = _React$useState4[1];
 
   function onKeyPress(event) {
     props.onSearch(event);
@@ -91,8 +91,12 @@ function Menu(props) {
     props.onLanguageChange(event.target.value);
   }
 
-  if (account === "") {
-    fetch();
+  if (avatar === "") {
+    fetch(getLocalApi(AVATAR_URL)).then(function (response) {
+      return response.blob();
+    }).then(function (blob) {
+      setAvatar(URL.createObjectURL(blob));
+    });
   }
 
   return React.createElement(
@@ -168,7 +172,7 @@ function Menu(props) {
               color: "inherit",
               "aria-label": "menu"
             },
-            React.createElement(Avatar, { alt: "Avatar", src: getLocalImage(AVATAR_URL) })
+            React.createElement(Avatar, { alt: "Avatar", src: avatar })
           )
         )
       )

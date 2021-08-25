@@ -69,7 +69,7 @@ function Menu(props) {
   const classes = menuStyles();
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [account, setAccount] = React.useState("");
+  const [avatar, setAvatar] = React.useState("");
 
   function onKeyPress(event) {
     props.onSearch(event);
@@ -79,8 +79,12 @@ function Menu(props) {
     props.onLanguageChange(event.target.value);
   }
 
-  if (account === "") {
-    fetch()
+  if (avatar === "") {
+    fetch(getLocalApi(AVATAR_URL))
+      .then((response) => response.blob())
+      .then((blob) => {
+        setAvatar(URL.createObjectURL(blob));
+      });
   }
 
   return (
@@ -127,7 +131,7 @@ function Menu(props) {
               color="inherit"
               aria-label="menu"
             >
-              <Avatar alt="Avatar" src={getLocalImage(AVATAR_URL)} />
+              <Avatar alt="Avatar" src={avatar} />
             </IconButton>
           </div>
         </Toolbar>
