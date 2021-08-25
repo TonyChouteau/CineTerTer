@@ -82,13 +82,15 @@ var menuStyles = makeStyles(function (theme) {
     popover: {
       "& .MuiPopover-paper": {
         marginTop: "40px",
-        width: "200px",
         background: THEME.palette.primary.background,
         color: THEME.palette.primary.text
       }
     },
     whiteText: {
       color: THEME.palette.primary.text
+    },
+    icon: {
+      minWidth: "40px"
     }
   };
 });
@@ -155,7 +157,12 @@ function Menu(props) {
   }
 
   var menu = [{
+    name: "user",
+    icon: "account_circle",
+    url: getUserPage()
+  }, {
     name: "signout",
+    icon: "logout",
     onClick: onSignout
   }];
 
@@ -266,9 +273,22 @@ function Menu(props) {
                       ListItem,
                       { className: classes.item },
                       React.createElement(
-                        Typography,
-                        null,
-                        translateLogin(item.name, props.lang)
+                        ListItemIcon,
+                        { className: makeClass(classes.whiteText, classes.icon) },
+                        React.createElement(
+                          "span",
+                          { className: "material-icons" },
+                          item.icon
+                        )
+                      ),
+                      React.createElement(
+                        ListItemText,
+                        { className: classes.itemText },
+                        React.createElement(
+                          Typography,
+                          null,
+                          translateLogin(item.name, props.lang)
+                        )
                       )
                     )
                   );

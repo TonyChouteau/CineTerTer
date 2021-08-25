@@ -78,13 +78,15 @@ const menuStyles = makeStyles((theme) => ({
   popover: {
     "& .MuiPopover-paper": {
       marginTop: "40px",
-      width: "200px",
       background: THEME.palette.primary.background,
       color: THEME.palette.primary.text
     }
   },
   whiteText: {
     color: THEME.palette.primary.text
+  },
+  icon: {
+    minWidth: "40px",
   }
 }));
 
@@ -141,8 +143,14 @@ function Menu(props) {
 
   const menu = [
     {
+      name: "user",
+      icon: "account_circle",
+      url: getUserPage(),
+    },
+    {
       name: "signout",
-      onClick: onSignout
+      icon: "logout",
+      onClick: onSignout,
     }
   ];
 
@@ -214,7 +222,14 @@ function Menu(props) {
                         item.onClick();
                       }} to={item.url}>
                         <ListItem className={classes.item}>
-                          <Typography>{translateLogin(item.name, props.lang)}</Typography>
+                          <ListItemIcon className={makeClass(classes.whiteText, classes.icon)}>
+                          <span className="material-icons">
+                            {item.icon}
+                          </span>
+                          </ListItemIcon>
+                          <ListItemText className={classes.itemText}>
+                            <Typography>{translateLogin(item.name, props.lang)}</Typography>
+                          </ListItemText>
                         </ListItem>
                       </RLink>
                     ))}

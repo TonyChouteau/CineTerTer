@@ -772,7 +772,7 @@ var APP_CONTENT = {
     signout: ["Signout", "Déconnexion", "Desconexión"],
     username: ["Nom d'utilisateur", "Username", "Nombre de usuario"],
     password: ["Mot de passe", "Password", "Contraseña"],
-    userpage: ["Page du compte", "Account page", "Página de la cuenta"]
+    user: ["Compte", "Account", "Cuenta"]
   }
 };
 
