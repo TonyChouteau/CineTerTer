@@ -9,6 +9,7 @@ const Redirect = ReactRouterDOM.Redirect;
 
 const {
   AppBar,
+  Avatar,
   Button,
   Card,
   CardActionArea,

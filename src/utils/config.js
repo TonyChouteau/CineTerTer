@@ -1,13 +1,19 @@
-// Base URLs
+// Base Api Urls
 
 const API_BASE_URL = "/api";
+
+//==================
+// The Movie DB
+//==================
+
 const THE_MOVIE_DB_BASE_URL = API_BASE_URL + "/themoviedb";
 
 const API_URL = THE_MOVIE_DB_BASE_URL + "/data";
-const IMG_URL = THE_MOVIE_DB_BASE_URL + "/image";
+const SEARCH_MOVIE = "/search/movie";
 
-const MOVIE_URL = "/movie/";
-const LOGIN_URL = "/login";
+const IMG_URL = THE_MOVIE_DB_BASE_URL + "/image";
+const SIZE_w500 = "/w500";
+const SIZE_original = "/original";
 
 // API Params
 
@@ -18,16 +24,23 @@ const REGION_PARAM = "region=";
 
 const PAGE_PARAM = "page=";
 
+//==================
+// Pages
+//==================
+
+const MOVIE_URL = "/movie/";
 const ID_PARAM = "id=";
 
-// API URLs
+const LOGIN_URL = "/login";
 
-const SEARCH_MOVIE = "/search/movie";
+//==================
+// Api Urls
+//==================
 
-// Images URLS
+const LOCAL_IMG_URL = API_BASE_URL + "/image";
+const AVATAR_URL = API_BASE_URL + "/avatar";
 
-const SIZE_w500 = "/w500";
-const SIZE_original = "/original";
+const USER_URL = API_BASE_URL + "/user";
 
 const IMG_ERROR = "resources/images/error.png";
 

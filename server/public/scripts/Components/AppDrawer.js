@@ -14,6 +14,35 @@ var drawerStyles = makeStyles(function (theme) {
     },
     itemText: {
       width: "150px"
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      width: "100%"
+    },
+    whiteText: {
+      color: THEME.palette.primary.text,
+      "& label.Mui-focused": {
+        color: THEME.palette.primary.main
+      }
+    },
+    selectEmpty: {
+      "&:before": {
+        borderColor: THEME.palette.primary.text
+      },
+      "&:after": {
+        borderColor: THEME.palette.primary.text
+      },
+      "&:hover:not(.Mui-disabled):before": {
+        borderColor: THEME.palette.primary.text
+      }
+    },
+    selectRoot: {
+      padding: "10px",
+      color: "white",
+      borderColor: "white"
+    },
+    icon: {
+      fill: THEME.palette.primary.text
     }
   };
 });
@@ -71,7 +100,53 @@ function AppDrawer(props) {
             )
           )
         );
-      })
+      }),
+      React.createElement(
+        ListItem,
+        null,
+        React.createElement(
+          FormControl,
+          {
+            variant: "outlined",
+            className: makeClass(classes.formControl, classes.whiteText)
+          },
+          React.createElement(
+            InputLabel,
+            {
+              shrink: true,
+              id: "input-language-label",
+              className: makeClass(classes.whiteText) //padding 10px
+            },
+            translateMenu("lang", props.lang)
+          ),
+          React.createElement(
+            Select,
+            {
+              labelId: "input-language-label",
+              id: "select-language",
+              value: props.lang,
+              onChange: props.onLanguageChange,
+              className: makeClass(classes.selectEmpty, classes.whiteText),
+              label: "Language",
+              classes: {
+                root: classes.selectRoot,
+                icon: classes.icon
+              }
+            },
+            LANGUAGE_AVAILABLE.map(function (lang) {
+              return React.createElement(
+                MenuItem,
+                { value: lang, key: lang },
+                React.createElement(
+                  "em",
+                  null,
+                  getLanguage(lang).name
+                )
+              );
+            })
+          )
+        )
+      )
     )
   );
 }

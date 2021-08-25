@@ -1,13 +1,19 @@
-// Base URLs
+// Base Api Urls
 
 var API_BASE_URL = "/api";
+
+//==================
+// The Movie DB
+//==================
+
 var THE_MOVIE_DB_BASE_URL = API_BASE_URL + "/themoviedb";
 
 var API_URL = THE_MOVIE_DB_BASE_URL + "/data";
-var IMG_URL = THE_MOVIE_DB_BASE_URL + "/image";
+var SEARCH_MOVIE = "/search/movie";
 
-var MOVIE_URL = "/movie/";
-var LOGIN_URL = "/login";
+var IMG_URL = THE_MOVIE_DB_BASE_URL + "/image";
+var SIZE_w500 = "/w500";
+var SIZE_original = "/original";
 
 // API Params
 
@@ -18,16 +24,23 @@ var REGION_PARAM = "region=";
 
 var PAGE_PARAM = "page=";
 
+//==================
+// Pages
+//==================
+
+var MOVIE_URL = "/movie/";
 var ID_PARAM = "id=";
 
-// API URLs
+var LOGIN_URL = "/login";
 
-var SEARCH_MOVIE = "/search/movie";
+//==================
+// Api Urls
+//==================
 
-// Images URLS
+var LOCAL_IMG_URL = API_BASE_URL + "/image";
+var AVATAR_URL = API_BASE_URL + "/avatar";
 
-var SIZE_w500 = "/w500";
-var SIZE_original = "/original";
+var USER_URL = API_BASE_URL + "/user";
 
 var IMG_ERROR = "resources/images/error.png";
 
@@ -40,21 +53,21 @@ var THEME = {
       background: "#333",
       text: "#fff",
       border: "#fff",
-      borderHover: "#ccc",
+      borderHover: "#ccc"
     },
     secondary: {
       main: "#3a50cf",
       background: "#424242",
-      text: "#ccc",
+      text: "#ccc"
     },
     third: {
-      background: "#222",
-    },
+      background: "#222"
+    }
   },
   size: {
     appBar: "70px",
-    footer: "125px",
-  },
+    footer: "125px"
+  }
 };
 
 THEME["overrides"] = {
@@ -63,7 +76,7 @@ THEME["overrides"] = {
       position: "relative",
       "& $notchedOutline": {
         borderWidth: "2px",
-        borderColor: THEME.palette.primary.border,
+        borderColor: THEME.palette.primary.border
       },
       "&:hover:not($disabled):not($focused):not($error) $notchedOutline": {
         borderWidth: "2px",
@@ -71,23 +84,23 @@ THEME["overrides"] = {
         // Reset on touch devices, it doesn't add specificity
         "@media (hover: none)": {
           borderWidth: "2px",
-          borderColor: THEME.palette.primary.border,
-        },
+          borderColor: THEME.palette.primary.border
+        }
       },
       "&$focused $notchedOutline": {
         borderWidth: "2px",
-        borderColor: THEME.palette.secondary.main,
-      },
-    },
+        borderColor: THEME.palette.secondary.main
+      }
+    }
   },
   MuiFormLabel: {
     root: {
       "&$focused": {
         borderWidth: 1,
-        borderColor: THEME.palette.secondary.main,
-      },
-    },
-  },
+        borderColor: THEME.palette.secondary.main
+      }
+    }
+  }
 };
 
 // Create the jsHash instance

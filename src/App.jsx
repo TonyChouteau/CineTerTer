@@ -35,6 +35,18 @@ function App() {
     }
   }
 
+  function onLanguageChange(lang) {
+    setCookie("lang", lang, 365);
+    setLang(lang);
+  }
+
+  let cookieLang = getCookie("lang");
+  if (cookieLang !== "" && cookieLang !== lang) {
+    setLang(cookieLang);
+  } else {
+    setCookie("lang", lang, 365);
+  }
+
   //==================
   // RENDER
   //==================
@@ -71,7 +83,7 @@ function App() {
             onSearch={onSearch}
             query={query}
             lang={lang}
-            onLanguageChange={setLang}
+            onLanguageChange={onLanguageChange}
           ></Menu>
           <Route path="/movie" component={moviePage}></Route>
           <Route path="/stats" component={infoPage}></Route>

@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 
 from sqlalchemy.sql.expression import select
 from sqlalchemy.sql import func
-from sqlalchemy.sql.functions import user
 
 from api.bdd.connector import session_scope
 from api.bdd.definitions.User import User
@@ -30,7 +29,7 @@ class Token():
     self.renew()
 
   def renew(self):
-    self.expiration_date = datetime.now() + timedelta(seconds=10)
+    self.expiration_date = datetime.now() + timedelta(hours=5)
     tokens[self.id] = self
     self.updateSession()
 

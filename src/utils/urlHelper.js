@@ -60,6 +60,10 @@ function getImage(size, path) {
   return IMG_URL + size + path;
 }
 
+function getLocalImage(path) {
+  return LOCAL_IMG_URL + path;
+}
+
 function getMoviePage(id, query) {
   return MOVIE_URL + makeParams(ID_PARAM + id, QUERY_PARAM + query);
 }
