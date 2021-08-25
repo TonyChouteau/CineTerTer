@@ -81,15 +81,13 @@ function Menu(props) {
 
   if (user === "" && props.isLogged) {
     fetch(USER_URL)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
+      .then((response) => response.json())
+      .then((data) => {
         setUser(data.data);
       });
   }
 
   if (user !== "" && !props.isLogged) {
-    console.log("d")
     setUser("");
   }
 
@@ -132,15 +130,22 @@ function Menu(props) {
           </div>
           <div>
             {console.log(getLocalImage(AVATAR_URL, user.id, IMAGE_PNG))}
-            {props.isLogged ? <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-              display={props.isLogged ? "block": "none"}
-            >
-              <Avatar alt="Avatar" src={getLocalApi(AVATAR_URL, user.id)+".png"} />
-            </IconButton> : ""}
+            {props.isLogged ? (
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="menu"
+                display={props.isLogged ? "block" : "none"}
+              >
+                <Avatar
+                  alt={user.name}
+                  src={getLocalApi(AVATAR_URL, user.id) + ".png"}
+                />
+              </IconButton>
+            ) : (
+              ""
+            )}
           </div>
         </Toolbar>
       </AppBar>

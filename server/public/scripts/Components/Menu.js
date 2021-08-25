@@ -95,13 +95,11 @@ function Menu(props) {
     fetch(USER_URL).then(function (response) {
       return response.json();
     }).then(function (data) {
-      console.log(data);
       setUser(data.data);
     });
   }
 
   if (user !== "" && !props.isLogged) {
-    console.log("d");
     setUser("");
   }
 
@@ -180,7 +178,10 @@ function Menu(props) {
               "aria-label": "menu",
               display: props.isLogged ? "block" : "none"
             },
-            React.createElement(Avatar, { alt: "Avatar", src: getLocalApi(AVATAR_URL, user.id) + ".png" })
+            React.createElement(Avatar, {
+              alt: user.name,
+              src: getLocalApi(AVATAR_URL, user.id) + ".png"
+            })
           ) : ""
         )
       )
