@@ -69,7 +69,7 @@ function Menu(props) {
   const classes = menuStyles();
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [avatar, setAvatar] = React.useState("");
+  const [user, setUser] = React.useState("");
 
   function onKeyPress(event) {
     props.onSearch(event);
@@ -79,12 +79,18 @@ function Menu(props) {
     props.onLanguageChange(event.target.value);
   }
 
-  if (avatar === "") {
-    fetch(getLocalApi(AVATAR_URL))
-      .then((response) => response.blob())
-      .then((blob) => {
-        setAvatar(URL.createObjectURL(blob));
+  if (user === "" && props.isLogged) {
+    fetch(USER_URL)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setUser(data.data);
       });
+  }
+
+  if (user !== "" && !props.isLogged) {
+    console.log("d")
+    setUser("");
   }
 
   return (
@@ -125,14 +131,16 @@ function Menu(props) {
             </div>
           </div>
           <div>
-            <IconButton
+            {console.log(getLocalImage(AVATAR_URL, user.id, IMAGE_PNG))}
+            {props.isLogged ? <IconButton
               edge="start"
               className={classes.menuButton}
               color="inherit"
               aria-label="menu"
+              display={props.isLogged ? "block": "none"}
             >
-              <Avatar alt="Avatar" src={avatar} />
-            </IconButton>
+              <Avatar alt="Avatar" src={getLocalApi(AVATAR_URL, user.id)+".png"} />
+            </IconButton> : ""}
           </div>
         </Toolbar>
       </AppBar>

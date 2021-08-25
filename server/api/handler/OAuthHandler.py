@@ -1,4 +1,4 @@
-from flask import jsonify, request, session as flask_session
+from flask import request, session as flask_session
 import flask
 from flask.views import MethodView
 

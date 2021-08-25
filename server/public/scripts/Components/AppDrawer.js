@@ -2,73 +2,70 @@ var drawerStyles = makeStyles(function (theme) {
   return {
     root: {
       background: THEME.palette.primary.background,
-      color: THEME.palette.primary.text,
+      color: THEME.palette.primary.text
     },
     item: {
       "&:hover": {
-        background: THEME.palette.secondary.background,
-      },
+        background: THEME.palette.secondary.background
+      }
     },
     itemIcon: {
-      color: THEME.palette.primary.text,
+      color: THEME.palette.primary.text
     },
     itemText: {
-      width: "150px",
+      width: "150px"
     },
     formControl: {
       margin: theme.spacing(1),
-      width: "100%",
+      width: "100%"
     },
     whiteText: {
       color: THEME.palette.primary.text,
       "& label.Mui-focused": {
-        color: THEME.palette.primary.main,
-      },
+        color: THEME.palette.primary.main
+      }
     },
     selectEmpty: {
       "&:before": {
-        borderColor: THEME.palette.primary.text,
+        borderColor: THEME.palette.primary.text
       },
       "&:after": {
-        borderColor: THEME.palette.primary.text,
+        borderColor: THEME.palette.primary.text
       },
       "&:hover:not(.Mui-disabled):before": {
-        borderColor: THEME.palette.primary.text,
-      },
+        borderColor: THEME.palette.primary.text
+      }
     },
     selectRoot: {
       padding: "10px",
       color: "white",
-      borderColor: "white",
+      borderColor: "white"
     },
     icon: {
-      fill: THEME.palette.primary.text,
-    },
+      fill: THEME.palette.primary.text
+    }
   };
 });
 
 function AppDrawer(props) {
   var classes = drawerStyles();
 
-  var menu = [
-    {
-      icon: "search",
-      text: "search",
-      url: "/",
-    },
-    {
-      icon: "insert_chart",
-      text: "stats",
-      url: "/stats",
-    },
-  ];
+  var menu = [{
+    icon: "search",
+    text: "search",
+    url: "/"
+  }, {
+    icon: "insert_chart",
+    text: "stats",
+    url: "/stats"
+  }];
 
   return React.createElement(
     Drawer,
     {
       open: props.open,
       onClose: props.closeDrawer,
-      classes: { paperAnchorLeft: classes.root },
+      classes: { paperAnchorLeft: classes.root }
     },
     React.createElement(
       List,
@@ -82,7 +79,7 @@ function AppDrawer(props) {
             onClick: props.closeDrawer,
             component: "a",
             href: item.url,
-            key: item.text,
+            key: item.text
           },
           React.createElement(
             ListItemIcon,
@@ -111,14 +108,14 @@ function AppDrawer(props) {
           FormControl,
           {
             variant: "outlined",
-            className: makeClass(classes.formControl, classes.whiteText),
+            className: makeClass(classes.formControl, classes.whiteText)
           },
           React.createElement(
             InputLabel,
             {
               shrink: true,
               id: "input-language-label",
-              className: makeClass(classes.whiteText), //padding 10px
+              className: makeClass(classes.whiteText) //padding 10px
             },
             translateMenu("lang", props.lang)
           ),
@@ -133,14 +130,18 @@ function AppDrawer(props) {
               label: "Language",
               classes: {
                 root: classes.selectRoot,
-                icon: classes.icon,
-              },
+                icon: classes.icon
+              }
             },
             LANGUAGE_AVAILABLE.map(function (lang) {
               return React.createElement(
                 MenuItem,
                 { value: lang, key: lang },
-                React.createElement("em", null, getLanguage(lang).name)
+                React.createElement(
+                  "em",
+                  null,
+                  getLanguage(lang).name
+                )
               );
             })
           )

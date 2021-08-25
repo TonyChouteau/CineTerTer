@@ -84,6 +84,7 @@ function App() {
             query={query}
             lang={lang}
             onLanguageChange={onLanguageChange}
+            isLogged={logInfo.logged}
           ></Menu>
           <Route path="/movie" component={moviePage}></Route>
           <Route path="/stats" component={infoPage}></Route>

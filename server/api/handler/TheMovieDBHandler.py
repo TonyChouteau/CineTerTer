@@ -1,9 +1,8 @@
-from flask import jsonify, request, session
+from flask import request
 from flask.views import MethodView
 
 import requests
 
-from api.bdd.connector import session_scope
 from api.handler.OAuthHandler import OAuthHandler
 from api.handler.utils import makeResponse
 

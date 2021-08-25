@@ -1,4 +1,4 @@
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.schema import Column
 from sqlalchemy.sql.sqltypes import DateTime
 from sqlalchemy.types import Integer, String, Integer
@@ -23,3 +23,13 @@ class User(Base):
 
   def __repr__(self):
     return f"User(id={self.id!r}, name={self.name!r}, xp={self.xp!r})"
+
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "name": self.name,
+      "email": self.email,
+      "create_time": self.create_time,
+      "update_time": self.update_time,
+      "xp": self.xp
+    }

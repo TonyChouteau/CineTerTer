@@ -80,8 +80,8 @@ function Menu(props) {
 
   var _React$useState3 = React.useState(""),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
-      avatar = _React$useState4[0],
-      setAvatar = _React$useState4[1];
+      user = _React$useState4[0],
+      setUser = _React$useState4[1];
 
   function onKeyPress(event) {
     props.onSearch(event);
@@ -91,12 +91,18 @@ function Menu(props) {
     props.onLanguageChange(event.target.value);
   }
 
-  if (avatar === "") {
-    fetch(getLocalApi(AVATAR_URL)).then(function (response) {
-      return response.blob();
-    }).then(function (blob) {
-      setAvatar(URL.createObjectURL(blob));
+  if (user === "" && props.isLogged) {
+    fetch(USER_URL).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      console.log(data);
+      setUser(data.data);
     });
+  }
+
+  if (user !== "" && !props.isLogged) {
+    console.log("d");
+    setUser("");
   }
 
   return React.createElement(
@@ -164,16 +170,18 @@ function Menu(props) {
         React.createElement(
           "div",
           null,
-          React.createElement(
+          console.log(getLocalImage(AVATAR_URL, user.id, IMAGE_PNG)),
+          props.isLogged ? React.createElement(
             IconButton,
             {
               edge: "start",
               className: classes.menuButton,
               color: "inherit",
-              "aria-label": "menu"
+              "aria-label": "menu",
+              display: props.isLogged ? "block" : "none"
             },
-            React.createElement(Avatar, { alt: "Avatar", src: avatar })
-          )
+            React.createElement(Avatar, { alt: "Avatar", src: getLocalApi(AVATAR_URL, user.id) + ".png" })
+          ) : ""
         )
       )
     )

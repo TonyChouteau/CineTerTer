@@ -37,9 +37,11 @@ const LOGIN_URL = "/login";
 // Api Urls
 //==================
 
-const LOCAL_IMG_URL = API_BASE_URL + "/image";
-const AVATAR_URL = LOCAL_IMG_URL + "/avatar";
+const LOCAL_IMG_URL = API_BASE_URL + "/images";
+const AVATAR_URL = LOCAL_IMG_URL + "/avatars";
+const IMAGE_PNG = ".png";
 
+const USERS_URL = API_BASE_URL + "/users";
 const USER_URL = API_BASE_URL + "/user";
 
 const IMG_ERROR = "resources/images/error.png";
