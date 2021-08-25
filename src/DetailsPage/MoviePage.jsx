@@ -43,7 +43,7 @@ function MoviePage(props) {
 
   const [_data, setData] = React.useState({});
 
-  let id = getParam(MOVIE_URL, "id");
+  let id = getParam(MOVIE_PAGE_URL, "id");
 
   if (JSON.stringify(_data) === "{}") {
     fetch(getApiMovie(id, props.lang))

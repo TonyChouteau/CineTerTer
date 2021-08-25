@@ -60,7 +60,7 @@ function App() {
   );
   const searchPage = () => <SearchPage query={query} lang={lang}></SearchPage>;
   const moviePage = () => <MoviePage lang={lang}></MoviePage>;
-  const infoPage = () => <InfosPage lang={lang}></InfosPage>;
+  const userPage = () => <UserPage lang={lang}></UserPage>;
 
   function RedirectIf401() {
     if (logInfo.logged === false && !getCurrentUrl().includes("login")) {
@@ -85,9 +85,11 @@ function App() {
             lang={lang}
             onLanguageChange={onLanguageChange}
             isLogged={logInfo.logged}
+            setLogInfo={setLogInfo}
+            logInfo={logInfo}
           ></Menu>
           <Route path="/movie" component={moviePage}></Route>
-          <Route path="/stats" component={infoPage}></Route>
+          <Route path="/user" component={userPage}></Route>
           <Route path="/login" render={loginPage}></Route>
           <Route path="/" exact component={searchPage}></Route>
           <Footer lang={lang}></Footer>

@@ -43,6 +43,16 @@ const drawerStyles = makeStyles((theme) => ({
   icon: {
     fill: THEME.palette.primary.text,
   },
+  rLink: {
+    textDecoration: "none",
+    color: "inherit",
+    "&:hover": {
+      color: "inherit",
+    },
+    display: "flex",
+    flexDirection: "row",
+    padding: theme.spacing(1)+"px "+theme.spacing(3)+"px"
+  }
 }));
 
 function AppDrawer(props) {
@@ -69,21 +79,21 @@ function AppDrawer(props) {
     >
       <List>
         {menu.map((item) => (
-          <ListItem
-            button
-            className={classes.item}
-            onClick={props.closeDrawer}
-            component="a"
-            href={item.url}
-            key={item.text}
-          >
-            <ListItemIcon className={classes.itemIcon}>
-              <span className="material-icons">{item.icon}</span>
-            </ListItemIcon>
-            <ListItemText className={classes.itemText}>
-              <Typography>{translateMenu(item.text, props.lang)}</Typography>
-            </ListItemText>
-          </ListItem>
+          <React.Fragment key={item.icon}>
+            <RLink
+              className={makeClass(classes.rLink, classes.item, classes.itemText)}
+              to={item.url}
+              onClick={props.closeDrawer}
+            >
+              <ListItemIcon className={classes.itemIcon}>
+                <span className="material-icons">{item.icon}</span>
+              </ListItemIcon>
+              <ListItemText className={classes.itemText}>
+                <Typography>{translateMenu(item.text, props.lang)}</Typography>
+              </ListItemText>
+            </RLink>
+            <Divider></Divider>
+          </React.Fragment>
         ))}
         <ListItem>
           <FormControl

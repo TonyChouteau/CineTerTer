@@ -63,6 +63,29 @@ const menuStyles = makeStyles((theme) => ({
       width: "20ch",
     },
   },
+  rLink: {
+    textDecoration: "none",
+    color: "inherit",
+    "&:hover": {
+      color: "inherit",
+    },
+  },
+  item: {
+    "&:hover": {
+      background: THEME.palette.secondary.background,
+    }
+  },
+  popover: {
+    "& .MuiPopover-paper": {
+      marginTop: "40px",
+      width: "200px",
+      background: THEME.palette.primary.background,
+      color: THEME.palette.primary.text
+    }
+  },
+  whiteText: {
+    color: THEME.palette.primary.text
+  }
 }));
 
 function Menu(props) {
@@ -70,6 +93,16 @@ function Menu(props) {
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [user, setUser] = React.useState("");
+  
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   function onKeyPress(event) {
     props.onSearch(event);
@@ -90,6 +123,28 @@ function Menu(props) {
   if (user !== "" && !props.isLogged) {
     setUser("");
   }
+  
+  function onSignout() {
+    fetch(getLoginUrl(), {
+      method: "DELETE",
+    }).then(() => {
+      const logInfo = {
+        username: "-",
+        password: "",
+        error: false,
+        logged: false,
+        logging: false,
+      };
+      props.setLogInfo(logInfo);
+    });
+  }
+
+  const menu = [
+    {
+      name: "signout",
+      onClick: onSignout
+    }
+  ];
 
   return (
     <div className={classes.root}>
@@ -99,7 +154,7 @@ function Menu(props) {
         lang={props.lang}
         onLanguageChange={onLanguageChange}
       ></AppDrawer>
-      <AppBar position="static" color="primary">
+      <AppBar position="static" color="primary" id="appbar">
         <Toolbar className={classes.appBar}>
           <div className={classes.appBarSide}>
             <IconButton
@@ -129,20 +184,43 @@ function Menu(props) {
             </div>
           </div>
           <div>
-            {console.log(getLocalImage(AVATAR_URL, user.id, IMAGE_PNG))}
             {props.isLogged ? (
-              <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="menu"
-                display={props.isLogged ? "block" : "none"}
-              >
-                <Avatar
-                  alt={user.name}
-                  src={getLocalApi(AVATAR_URL, user.id) + ".png"}
-                />
-              </IconButton>
+              <div>
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="menu"
+                  display={props.isLogged ? "block" : "none"}
+                  onClick={handleClick}
+                  title="Account Page"
+                >
+                  <Avatar
+                    alt={user.name}
+                    src={getLocalApi(AVATAR_URL, user.id) + ".png"}
+                  />
+                </IconButton>
+                <Popover 
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  className={classes.popover}
+                >
+                  <List>
+                    {menu.map((item) => (
+                      <RLink key={item.name} className={makeClass(classes.rLink, classes.whiteText)} onClick={() => {
+                        handleClose();
+                        item.onClick();
+                      }} to={item.url}>
+                        <ListItem className={classes.item}>
+                          <Typography>{translateLogin(item.name, props.lang)}</Typography>
+                        </ListItem>
+                      </RLink>
+                    ))}
+                  </List>
+                </Popover>
+                </div>
             ) : (
               ""
             )}

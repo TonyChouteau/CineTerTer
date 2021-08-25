@@ -58,7 +58,7 @@ function getApi(query, page, lang) {
 function getApiMovie(id, lang) {
   return (
     API_URL +
-    MOVIE_URL +
+    MOVIE_PAGE_URL +
     "/" +
     id +
     makeParams(
@@ -86,12 +86,16 @@ function getLocalImage(path, id, type) {
   return path + (id ? "/" + id : "") + IMAGE_PNG;
 }
 
+function getLoginUrl() {
+  return API_BASE_URL + LOGIN_PAGE_URL;
+}
+
 // Page
 
 function getMoviePage(id, query) {
-  return MOVIE_URL + makeParams(ID_PARAM + id, QUERY_PARAM + query);
+  return MOVIE_PAGE_URL + makeParams(ID_PARAM + id, QUERY_PARAM + query);
 }
 
-function getLoginUrl() {
-  return API_BASE_URL + LOGIN_URL;
+function getUserPage() {
+  return USER_PAGE_URL;
 }

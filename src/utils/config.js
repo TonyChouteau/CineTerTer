@@ -28,10 +28,12 @@ const PAGE_PARAM = "page=";
 // Pages
 //==================
 
-const MOVIE_URL = "/movie/";
-const ID_PARAM = "id=";
+const MOVIE_PAGE_URL = "/movie/";
 
-const LOGIN_URL = "/login";
+const LOGIN_PAGE_URL = "/login";
+const USER_PAGE_URL = "/user";
+
+const ID_PARAM = "id=";
 
 //==================
 // Api Urls

@@ -2,32 +2,32 @@ var scrollableStyles = makeStyles(function (theme) {
   return {
     root: {
       width: "100%",
-      overflow: "auto",
+      overflow: "auto"
     },
     list: {
       display: "flex",
-      flexDirection: "row",
+      flexDirection: "row"
     },
     button: {
       height: "100%",
       display: "flex",
       flexDirection: "column",
-      justifyContent: "start",
+      justifyContent: "start"
     },
     card: {
       margin: "10px",
       overflow: "visible",
       background: THEME.palette.secondary.background,
-      color: THEME.palette.primary.text,
+      color: THEME.palette.primary.text
     },
     media: {
       height: "250px",
       width: "200px",
-      backgroundPosition: "top",
+      backgroundPosition: "top"
     },
     whiteText: {
-      color: THEME.palette.primary.text,
-    },
+      color: THEME.palette.primary.text
+    }
   };
 });
 
@@ -51,7 +51,7 @@ function ScrollableCardList(props) {
               className: classes.media,
               image: props.image(item),
               title: props.title(item),
-              key: id,
+              key: id
             }),
             React.createElement(
               CardContent,
