@@ -11,7 +11,8 @@ with open('server/api/bdd/.login_secret.json') as f:
 engine = create_engine(
     f"{login['type']}+mysqldb://{login['user']}:{login['pwd']}@{login['url']}/{login['database']}")
 Session = sessionmaker(engine)
-  
+
+
 @contextmanager
 def session_scope():
   """Provide a transactional scope around a series of operations."""

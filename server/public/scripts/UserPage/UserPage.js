@@ -28,12 +28,32 @@ var userStyles = makeStyles(function (theme) {
       height: "0",
       paddingBottom: "100%",
       background: THEME.palette.primary.background,
-      position: "relative"
+      position: "relative",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    imageAlt: {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      top: "0",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    imageAltButton: {
+      background: THEME.palette.primary.main,
+      color: THEME.palette.primary.text,
+      "&:hover": {
+        background: THEME.palette.secondary.main
+      }
     },
     image: {
       position: "absolute",
       width: "100%",
-      height: "100%"
+      height: "100%",
+      top: "0"
     }
   };
 });
@@ -41,6 +61,54 @@ var userStyles = makeStyles(function (theme) {
 function UserPage(props) {
   var classes = userStyles();
   var user = props.user;
+
+  function avatarChange(event) {
+    var input = event.target;
+
+    var file = new FormData();
+    file.append('file', input.files[0]);
+    fetch(AVATAR_URL, {
+      method: "POST",
+      body: file
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      console.log(data);
+    });
+  }
+
+  var avatar = "";
+  if (user.avatar_exists) {
+    avatar = React.createElement("img", {
+      className: classes.image,
+      alt: "",
+      src: getLocalImage(AVATAR_URL)
+    });
+  } else {
+    avatar = React.createElement(
+      "div",
+      { className: classes.imageAlt },
+      React.createElement(
+        Button,
+        {
+          className: classes.imageAltButton,
+          variant: "contained",
+          component: "label"
+        },
+        React.createElement(
+          Typography,
+          null,
+          "Upload your avatar"
+        ),
+        React.createElement("input", {
+          type: "file",
+          className: classes.imageAltButton,
+          hidden: true,
+          onChange: avatarChange
+        })
+      )
+    );
+  }
 
   return React.createElement(
     "div",
@@ -75,12 +143,7 @@ function UserPage(props) {
           React.createElement(
             "div",
             { className: classes.imageContainer },
-            React.createElement("img", { className: classes.image, src: getImage(true) }),
-            React.createElement("img", {
-              className: classes.image,
-              src: getLocalImage(AVATAR_URL, props.user ? props.user.id : "", ".png"),
-              alt: ""
-            })
+            avatar
           )
         )
       )

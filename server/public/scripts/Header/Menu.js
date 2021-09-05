@@ -242,7 +242,7 @@ function Menu(props) {
               },
               React.createElement(Avatar, {
                 alt: props.user ? props.user.name : "",
-                src: getLocalImage(AVATAR_URL, props.user ? props.user.id : "", ".png")
+                src: getLocalImage(AVATAR_URL)
               })
             ),
             React.createElement(

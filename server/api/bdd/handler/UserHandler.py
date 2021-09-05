@@ -5,8 +5,9 @@ from sqlalchemy.sql.expression import select
 
 from api.bdd.connector import session_scope
 from api.bdd.definitions.User import User
-from api.handler.OAuthHandler import OAuthHandler
-from api.handler.utils import makeResponse
+from api.bdd.handler.OAuthHandler import OAuthHandler
+from api.bdd.handler.utils import makeResponse
+
 
 class UserHandler(MethodView):
 
@@ -18,8 +19,9 @@ class UserHandler(MethodView):
       return self.getByName(id)
 
     with session_scope() as session:
-      user = session.execute(select(User).filter_by(id=id)).scalar_one_or_none()
-      
+      user = session.execute(
+          select(User).filter_by(id=id)).scalar_one_or_none()
+
       if user is None:
         return makeResponse("This use doesn't exist", 404, True)
 
@@ -27,7 +29,8 @@ class UserHandler(MethodView):
 
   def getByName(self, username):
     with session_scope() as session:
-      user = session.execute(select(User).filter_by(name=username)).scalar_one_or_none()
+      user = session.execute(select(User).filter_by(
+          name=username)).scalar_one_or_none()
 
       if user is None:
         return makeResponse("This use doesn't exist", 404, True)
@@ -37,13 +40,15 @@ class UserHandler(MethodView):
   def patch(self, id):
     return "patch"
 
+
 class UsersHandler(MethodView):
 
   def get(self):
     return "get"
-  
+
   def post(self):
     return "post"
+
 
 class AnonymousUserHandler(MethodView):
 
@@ -54,6 +59,7 @@ class AnonymousUserHandler(MethodView):
     user_id = flask_session.get("user_id")
     print(user_id)
     with session_scope() as session:
-      user = session.execute(select(User).filter_by(id=user_id)).scalar_one_or_none()
+      user = session.execute(select(User).filter_by(
+          id=user_id)).scalar_one_or_none()
 
       return makeResponse(user.to_dict(), 200)

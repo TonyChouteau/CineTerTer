@@ -61,8 +61,8 @@ function getLocalApi(path, id) {
   return path + (id ? "/" + id : "");
 }
 
-function getLocalImage(path, id, type) {
-  return path + (id ? "/" + id : "") + IMAGE_PNG;
+function getLocalImage(path) {
+  return path;
 }
 
 function getLoginUrl() {

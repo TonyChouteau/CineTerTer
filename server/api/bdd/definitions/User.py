@@ -1,3 +1,5 @@
+import os
+
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.schema import Column
 from sqlalchemy.sql.sqltypes import DateTime
@@ -25,11 +27,14 @@ class User(Base):
     return f"User(id={self.id!r}, name={self.name!r}, xp={self.xp!r})"
 
   def to_dict(self):
+    avatarExists = os.path.isfile(f"server/images/avatars/{self.id}")
+
     return {
-      "id": self.id,
-      "name": self.name,
-      "email": self.email,
-      "create_time": self.create_time,
-      "update_time": self.update_time,
-      "xp": self.xp
+        "id": self.id,
+        "name": self.name,
+        "email": self.email,
+        "create_time": self.create_time,
+        "update_time": self.update_time,
+        "xp": self.xp,
+        "avatar_exists": avatarExists
     }

@@ -28,17 +28,79 @@ const userStyles = makeStyles((theme) => ({
     paddingBottom: "100%",
     background: THEME.palette.primary.background,
     position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  imageAlt: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    top: "0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  imageAltButton: {
+    background: THEME.palette.primary.main,
+    color: THEME.palette.primary.text,
+    "&:hover": {
+      background: THEME.palette.secondary.main,
+    },
   },
   image: {
     position: "absolute",
     width: "100%",
     height: "100%",
+    top: "0",
   },
 }));
 
 function UserPage(props) {
   const classes = userStyles();
   const user = props.user;
+
+  function avatarChange(event) {
+    var input = event.target;
+
+    let file = new FormData();
+    file.append('file', input.files[0])
+    fetch(AVATAR_URL, {
+      method: "POST",
+      body: file
+    }).then(response => response.json()).then(data => {
+      console.log(data);
+    });
+  }
+
+  let avatar = "";
+  if (user.avatar_exists) {
+    avatar = (
+      <img
+        className={classes.image}
+        alt=""
+        src={getLocalImage(AVATAR_URL)}
+      ></img>
+    );
+  } else {
+    avatar = (
+      <div className={classes.imageAlt}>
+        <Button
+          className={classes.imageAltButton}
+          variant="contained"
+          component="label"
+        >
+          <Typography>Upload your avatar</Typography>
+          <input
+            type="file"
+            className={classes.imageAltButton}
+            hidden
+            onChange={avatarChange}
+          ></input>
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className={classes.root}>
@@ -58,18 +120,7 @@ function UserPage(props) {
             xs={6}
             className={makeClass(classes.grid, classes.gridImage)}
           >
-            <div className={classes.imageContainer}>
-              <img className={classes.image} src={getImage(true)}></img>
-              <img
-                className={classes.image}
-                src={getLocalImage(
-                  AVATAR_URL,
-                  props.user ? props.user.id : "",
-                  ".png"
-                )}
-                alt=""
-              ></img>
-            </div>
+            <div className={classes.imageContainer}>{avatar}</div>
           </Grid>
         </Grid>
       </Paper>

@@ -332,4 +332,4 @@ dist
 .api_key.js
 .api_key
 .login_secret.json
-./server/images/avatars/*
+server/images/avatars/*

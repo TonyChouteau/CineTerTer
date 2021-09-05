@@ -40,7 +40,7 @@ const ID_PARAM = "id=";
 //==================
 
 const LOCAL_IMG_URL = API_BASE_URL + "/images";
-const AVATAR_URL = LOCAL_IMG_URL + "/avatars";
+const AVATAR_URL = LOCAL_IMG_URL + "/avatar";
 const IMAGE_PNG = ".png";
 
 const USERS_URL = API_BASE_URL + "/users";

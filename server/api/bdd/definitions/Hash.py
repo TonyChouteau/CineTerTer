@@ -3,12 +3,13 @@ import hashlib
 
 ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+
 class Hash():
-  
+
   def __init__(self, password):
     self.hash = self.getHash(password)
-  
-  def __init__(self, password, salt = None):
+
+  def __init__(self, password, salt=None):
     if salt is None:
       self.salt = Hash.makeSalt()
     else:
@@ -32,4 +33,3 @@ class Hash():
 
   def makeSalt():
     return Hash.randomString(10)
-

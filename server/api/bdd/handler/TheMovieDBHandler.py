@@ -3,16 +3,17 @@ from flask.views import MethodView
 
 import requests
 
-from api.handler.OAuthHandler import OAuthHandler
-from api.handler.utils import makeResponse
+from api.bdd.handler.OAuthHandler import OAuthHandler
+from api.bdd.handler.utils import makeResponse
 
-with open('server/api/handler/.api_key') as f:
+with open('server/api/bdd/handler/.api_key') as f:
   API_KEY = f.readline()
 
 ROUTES = {
-  "data":  "https://api.themoviedb.org/3",
-  "image": "https://image.tmdb.org/t/p"
+    "data":  "https://api.themoviedb.org/3",
+    "image": "https://image.tmdb.org/t/p"
 }
+
 
 class TheMovieDBHandler(MethodView):
 
@@ -25,10 +26,10 @@ class TheMovieDBHandler(MethodView):
     if not url_route:
       return makeResponse("No root", 400, True)
     path = url_route + path.replace("data/", "").replace("image/", "")
-    
+
     if not OAuthHandler.isAuthorized():
       return makeResponse("You need to be logged to see this", 401, True)
-    
+
     real_url = path.replace("API_KEY", API_KEY)
 
     return requests.get(real_url).content

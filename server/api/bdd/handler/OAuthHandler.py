@@ -10,9 +10,10 @@ from sqlalchemy.sql import func
 from api.bdd.connector import session_scope
 from api.bdd.definitions.User import User
 from api.bdd.definitions.Hash import Hash
-from api.handler.utils import makeResponse
+from api.bdd.handler.utils import makeResponse
 
 tokens = {}
+
 
 class Token():
 
@@ -38,10 +39,10 @@ class Token():
     flask_session["user_id"] = self.id
 
   def to_dict(self):
-    return  {
-      "id": self.id,
-      "hash": self.hash,
-      "expiration_date": self.expiration_date
+    return {
+        "id": self.id,
+        "hash": self.hash,
+        "expiration_date": self.expiration_date
     }
 
 
@@ -49,8 +50,8 @@ class OAuthHandler(MethodView):
 
   def get(self):
     return str(OAuthHandler.isAuthorized()).lower(), 200
-  
-  #curl -X POST "127.0.0.1:5000/api/login" -d '{"name":"name", "password":"password"}' --header "Content-Type: application/json"
+
+  # curl -X POST "127.0.0.1:5000/api/login" -d '{"name":"name", "password":"password"}' --header "Content-Type: application/json"
   def post(self):
     body = request.get_json()
 
@@ -59,11 +60,12 @@ class OAuthHandler(MethodView):
       return makeResponse(token.to_dict(), 200)
 
     with session_scope() as session:
-      user = session.execute(select(User).filter_by(name=func.binary(body["username"]))).scalar_one_or_none()
+      user = session.execute(select(User).filter_by(
+          name=func.binary(body["username"]))).scalar_one_or_none()
 
       if user is None:
         return makeResponse("The username or password is incorrect", 401, True)
-      
+
       hash, _ = Hash(body["password"], user.salt).get()
 
       if (hash == user.password):
@@ -75,14 +77,13 @@ class OAuthHandler(MethodView):
   def delete(self):
     if not OAuthHandler.isAuthorized():
       return makeResponse("You need to be logged do this", 401, True)
-    
+
     user_id = flask_session.get("user_id")
     tokens.pop(user_id)
     flask_session.pop("token")
     flask_session.pop("user_id")
 
     return makeResponse("Successful signout", 200)
-    
 
   def isAuthorized():
     user_token = flask_session.get("token")
@@ -90,7 +91,7 @@ class OAuthHandler(MethodView):
 
     if user_token is None or user_id is None:
       return False
-    
+
     real_token = tokens[user_id]
 
     if real_token.hash == user_token and real_token.expiration_date >= datetime.now():
