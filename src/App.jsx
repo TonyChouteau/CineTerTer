@@ -26,6 +26,7 @@ function App() {
     logged: g_is_logged,
     logging: false,
   });
+  const [user, setUser] = React.useState("");
 
   function onSearch(event) {
     if (event.key === "Enter" && window.location.hash !== "#/") {
@@ -58,9 +59,11 @@ function App() {
       logInfo={logInfo}
     ></LoginPage>
   );
+  const userPage = () => (
+    <UserPage lang={lang} user={user} setUser={setUser}></UserPage>
+  );
   const searchPage = () => <SearchPage query={query} lang={lang}></SearchPage>;
   const moviePage = () => <MoviePage lang={lang}></MoviePage>;
-  const userPage = () => <UserPage lang={lang}></UserPage>;
 
   function RedirectIf401() {
     if (logInfo.logged === false && !getCurrentUrl().includes("login")) {
@@ -84,13 +87,14 @@ function App() {
             query={query}
             lang={lang}
             onLanguageChange={onLanguageChange}
-            isLogged={logInfo.logged}
             setLogInfo={setLogInfo}
             logInfo={logInfo}
+            user={user}
+            setUser={setUser}
           ></Menu>
-          <Route path="/movie" component={moviePage}></Route>
-          <Route path="/user" component={userPage}></Route>
           <Route path="/login" render={loginPage}></Route>
+          <Route path="/user" component={userPage}></Route>
+          <Route path="/movie" component={moviePage}></Route>
           <Route path="/" exact component={searchPage}></Route>
           <Footer lang={lang}></Footer>
         </HashRouter>

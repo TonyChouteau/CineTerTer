@@ -51,8 +51,8 @@ const drawerStyles = makeStyles((theme) => ({
     },
     display: "flex",
     flexDirection: "row",
-    padding: theme.spacing(1)+"px "+theme.spacing(3)+"px"
-  }
+    padding: theme.spacing(1) + "px " + theme.spacing(3) + "px",
+  },
 }));
 
 function AppDrawer(props) {
@@ -81,7 +81,11 @@ function AppDrawer(props) {
         {menu.map((item) => (
           <React.Fragment key={item.icon}>
             <RLink
-              className={makeClass(classes.rLink, classes.item, classes.itemText)}
+              className={makeClass(
+                classes.rLink,
+                classes.item,
+                classes.itemText
+              )}
               to={item.url}
               onClick={props.closeDrawer}
             >

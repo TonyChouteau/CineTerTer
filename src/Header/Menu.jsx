@@ -73,29 +73,28 @@ const menuStyles = makeStyles((theme) => ({
   item: {
     "&:hover": {
       background: THEME.palette.secondary.background,
-    }
+    },
   },
   popover: {
     "& .MuiPopover-paper": {
       marginTop: "40px",
       background: THEME.palette.primary.background,
-      color: THEME.palette.primary.text
-    }
+      color: THEME.palette.primary.text,
+    },
   },
   whiteText: {
-    color: THEME.palette.primary.text
+    color: THEME.palette.primary.text,
   },
   icon: {
     minWidth: "40px",
-  }
+  },
 }));
 
 function Menu(props) {
   const classes = menuStyles();
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [user, setUser] = React.useState("");
-  
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -114,18 +113,18 @@ function Menu(props) {
     props.onLanguageChange(event.target.value);
   }
 
-  if (user === "" && props.isLogged) {
+  if (props.user === "" && props.logInfo.logged) {
     fetch(USER_URL)
       .then((response) => response.json())
       .then((data) => {
-        setUser(data.data);
+        props.setUser(data.data);
       });
   }
 
-  if (user !== "" && !props.isLogged) {
-    setUser("");
+  if (props.user !== "" && !props.logInfo.logged) {
+    props.setUser("");
   }
-  
+
   function onSignout() {
     fetch(getLoginUrl(), {
       method: "DELETE",
@@ -151,7 +150,7 @@ function Menu(props) {
       name: "signout",
       icon: "logout",
       onClick: onSignout,
-    }
+    },
   ];
 
   return (
@@ -192,23 +191,27 @@ function Menu(props) {
             </div>
           </div>
           <div>
-            {props.isLogged ? (
+            {props.logInfo.logged ? (
               <div>
                 <IconButton
                   edge="start"
                   className={classes.menuButton}
                   color="inherit"
                   aria-label="menu"
-                  display={props.isLogged ? "block" : "none"}
+                  display={props.logInfo.logged ? "block" : "none"}
                   onClick={handleClick}
                   title="Account Page"
                 >
                   <Avatar
-                    alt={user.name}
-                    src={getLocalApi(AVATAR_URL, user.id) + ".png"}
+                    alt={props.user ? props.user.name : ""}
+                    src={getLocalImage(
+                      AVATAR_URL,
+                      props.user ? props.user.id : "",
+                      ".png"
+                    )}
                   />
                 </IconButton>
-                <Popover 
+                <Popover
                   anchorEl={anchorEl}
                   keepMounted
                   open={Boolean(anchorEl)}
@@ -217,25 +220,37 @@ function Menu(props) {
                 >
                   <List>
                     {menu.map((item) => (
-                      <RLink key={item.name} className={makeClass(classes.rLink, classes.whiteText)} onClick={() => {
-                        handleClose();
-                        item.onClick();
-                      }} to={item.url}>
+                      <RLink
+                        key={item.name}
+                        className={makeClass(classes.rLink, classes.whiteText)}
+                        onClick={() => {
+                          handleClose();
+                          if (item.onClick) {
+                            item.onClick();
+                          }
+                        }}
+                        to={item.url}
+                      >
                         <ListItem className={classes.item}>
-                          <ListItemIcon className={makeClass(classes.whiteText, classes.icon)}>
-                          <span className="material-icons">
-                            {item.icon}
-                          </span>
+                          <ListItemIcon
+                            className={makeClass(
+                              classes.whiteText,
+                              classes.icon
+                            )}
+                          >
+                            <span className="material-icons">{item.icon}</span>
                           </ListItemIcon>
                           <ListItemText className={classes.itemText}>
-                            <Typography>{translateLogin(item.name, props.lang)}</Typography>
+                            <Typography>
+                              {translateLogin(item.name, props.lang)}
+                            </Typography>
                           </ListItemText>
                         </ListItem>
                       </RLink>
                     ))}
                   </List>
                 </Popover>
-                </div>
+              </div>
             ) : (
               ""
             )}

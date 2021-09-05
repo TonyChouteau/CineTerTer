@@ -103,15 +103,10 @@ function Menu(props) {
       openDrawer = _React$useState2[0],
       setOpenDrawer = _React$useState2[1];
 
-  var _React$useState3 = React.useState(""),
+  var _React$useState3 = React.useState(null),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
-      user = _React$useState4[0],
-      setUser = _React$useState4[1];
-
-  var _React$useState5 = React.useState(null),
-      _React$useState6 = _slicedToArray(_React$useState5, 2),
-      anchorEl = _React$useState6[0],
-      setAnchorEl = _React$useState6[1];
+      anchorEl = _React$useState4[0],
+      setAnchorEl = _React$useState4[1];
 
   var handleClick = function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -129,16 +124,16 @@ function Menu(props) {
     props.onLanguageChange(event.target.value);
   }
 
-  if (user === "" && props.isLogged) {
+  if (props.user === "" && props.logInfo.logged) {
     fetch(USER_URL).then(function (response) {
       return response.json();
     }).then(function (data) {
-      setUser(data.data);
+      props.setUser(data.data);
     });
   }
 
-  if (user !== "" && !props.isLogged) {
-    setUser("");
+  if (props.user !== "" && !props.logInfo.logged) {
+    props.setUser("");
   }
 
   function onSignout() {
@@ -231,7 +226,7 @@ function Menu(props) {
         React.createElement(
           "div",
           null,
-          props.isLogged ? React.createElement(
+          props.logInfo.logged ? React.createElement(
             "div",
             null,
             React.createElement(
@@ -241,13 +236,13 @@ function Menu(props) {
                 className: classes.menuButton,
                 color: "inherit",
                 "aria-label": "menu",
-                display: props.isLogged ? "block" : "none",
+                display: props.logInfo.logged ? "block" : "none",
                 onClick: handleClick,
                 title: "Account Page"
               },
               React.createElement(Avatar, {
-                alt: user.name,
-                src: getLocalApi(AVATAR_URL, user.id) + ".png"
+                alt: props.user ? props.user.name : "",
+                src: getLocalImage(AVATAR_URL, props.user ? props.user.id : "", ".png")
               })
             ),
             React.createElement(
@@ -265,16 +260,25 @@ function Menu(props) {
                 menu.map(function (item) {
                   return React.createElement(
                     RLink,
-                    { key: item.name, className: makeClass(classes.rLink, classes.whiteText), onClick: function onClick() {
+                    {
+                      key: item.name,
+                      className: makeClass(classes.rLink, classes.whiteText),
+                      onClick: function onClick() {
                         handleClose();
-                        item.onClick();
-                      }, to: item.url },
+                        if (item.onClick) {
+                          item.onClick();
+                        }
+                      },
+                      to: item.url
+                    },
                     React.createElement(
                       ListItem,
                       { className: classes.item },
                       React.createElement(
                         ListItemIcon,
-                        { className: makeClass(classes.whiteText, classes.icon) },
+                        {
+                          className: makeClass(classes.whiteText, classes.icon)
+                        },
                         React.createElement(
                           "span",
                           { className: "material-icons" },

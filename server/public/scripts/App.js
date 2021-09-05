@@ -43,6 +43,11 @@ function App() {
       logInfo = _React$useState6[0],
       setLogInfo = _React$useState6[1];
 
+  var _React$useState7 = React.useState(""),
+      _React$useState8 = _slicedToArray(_React$useState7, 2),
+      user = _React$useState8[0],
+      setUser = _React$useState8[1];
+
   function onSearch(event) {
     if (event.key === "Enter" && window.location.hash !== "#/") {
       goToUrl("/", QUERY_PARAM + event.target.value);
@@ -74,14 +79,14 @@ function App() {
       logInfo: logInfo
     });
   };
+  var userPage = function userPage() {
+    return React.createElement(UserPage, { lang: lang, user: user, setUser: setUser });
+  };
   var searchPage = function searchPage() {
     return React.createElement(SearchPage, { query: query, lang: lang });
   };
   var moviePage = function moviePage() {
     return React.createElement(MoviePage, { lang: lang });
-  };
-  var userPage = function userPage() {
-    return React.createElement(UserPage, { lang: lang });
   };
 
   function RedirectIf401() {
@@ -111,13 +116,14 @@ function App() {
           query: query,
           lang: lang,
           onLanguageChange: onLanguageChange,
-          isLogged: logInfo.logged,
           setLogInfo: setLogInfo,
-          logInfo: logInfo
+          logInfo: logInfo,
+          user: user,
+          setUser: setUser
         }),
-        React.createElement(Route, { path: "/movie", component: moviePage }),
-        React.createElement(Route, { path: "/user", component: userPage }),
         React.createElement(Route, { path: "/login", render: loginPage }),
+        React.createElement(Route, { path: "/user", component: userPage }),
+        React.createElement(Route, { path: "/movie", component: moviePage }),
         React.createElement(Route, { path: "/", exact: true, component: searchPage }),
         React.createElement(Footer, { lang: lang })
       )
