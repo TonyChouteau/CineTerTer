@@ -97,6 +97,7 @@ var menuStyles = makeStyles(function (theme) {
 
 function Menu(props) {
   var classes = menuStyles();
+  var user = props.user;
 
   var _React$useState = React.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -124,16 +125,8 @@ function Menu(props) {
     props.onLanguageChange(event.target.value);
   }
 
-  if (props.user === "" && props.logInfo.logged) {
-    fetch(USER_URL).then(function (response) {
-      return response.json();
-    }).then(function (data) {
-      props.setUser(data.data);
-    });
-  }
-
-  if (props.user !== "" && !props.logInfo.logged) {
-    props.setUser("");
+  if (user === "" && props.logInfo.logged) {
+    props.getUser();
   }
 
   function onSignout() {
@@ -241,8 +234,8 @@ function Menu(props) {
                 title: "Account Page"
               },
               React.createElement(Avatar, {
-                alt: props.user ? props.user.name : "",
-                src: getLocalImage(AVATAR_URL)
+                alt: user ? user.name : "",
+                src: getLocalImage(AVATAR_URL, true)
               })
             ),
             React.createElement(

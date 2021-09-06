@@ -61,7 +61,10 @@ function getLocalApi(path, id) {
   return path + (id ? "/" + id : "");
 }
 
-function getLocalImage(path) {
+function getLocalImage(path, forceRefresh) {
+  if (forceRefresh) {
+    return path + "?refresh=" + getRandomString();
+  }
   return path;
 }
 

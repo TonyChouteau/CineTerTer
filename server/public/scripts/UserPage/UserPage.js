@@ -11,6 +11,9 @@ var userStyles = makeStyles(function (theme) {
     grid: {
       padding: theme.spacing(1)
     },
+    gridImage: {
+      maxWidth: "400px"
+    },
     whiteText: {
       color: THEME.palette.primary.text
     },
@@ -31,16 +34,23 @@ var userStyles = makeStyles(function (theme) {
       position: "relative",
       display: "flex",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
+      borderRadius: "10px",
+      overflow: "hidden"
     },
     imageAlt: {
       position: "absolute",
+      background: THEME.palette.primary.background,
       width: "100%",
       height: "100%",
       top: "0",
       display: "flex",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
+      opacity: 0,
+      "&:hover": {
+        opacity: 0.7
+      }
     },
     imageAltButton: {
       background: THEME.palette.primary.main,
@@ -53,7 +63,8 @@ var userStyles = makeStyles(function (theme) {
       position: "absolute",
       width: "100%",
       height: "100%",
-      top: "0"
+      top: "0",
+      objectFit: "cover"
     }
   };
 });
@@ -66,26 +77,21 @@ function UserPage(props) {
     var input = event.target;
 
     var file = new FormData();
-    file.append('file', input.files[0]);
+    file.append("file", input.files[0]);
     fetch(AVATAR_URL, {
       method: "POST",
       body: file
     }).then(function (response) {
       return response.json();
     }).then(function (data) {
-      console.log(data);
+      if (data.status === 201) {
+        props.getUser();
+      }
     });
   }
 
-  var avatar = "";
-  if (user.avatar_exists) {
-    avatar = React.createElement("img", {
-      className: classes.image,
-      alt: "",
-      src: getLocalImage(AVATAR_URL)
-    });
-  } else {
-    avatar = React.createElement(
+  var uploadHtml = function uploadHtml(label) {
+    return React.createElement(
       "div",
       { className: classes.imageAlt },
       React.createElement(
@@ -98,7 +104,7 @@ function UserPage(props) {
         React.createElement(
           Typography,
           null,
-          "Upload your avatar"
+          label
         ),
         React.createElement("input", {
           type: "file",
@@ -107,6 +113,26 @@ function UserPage(props) {
           onChange: avatarChange
         })
       )
+    );
+  };
+
+  var avatar = "";
+  if (user.avatar_exists) {
+    avatar = React.createElement(
+      "div",
+      { className: classes.imageContainer },
+      React.createElement("img", {
+        className: classes.image,
+        alt: "",
+        src: getLocalImage(AVATAR_URL)
+      }),
+      uploadHtml("Change your avatar")
+    );
+  } else {
+    avatar = React.createElement(
+      "div",
+      { className: classes.imageContainer },
+      uploadHtml("Upload your avatar")
     );
   }
 
@@ -140,11 +166,7 @@ function UserPage(props) {
             xs: 6,
             className: makeClass(classes.grid, classes.gridImage)
           },
-          React.createElement(
-            "div",
-            { className: classes.imageContainer },
-            avatar
-          )
+          avatar
         )
       )
     )

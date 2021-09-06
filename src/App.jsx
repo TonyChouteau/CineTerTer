@@ -41,6 +41,14 @@ function App() {
     setLang(lang);
   }
 
+  function getUser() {
+    fetch(USER_URL)
+      .then((response) => response.json())
+      .then((data) => {
+        setUser(data.data);
+      });
+  }
+
   let cookieLang = getCookie("lang");
   if (cookieLang !== "" && cookieLang !== lang) {
     setLang(cookieLang);
@@ -60,7 +68,7 @@ function App() {
     ></LoginPage>
   );
   const userPage = () => (
-    <UserPage lang={lang} user={user} setUser={setUser}></UserPage>
+    <UserPage lang={lang} user={user} getUser={getUser}></UserPage>
   );
   const searchPage = () => <SearchPage query={query} lang={lang}></SearchPage>;
   const moviePage = () => <MoviePage lang={lang}></MoviePage>;
@@ -90,7 +98,7 @@ function App() {
             setLogInfo={setLogInfo}
             logInfo={logInfo}
             user={user}
-            setUser={setUser}
+            getUser={getUser}
           ></Menu>
           <Route path="/login" render={loginPage}></Route>
           <Route path="/user" component={userPage}></Route>

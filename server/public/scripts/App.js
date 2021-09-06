@@ -61,6 +61,14 @@ function App() {
     setLang(lang);
   }
 
+  function getUser() {
+    fetch(USER_URL).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      setUser(data.data);
+    });
+  }
+
   var cookieLang = getCookie("lang");
   if (cookieLang !== "" && cookieLang !== lang) {
     setLang(cookieLang);
@@ -80,7 +88,7 @@ function App() {
     });
   };
   var userPage = function userPage() {
-    return React.createElement(UserPage, { lang: lang, user: user, setUser: setUser });
+    return React.createElement(UserPage, { lang: lang, user: user, getUser: getUser });
   };
   var searchPage = function searchPage() {
     return React.createElement(SearchPage, { query: query, lang: lang });
@@ -119,7 +127,7 @@ function App() {
           setLogInfo: setLogInfo,
           logInfo: logInfo,
           user: user,
-          setUser: setUser
+          getUser: getUser
         }),
         React.createElement(Route, { path: "/login", render: loginPage }),
         React.createElement(Route, { path: "/user", component: userPage }),

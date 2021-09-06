@@ -92,6 +92,7 @@ const menuStyles = makeStyles((theme) => ({
 
 function Menu(props) {
   const classes = menuStyles();
+  const user = props.user;
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
@@ -113,16 +114,8 @@ function Menu(props) {
     props.onLanguageChange(event.target.value);
   }
 
-  if (props.user === "" && props.logInfo.logged) {
-    fetch(USER_URL)
-      .then((response) => response.json())
-      .then((data) => {
-        props.setUser(data.data);
-      });
-  }
-
-  if (props.user !== "" && !props.logInfo.logged) {
-    props.setUser("");
+  if (user === "" && props.logInfo.logged) {
+    props.getUser();
   }
 
   function onSignout() {
@@ -203,8 +196,8 @@ function Menu(props) {
                   title="Account Page"
                 >
                   <Avatar
-                    alt={props.user ? props.user.name : ""}
-                    src={getLocalImage(AVATAR_URL)}
+                    alt={user ? user.name : ""}
+                    src={getLocalImage(AVATAR_URL, true)}
                   />
                 </IconButton>
                 <Popover

@@ -32,3 +32,7 @@ function getCookie(cname) {
   }
   return "";
 }
+
+function getRandomString() {
+  return Math.random().toString(36);
+}
