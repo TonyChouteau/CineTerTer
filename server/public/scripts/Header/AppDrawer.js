@@ -159,6 +159,7 @@ function AppDrawer(props) {
           )
         )
       )
-    )
+    ),
+    React.createElement(Version, null)
   );
 }

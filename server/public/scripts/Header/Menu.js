@@ -168,7 +168,7 @@ function Menu(props) {
     React.createElement(
       AppBar,
       { position: "static", color: "primary", id: "appbar" },
-      React.createElement(
+      props.logInfo.logged ? React.createElement(
         Toolbar,
         { className: classes.appBar },
         React.createElement(
@@ -219,7 +219,7 @@ function Menu(props) {
         React.createElement(
           "div",
           null,
-          props.logInfo.logged ? React.createElement(
+          React.createElement(
             "div",
             null,
             React.createElement(
@@ -292,9 +292,9 @@ function Menu(props) {
                 })
               )
             )
-          ) : ""
+          )
         )
-      )
+      ) : ""
     )
   );
 }

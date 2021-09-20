@@ -155,36 +155,36 @@ function Menu(props) {
         onLanguageChange={onLanguageChange}
       ></AppDrawer>
       <AppBar position="static" color="primary" id="appbar">
-        <Toolbar className={classes.appBar}>
-          <div className={classes.appBarSide}>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={() => setOpenDrawer(true)}
-            >
-              <span className="material-icons">menu</span>
-            </IconButton>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <span className="material-icons">search</span>
+        {props.logInfo.logged ? (
+          <Toolbar className={classes.appBar}>
+            <div className={classes.appBarSide}>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="menu"
+                onClick={() => setOpenDrawer(true)}
+              >
+                <span className="material-icons">menu</span>
+              </IconButton>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <span className="material-icons">search</span>
+                </div>
+                <InputBase
+                  placeholder={translateMenu("search", props.lang) + "..."}
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                  onChange={onKeyPress}
+                  onKeyPress={onKeyPress}
+                  value={props.query}
+                />
               </div>
-              <InputBase
-                placeholder={translateMenu("search", props.lang) + "..."}
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-                onChange={onKeyPress}
-                onKeyPress={onKeyPress}
-                value={props.query}
-              />
             </div>
-          </div>
-          <div>
-            {props.logInfo.logged ? (
+            <div>
               <div>
                 <IconButton
                   edge="start"
@@ -240,11 +240,11 @@ function Menu(props) {
                   </List>
                 </Popover>
               </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </Toolbar>
+            </div>
+          </Toolbar>
+        ) : (
+          ""
+        )}
       </AppBar>
     </div>
   );

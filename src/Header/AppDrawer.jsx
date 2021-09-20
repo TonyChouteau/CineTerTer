@@ -132,6 +132,7 @@ function AppDrawer(props) {
           </FormControl>
         </ListItem>
       </List>
+      <Version></Version>
     </Drawer>
   );
 }

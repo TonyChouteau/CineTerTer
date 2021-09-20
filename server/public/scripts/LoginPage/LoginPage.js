@@ -3,6 +3,9 @@ var loginStyles = makeStyles(function (theme) {
     root: {
       minHeight: "calc(100vh - " + THEME.size.appBar + " - " + THEME.size.footer + ")"
     },
+    fullHeight: {
+      minHeight: "calc(100vh - " + THEME.size.footer + ")"
+    },
     cardContainer: {
       padding: theme.spacing(5),
       background: THEME.palette.secondary.background
@@ -137,12 +140,13 @@ function LoginPage(props) {
           },
           translateLogin("signout", props.lang)
         )
-      )
+      ),
+      React.createElement(Version, null)
     );
   } else {
     return React.createElement(
       "div",
-      { className: makeClass(classes.root, classes.flex) },
+      { className: makeClass(classes.root, classes.flex, props.logInfo.logged ? "" : classes.fullHeight) },
       React.createElement(
         Card,
         { className: makeClass(classes.cardContainer, classes.flex) },
@@ -185,7 +189,8 @@ function LoginPage(props) {
           },
           translateLogin("login", props.lang)
         )
-      )
+      ),
+      React.createElement(Version, null)
     );
   }
 }
