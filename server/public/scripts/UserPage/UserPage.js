@@ -124,7 +124,6 @@ function UserPage(props) {
 
   function passwordChange() {
     password = $("input", ".change_user_password").val();
-    console.log(password.length);
     if (password.length >= 8) {
       setErrorChange(false);
       fetch(USER_URL, {
@@ -167,9 +166,7 @@ function UserPage(props) {
       }).then(function (response) {
         return response.json();
       }).then(function (data) {
-        if (data.status === 201) {
-          console.log(data);
-        }
+        if (data.status === 201) {}
       });
     } else {
       setErrorNew(true);

@@ -1,6 +1,3 @@
-
-
-from types import MethodType
 from flask import session as flask_session, request
 from flask.views import MethodView
 
@@ -8,6 +5,7 @@ from sqlalchemy.sql.expression import select
 
 from api.bdd.connector import session_scope
 from api.bdd.definitions.Review import Review
+from api.bdd.definitions.User import User
 from api.bdd.handler.OAuthHandler import OAuthHandler
 from api.bdd.handler.utils import makeResponse
 
@@ -24,7 +22,7 @@ class ReviewsHandler(MethodView):
       
       review_json = []
       for review in reviews:
-        review_json.append(review.to_dict())
+        review_json.append(review.to_dict_with_user())
 
       return makeResponse(review_json, 200)
 
@@ -47,6 +45,8 @@ class ReviewsHandler(MethodView):
     
       user_id = flask_session.get("user_id")
 
+      print(body["rating"])
+
       session.add(Review(
 				title=body["title"],
 				content=body["content"],
@@ -57,5 +57,13 @@ class ReviewsHandler(MethodView):
 				in_cinema=body["inCinema"],
 				spoiler=body["isSpoiler"]
       ))
+
+      user = session.execute(
+        select(User).filter_by(id=user_id)).scalar_one_or_none()
+
+      session.query(User).filter(User.id == user_id) \
+          .update({
+            "xp": user.xp + 10
+          })
 
       return makeResponse("A new user has been created", 201)

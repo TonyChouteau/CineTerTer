@@ -4,6 +4,7 @@ from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.sql.sqltypes import Boolean, DateTime
 from sqlalchemy.types import Integer, String, Integer
+from sqlalchemy.sql import func
 
 Base = declarative_base()
 
@@ -11,8 +12,8 @@ class User(Base):
   __tablename__ = 'user'
   id = Column(Integer, primary_key=True)
 
-  create_time = Column(DateTime)
-  update_time = Column(DateTime)
+  create_time = Column(DateTime, server_default=func.now())
+  update_time = Column(DateTime, server_default=func.now(), server_onupdate=func.now())
 
   name = Column(String(255))
   email = Column(String(255))

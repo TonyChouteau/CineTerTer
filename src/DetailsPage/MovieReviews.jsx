@@ -97,14 +97,27 @@ const movieReviewsStyles = makeStyles((theme) => ({
     top: 0,
     bottom: 0,
     zIndex: 5,
+    justifyContent: "center",
+  },
+  multiline: {
+    whiteSpace: "pre-wrap",
+  },
+  height: {
+    height: "100px",
+  },
+  greyText: {
+    color: THEME.palette.secondary.text,
   },
 }));
 
 function MovieReviews(props) {
   const classes = movieReviewsStyles();
 
-  const [reviews, setReviews] = React.useState(null);
-  const [error, setError] = React.useState(false);
+  const [state, setState] = React.useState({
+    reviews: null,
+    error: false,
+    submit: false,
+  })
   const newReviewData = {
     reviewRating: 0,
     reviewIsRating: true,
@@ -147,10 +160,9 @@ function MovieReviews(props) {
     const title = $("input", ".review_title").val();
     const content = $("textarea", ".review_content").val();
     if (title.length < 3 || content.length < 20) {
-      setError(true);
+      setState({...state, error: true});
       return "";
     }
-    setError(false);
     fetch(getReviewsUrl(props.movieId), {
       headers: {
         "Content-Type": "application/json",
@@ -169,27 +181,27 @@ function MovieReviews(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.status === 200) {
-          setReviews(data.data);
+        if (data.status === 201) {
+          setState({...state, error: false, submit: true, reviews: null});
         }
       });
   }
 
-  if (!reviews) {
+  if (!state.reviews) {
     fetch(getReviewsUrl(props.movieId), {
       method: "GET",
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.status === 200) {
-          setReviews(data.data);
-          console.log(data);
+          setState({...state, reviews: data.data});
+          console.log(data.data);
         }
       });
   }
 
   function RenderError() {
-    if (error) {
+    if (state.error) {
       return (
         <Typography className={makeClass(classes.error, classes.marginLeft)}>
           {translateMoviePage("error", props.lang)}
@@ -200,6 +212,26 @@ function MovieReviews(props) {
     }
   }
 
+  function RenderSubmit() {
+    if (state.submit) {
+      return (
+        <div
+          className={makeClass(classes.overlay, classes.flexRow)}
+        >
+          <Typography 
+            className={classes.whiteText}
+            variant="h6"
+          >
+            {translateMoviePage("submit", props.lang)}
+          </Typography>
+        </div>
+      );
+    } else {
+      return "";
+    }
+  }
+
+  console.log(state.submit)
   return (
     <div className={classes.root}>
       <div className={classes.head}>
@@ -213,10 +245,8 @@ function MovieReviews(props) {
           className={classes.card}
           style={{ border: "none", boxShadow: "none" }}
         >
-          <CardContent className={classes.overlayContainer}>
-            <div
-              className={makeClass("new_review_overlay", classes.overlay)}
-            ></div>
+          <CardContent className={makeClass(classes.overlayContainer, (state.submit ? classes.height : ""))}>
+            <RenderSubmit></RenderSubmit>
             <Typography
               className={makeClass(classes.margin, classes.whiteText)}
               variant="h6"
@@ -298,7 +328,7 @@ function MovieReviews(props) {
         >
           {translateMoviePage("list_reviews_title", props.lang)}
         </Typography>
-        {(reviews || []).map((review, id) => {
+        {(state.reviews || []).map((review, id) => {
           return (
             <Card className={classes.card} key={id}>
               <CardContent className={classes.reviewContentContainer}>
@@ -318,11 +348,16 @@ function MovieReviews(props) {
                   >
                     {review.title}
                   </Typography>
+                  <Typography
+                    className={makeClass(classes.margin, classes.greyText)}
+                  >
+                    {review.user.name} - {review.create_time}
+                  </Typography>
                   <Rating value={review.grade}></Rating>
                   <Typography
-                    className={makeClass(classes.margin, classes.whiteText)}
+                    className={makeClass(classes.margin, classes.whiteText, classes.multiline)}
                   >
-                    {review.content}
+                    {review.content.replace("\n")}
                   </Typography>
                 </div>
               </CardContent>

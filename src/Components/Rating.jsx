@@ -89,7 +89,7 @@ function Rating(props) {
   }
 
   function DisplayRating() {
-    if (props.count > 0 || props.count === undefined || props.input) {
+    if ((props.count > 0 || props.count === undefined || props.input) && reviewValue !== null) {
       return (
         <div className={makeClass(classes.flex, props.className || "")}>
           <div

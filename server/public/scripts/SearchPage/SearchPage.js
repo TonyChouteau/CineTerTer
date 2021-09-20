@@ -28,7 +28,6 @@ var SearchPage = React.memo(function SearchPage(props) {
     fetch(getApi(query || props.query, page || 1, props.lang)).then(function (response) {
       return response.json();
     }).then(function (data) {
-      console.log(data);
       g_pageLoaded = true;
       if (data.results) {
         if (page !== 1 && page !== undefined && page !== null) {

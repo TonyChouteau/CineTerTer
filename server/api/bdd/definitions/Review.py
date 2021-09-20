@@ -5,6 +5,7 @@ from sqlalchemy.schema import Column
 from sqlalchemy.sql.sqltypes import Boolean, DateTime
 from sqlalchemy.types import Integer, String, Integer
 from sqlalchemy import ForeignKey
+from sqlalchemy.sql import func
 
 from api.bdd.definitions.User import User
 
@@ -14,8 +15,8 @@ class Review(Base):
   __tablename__ = 'movie_review'
   id = Column(Integer, primary_key=True)
 
-  create_time = Column(DateTime)
-  update_time = Column(DateTime)
+  create_time = Column(DateTime, server_default=func.now())
+  update_time = Column(DateTime, server_default=func.now(), server_onupdate=func.now())
 
   user_id = Column(Integer, ForeignKey(User.id))
   user = relationship(User, backref='reviews', lazy=True)
@@ -47,4 +48,12 @@ class Review(Base):
         "in_cinema": self.in_cinema,
         "already_seen": self.already_seen,
         "spoiler": self.spoiler,
+    }
+
+  def to_dict_with_user(self):
+    json = self.to_dict()
+
+    return {
+      **json,
+      "user": self.user.to_dict()
     }

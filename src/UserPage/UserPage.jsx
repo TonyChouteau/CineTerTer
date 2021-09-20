@@ -113,7 +113,6 @@ function UserPage(props) {
 
   function passwordChange() {
     password = $("input", ".change_user_password").val();
-    console.log(password.length);
     if (password.length >= 8) {
       setErrorChange(false);
       fetch(USER_URL, {
@@ -157,7 +156,6 @@ function UserPage(props) {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === 201) {
-            console.log(data);
           }
         });
     } else {

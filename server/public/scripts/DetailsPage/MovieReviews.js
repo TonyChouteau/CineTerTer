@@ -99,7 +99,17 @@ var movieReviewsStyles = makeStyles(function (theme) {
       right: 0,
       top: 0,
       bottom: 0,
-      zIndex: 5
+      zIndex: 5,
+      justifyContent: "center"
+    },
+    multiline: {
+      whiteSpace: "pre-wrap"
+    },
+    height: {
+      height: "100px"
+    },
+    greyText: {
+      color: THEME.palette.secondary.text
     }
   };
 });
@@ -107,15 +117,14 @@ var movieReviewsStyles = makeStyles(function (theme) {
 function MovieReviews(props) {
   var classes = movieReviewsStyles();
 
-  var _React$useState = React.useState(null),
+  var _React$useState = React.useState({
+    reviews: null,
+    error: false,
+    submit: false
+  }),
       _React$useState2 = _slicedToArray(_React$useState, 2),
-      reviews = _React$useState2[0],
-      setReviews = _React$useState2[1];
-
-  var _React$useState3 = React.useState(false),
-      _React$useState4 = _slicedToArray(_React$useState3, 2),
-      error = _React$useState4[0],
-      setError = _React$useState4[1];
+      state = _React$useState2[0],
+      setState = _React$useState2[1];
 
   var newReviewData = {
     reviewRating: 0,
@@ -159,10 +168,9 @@ function MovieReviews(props) {
     var title = $("input", ".review_title").val();
     var content = $("textarea", ".review_content").val();
     if (title.length < 3 || content.length < 20) {
-      setError(true);
+      setState(Object.assign({}, state, { error: true }));
       return "";
     }
-    setError(false);
     fetch(getReviewsUrl(props.movieId), {
       headers: {
         "Content-Type": "application/json"
@@ -179,27 +187,27 @@ function MovieReviews(props) {
     }).then(function (response) {
       return response.json();
     }).then(function (data) {
-      if (data.status === 200) {
-        setReviews(data.data);
+      if (data.status === 201) {
+        setState(Object.assign({}, state, { error: false, submit: true, reviews: null }));
       }
     });
   }
 
-  if (!reviews) {
+  if (!state.reviews) {
     fetch(getReviewsUrl(props.movieId), {
       method: "GET"
     }).then(function (response) {
       return response.json();
     }).then(function (data) {
       if (data.status === 200) {
-        setReviews(data.data);
-        console.log(data);
+        setState(Object.assign({}, state, { reviews: data.data }));
+        console.log(data.data);
       }
     });
   }
 
   function RenderError() {
-    if (error) {
+    if (state.error) {
       return React.createElement(
         Typography,
         { className: makeClass(classes.error, classes.marginLeft) },
@@ -210,6 +218,28 @@ function MovieReviews(props) {
     }
   }
 
+  function RenderSubmit() {
+    if (state.submit) {
+      return React.createElement(
+        "div",
+        {
+          className: makeClass(classes.overlay, classes.flexRow)
+        },
+        React.createElement(
+          Typography,
+          {
+            className: classes.whiteText,
+            variant: "h6"
+          },
+          translateMoviePage("submit", props.lang)
+        )
+      );
+    } else {
+      return "";
+    }
+  }
+
+  console.log(state.submit);
   return React.createElement(
     "div",
     { className: classes.root },
@@ -232,10 +262,8 @@ function MovieReviews(props) {
         },
         React.createElement(
           CardContent,
-          { className: classes.overlayContainer },
-          React.createElement("div", {
-            className: makeClass("new_review_overlay", classes.overlay)
-          }),
+          { className: makeClass(classes.overlayContainer, state.submit ? classes.height : "") },
+          React.createElement(RenderSubmit, null),
           React.createElement(
             Typography,
             {
@@ -316,7 +344,7 @@ function MovieReviews(props) {
         },
         translateMoviePage("list_reviews_title", props.lang)
       ),
-      (reviews || []).map(function (review, id) {
+      (state.reviews || []).map(function (review, id) {
         return React.createElement(
           Card,
           { className: classes.card, key: id },
@@ -341,13 +369,22 @@ function MovieReviews(props) {
                 },
                 review.title
               ),
+              React.createElement(
+                Typography,
+                {
+                  className: makeClass(classes.margin, classes.greyText)
+                },
+                review.user.name,
+                " - ",
+                review.create_time
+              ),
               React.createElement(Rating, { value: review.grade }),
               React.createElement(
                 Typography,
                 {
-                  className: makeClass(classes.margin, classes.whiteText)
+                  className: makeClass(classes.margin, classes.whiteText, classes.multiline)
                 },
-                review.content
+                review.content.replace("\n")
               )
             )
           )

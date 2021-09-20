@@ -803,6 +803,11 @@ const APP_CONTENT = {
       "A review must contain a title and a content",
       "Una reseña debe contener un título y un contenido",
     ],
+    submit: [
+      "Votre critique à été ajoutée",
+      "Your review has been added",
+      "Su opinión ha sido añadida"
+    ]
   },
   login: {
     login: ["Connexion", "Login", "Inicio de sesión"],
