@@ -91,7 +91,7 @@ function Rating(props) {
   function DisplayRating() {
     if (props.count > 0 || props.count === undefined || props.input) {
       return (
-        <div className={classes.flex}>
+        <div className={makeClass(classes.flex, props.className || "")}>
           <div
             className={makeClass(classes.margin, "review_container")}
             onClick={onClick}

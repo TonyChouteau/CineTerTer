@@ -779,6 +779,30 @@ const APP_CONTENT = {
       "Enter your review",
       "Introduzca su comentario",
     ],
+    add_review: ["Envoyer", "Send", "Enviar"],
+    is_rating: [
+      "Je ne veux pas noter",
+      "I dont want to grade",
+      "No quiero calificar",
+    ],
+    in_cinema: ["Vu au cinéma", "Seen in theaters", "Visto en el cine"],
+    is_first_time: ["Premier visionnage", "First viewing", "Primer visionado"],
+    is_spoiler: ["Spoiler", "Spoiler", "Spoiler"],
+    add_review_title: [
+      "Faites une critique",
+      "Write a review",
+      "Escriba un comentario",
+    ],
+    list_reviews_title: [
+      "Les autres critiques",
+      "Other reviews",
+      "Otros comentarios",
+    ],
+    error: [
+      "Une critique doit comprendre un titre et un contenu",
+      "A review must contain a title and a content",
+      "Una reseña debe contener un título y un contenido",
+    ],
   },
   login: {
     login: ["Connexion", "Login", "Inicio de sesión"],

@@ -6,6 +6,8 @@ from sqlalchemy.sql.sqltypes import Boolean, DateTime
 from sqlalchemy.types import Integer, String, Integer
 from sqlalchemy import ForeignKey
 
+from api.bdd.definitions.User import User
+
 Base = declarative_base()
 
 class Review(Base):
@@ -15,7 +17,9 @@ class Review(Base):
   create_time = Column(DateTime)
   update_time = Column(DateTime)
 
-  user_id = Column(String(255), ForeignKey('user.id'))
+  user_id = Column(Integer, ForeignKey(User.id))
+  user = relationship(User, backref='reviews', lazy=True)
+
   movie_id = Column(String(255))
 
   title = Column(String(255))

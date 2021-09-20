@@ -106,6 +106,21 @@ THEME["overrides"] = {
       },
     },
   },
+  MuiFormControlLabel: {
+    root: {
+      "& svg": {
+        color: THEME.palette.primary.text,
+      },
+      "& .Mui-checked": {
+        "& svg": {
+          color: THEME.palette.primary.main,
+        },
+      },
+      "& span": {
+        color: THEME.palette.primary.text,
+      },
+    },
+  },
 };
 
 // Create the jsHash instance

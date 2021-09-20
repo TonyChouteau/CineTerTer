@@ -35,12 +35,14 @@ class ReviewsHandler(MethodView):
     with session_scope() as session:
       body = request.get_json()
 
+      print(body)
+
       if body is None \
 				or body["title"] is None \
 				or body["content"] is None \
-				or body["already_seen"] is None \
-				or body["in_cinema"] is None \
-				or body["spoiler"] is None:
+				or body["isFirstTime"] is None \
+				or body["inCinema"] is None \
+				or body["isSpoiler"] is None:
         return makeResponse("Invalid data given", 400, True)
     
       user_id = flask_session.get("user_id")
@@ -48,11 +50,12 @@ class ReviewsHandler(MethodView):
       session.add(Review(
 				title=body["title"],
 				content=body["content"],
+        movie_id=movie_id,
 				user_id=user_id,
-				grade=body["grade"] if "grade" in body else None,
-				already_seen=body["already_seen"],
-				in_cinema=body["in_cinema"],
-				spoiler=body["spoiler"]
+				grade=body["rating"],
+				already_seen=body["isFirstTime"],
+				in_cinema=body["inCinema"],
+				spoiler=body["isSpoiler"]
       ))
 
       return makeResponse("A new user has been created", 201)

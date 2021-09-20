@@ -1,6 +1,6 @@
 import os
 
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.sql.sqltypes import Boolean, DateTime
 from sqlalchemy.types import Integer, String, Integer

@@ -6,12 +6,12 @@ var footerStyles = makeStyles(function (theme) {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     },
     link: {
       textDecoration: "none",
-      color: THEME.palette.primary.main
-    }
+      color: THEME.palette.primary.main,
+    },
   };
 });
 
@@ -32,7 +32,7 @@ function Footer(props) {
           className: classes.link,
           target: "_blank",
           rel: "noreferrer",
-          href: "https://www.tonychouteau.fr"
+          href: "https://www.tonychouteau.fr",
         },
         "Tony Chouteau"
       )
@@ -48,7 +48,7 @@ function Footer(props) {
           className: classes.link,
           target: "_blank",
           rel: "noreferrer",
-          href: "https://www.themoviedb.org/"
+          href: "https://www.themoviedb.org/",
         },
         "The Movie DB"
       ),
@@ -66,7 +66,7 @@ function Footer(props) {
           className: classes.link,
           target: "_blank",
           rel: "noreferrer",
-          href: "https://github.com/TonyChouteau/CineTerTer"
+          href: "https://github.com/TonyChouteau/CineTerTer",
         },
         "Github"
       )

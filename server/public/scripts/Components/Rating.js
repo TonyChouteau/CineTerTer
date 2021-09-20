@@ -1,28 +1,66 @@
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+var _slicedToArray = (function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+    try {
+      for (
+        var _i = arr[Symbol.iterator](), _s;
+        !(_n = (_s = _i.next()).done);
+        _n = true
+      ) {
+        _arr.push(_s.value);
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+    return _arr;
+  }
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if (Symbol.iterator in Object(arr)) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError(
+        "Invalid attempt to destructure non-iterable instance"
+      );
+    }
+  };
+})();
 
 var ratingStyles = makeStyles(function (theme) {
   return {
     flex: {
       display: "flex",
       flexDirection: "row",
-      alignItems: "center"
+      alignItems: "center",
     },
     icon: {
       width: "20px",
-      margin: "1px"
+      margin: "1px",
     },
     margin: {
-      marginLeft: "10px"
+      marginLeft: "10px",
     },
     text: {
       color: THEME.palette.primary.main,
-      fontWeight: "bold"
+      fontWeight: "bold",
     },
     startHover: {
       "&:hover": {
-        "-webkit-filter": "brightness(50%)"
-      }
-    }
+        "-webkit-filter": "brightness(50%)",
+      },
+    },
   };
 });
 
@@ -30,9 +68,9 @@ function Rating(props) {
   var classes = ratingStyles();
 
   var _React$useState = React.useState(0),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      value = _React$useState2[0],
-      setValue = _React$useState2[1];
+    _React$useState2 = _slicedToArray(_React$useState, 2),
+    value = _React$useState2[0],
+    setValue = _React$useState2[1];
 
   var reviewValue = props.input ? value : props.value;
 
@@ -41,9 +79,12 @@ function Rating(props) {
 
   function onClick(event) {
     if (props.input) {
-      var rect = $(event.target).closest(".review_container").get(0).getBoundingClientRect();
+      var rect = $(event.target)
+        .closest(".review_container")
+        .get(0)
+        .getBoundingClientRect();
       var x = event.clientX - rect.left;
-      var review = Math.round(x / rect.width * 10 * 2) / 2;
+      var review = Math.round((x / rect.width) * 10 * 2) / 2;
       setValue(review);
       if (props.changeReview) {
         props.changeReview(review);
@@ -63,7 +104,7 @@ function Rating(props) {
     return React.createElement("img", {
       className: makeClass(classes.icon, props.input ? classes.startHover : ""),
       src: url,
-      key: key
+      key: key,
     });
   }
 
@@ -91,12 +132,12 @@ function Rating(props) {
     if (props.count > 0 || props.count === undefined || props.input) {
       return React.createElement(
         "div",
-        { className: classes.flex },
+        { className: makeClass(classes.flex, props.className || "") },
         React.createElement(
           "div",
           {
             className: makeClass(classes.margin, "review_container"),
-            onClick: onClick
+            onClick: onClick,
           },
           stars
         ),

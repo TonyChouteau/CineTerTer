@@ -66,7 +66,6 @@ function App() {
       return response.json();
     }).then(function (data) {
       setUser(data.data);
-      console.log(data);
     });
   }
 
