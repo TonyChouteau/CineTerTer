@@ -13,8 +13,28 @@ const userStyles = makeStyles((theme) => ({
   gridImage: {
     maxWidth: "400px",
   },
+  gridFlex: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   whiteText: {
     color: THEME.palette.primary.text,
+  },
+  inputRoot: {
+    margin: theme.spacing(1),
+    width: "250px",
+    "& label": {
+      color: THEME.palette.primary.text,
+    },
+    "& input": {
+      color: THEME.palette.primary.text,
+    },
+  },
+  submitButton: {
+    width: "200px",
+    height: "50px",
   },
   textAlign: {
     textAlign: "center",
@@ -35,7 +55,7 @@ const userStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "10px",
-    overflow: "hidden"
+    overflow: "hidden",
   },
   imageAlt: {
     position: "absolute",
@@ -49,7 +69,7 @@ const userStyles = makeStyles((theme) => ({
     opacity: 0,
     "&:hover": {
       opacity: 0.7,
-    }
+    },
   },
   imageAltButton: {
     background: THEME.palette.primary.main,
@@ -63,13 +83,16 @@ const userStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
     top: "0",
-    objectFit: "cover"
+    objectFit: "cover",
   },
 }));
 
 function UserPage(props) {
   const classes = userStyles();
   const user = props.user;
+
+  const [errorChange, setErrorChange] = React.useState(false);
+  const [errorNew, setErrorNew] = React.useState(false);
 
   function avatarChange(event) {
     var input = event.target;
@@ -86,6 +109,60 @@ function UserPage(props) {
           props.getUser();
         }
       });
+  }
+
+  function passwordChange() {
+    password = $("input", ".change_user_password").val();
+    console.log(password.length);
+    if (password.length >= 8) {
+      setErrorChange(false);
+      fetch(USER_URL, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "PATCH",
+        body: JSON.stringify({
+          password: SHA256.hex(password),
+          email: "",
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 201) {
+            props.getUser();
+          }
+        });
+    } else {
+      setErrorChange(true);
+    }
+  }
+
+  function newUser() {
+    username = $("input", ".new_user_username").val();
+    password = $("input", ".new_user_password").val();
+    email = $("input", ".new_user_email").val();
+    if (username.length >= 1 && password.length >= 8 && email.length >= 6) {
+      setErrorNew(false);
+      fetch(USERS_URL, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          username: username,
+          password: SHA256.hex(password),
+          email: email,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 201) {
+            console.log(data);
+          }
+        });
+    } else {
+      setErrorNew(true);
+    }
   }
 
   const uploadHtml = (label) => (
@@ -126,6 +203,67 @@ function UserPage(props) {
     );
   }
 
+  function makeAdmin() {
+    if (user.admin) {
+      return (
+        <Grid item container className={classes.gridFlex}>
+          <Grid item container className={classes.gridFlex}>
+            <TextField
+              error={errorNew}
+              id="username"
+              label={translateUserPage("new_username", props.lang)}
+              variant="outlined"
+              className={makeClass(
+                classes.inputRoot,
+                classes.whiteText,
+                "new_user_username"
+              )}
+            ></TextField>
+            <TextField
+              error={errorNew}
+              id="password"
+              label={translateUserPage("new_password", props.lang)}
+              variant="outlined"
+              className={makeClass(
+                classes.inputRoot,
+                classes.whiteText,
+                "new_user_password"
+              )}
+            ></TextField>
+            <TextField
+              error={errorNew}
+              id="email"
+              label={translateUserPage("new_email", props.lang)}
+              variant="outlined"
+              className={makeClass(
+                classes.inputRoot,
+                classes.whiteText,
+                "new_user_email"
+              )}
+            ></TextField>
+          </Grid>
+          <Grid item container className={classes.gridFlex}>
+            <Button
+              id="login"
+              variant="contained"
+              color="primary"
+              className={makeClass(
+                classes.inputRoot,
+                classes.whiteText,
+                classes.submitButton
+              )}
+              onClick={newUser}
+            >
+              {translateUserPage("create", props.lang)}
+            </Button>
+          </Grid>
+        </Grid>
+      );
+    } else {
+      return "";
+    }
+  }
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -138,7 +276,47 @@ function UserPage(props) {
               Welcome {user.name}
             </Typography>
           </Grid>
-          <Grid item xs={6} className={classes.grid}></Grid>
+          <Grid item xs={6} className={classes.grid}>
+            <Grid item container className={classes.gridFlex}>
+              <Grid item container className={classes.gridFlex}>
+                {/* <TextField
+                  id="username"
+                  label={translateUserPage("change_username", props.lang)}
+                  autoComplete="username"
+                  variant="outlined"
+                  className={makeClass(classes.inputRoot, classes.whiteText)}
+                ></TextField> */}
+                <TextField
+                  error={errorChange}
+                  id="password"
+                  label={translateUserPage("change_password", props.lang)}
+                  autoComplete="current-password"
+                  variant="outlined"
+                  className={makeClass(
+                    classes.inputRoot,
+                    classes.whiteText,
+                    "change_user_password"
+                  )}
+                ></TextField>
+              </Grid>
+              <Grid item container className={classes.gridFlex}>
+                <Button
+                  id="login"
+                  variant="contained"
+                  color="primary"
+                  className={makeClass(
+                    classes.inputRoot,
+                    classes.whiteText,
+                    classes.submitButton
+                  )}
+                  onClick={passwordChange}
+                >
+                  {translateUserPage("save", props.lang)}
+                </Button>
+              </Grid>
+            </Grid>
+            {makeAdmin()}
+          </Grid>
           <Grid
             item
             xs={6}

@@ -1,3 +1,5 @@
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var ratingStyles = makeStyles(function (theme) {
   return {
     flex: {
@@ -15,6 +17,11 @@ var ratingStyles = makeStyles(function (theme) {
     text: {
       color: THEME.palette.primary.main,
       fontWeight: "bold"
+    },
+    startHover: {
+      "&:hover": {
+        "-webkit-filter": "brightness(50%)"
+      }
     }
   };
 });
@@ -22,8 +29,27 @@ var ratingStyles = makeStyles(function (theme) {
 function Rating(props) {
   var classes = ratingStyles();
 
-  var decimalPart = Math.round((props.value - Math.floor(props.value)) * 2);
-  var starsCount = Math.floor(Math.floor(props.value) + decimalPart / 2);
+  var _React$useState = React.useState(0),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      value = _React$useState2[0],
+      setValue = _React$useState2[1];
+
+  var reviewValue = props.input ? value : props.value;
+
+  var decimalPart = Math.round((reviewValue - Math.floor(reviewValue)) * 2);
+  var starsCount = Math.floor(Math.floor(reviewValue) + decimalPart / 2);
+
+  function onClick(event) {
+    if (props.input) {
+      var rect = $(event.target).closest(".review_container").get(0).getBoundingClientRect();
+      var x = event.clientX - rect.left;
+      var review = Math.round(x / rect.width * 10 * 2) / 2;
+      setValue(review);
+      if (props.changeReview) {
+        props.changeReview(review);
+      }
+    }
+  }
 
   function getSvg(key, type) {
     var type_url = "";
@@ -34,7 +60,11 @@ function Rating(props) {
     }
     var url = "resources/Rating/" + type_url + "star.svg";
 
-    return React.createElement("img", { className: classes.icon, src: url, key: key });
+    return React.createElement("img", {
+      className: makeClass(classes.icon, props.input ? classes.startHover : ""),
+      src: url,
+      key: key
+    });
   }
 
   var stars = [];
@@ -49,23 +79,32 @@ function Rating(props) {
     }
   }
 
+  function makeViewCount() {
+    if (props.input === 0) {
+      return "(" + props.count + ")";
+    } else {
+      return "";
+    }
+  }
+
   function DisplayRating() {
-    if (props.count > 0) {
+    if (props.count > 0 || props.count === undefined || props.input) {
       return React.createElement(
         "div",
         { className: classes.flex },
         React.createElement(
           "div",
-          { className: classes.margin },
+          {
+            className: makeClass(classes.margin, "review_container"),
+            onClick: onClick
+          },
           stars
         ),
         React.createElement(
           Typography,
           { className: makeClass(classes.margin, classes.text) },
-          props.value,
-          " (",
-          props.count,
-          ")"
+          reviewValue,
+          makeViewCount()
         )
       );
     } else {

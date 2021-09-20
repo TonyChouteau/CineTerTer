@@ -2,14 +2,13 @@ import os
 
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.schema import Column
-from sqlalchemy.sql.sqltypes import DateTime
+from sqlalchemy.sql.sqltypes import Boolean, DateTime
 from sqlalchemy.types import Integer, String, Integer
 
 Base = declarative_base()
 
-
 class User(Base):
-  __tablename__ = 'User'
+  __tablename__ = 'user'
   id = Column(Integer, primary_key=True)
 
   create_time = Column(DateTime)
@@ -22,6 +21,7 @@ class User(Base):
   salt = Column(String(255))
 
   xp = Column(Integer, default=0)
+  admin = Column(Boolean, default=False)
 
   def __repr__(self):
     return f"User(id={self.id!r}, name={self.name!r}, xp={self.xp!r})"
@@ -36,5 +36,6 @@ class User(Base):
         "create_time": self.create_time,
         "update_time": self.update_time,
         "xp": self.xp,
-        "avatar_exists": avatarExists
+        "avatar_exists": avatarExists,
+        "admin": self.admin,
     }

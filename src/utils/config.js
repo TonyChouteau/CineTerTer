@@ -45,6 +45,7 @@ const IMAGE_PNG = ".png";
 
 const USERS_URL = API_BASE_URL + "/users";
 const USER_URL = API_BASE_URL + "/user";
+const REVIEWS_URL = API_BASE_URL + "/reviews";
 
 const IMG_ERROR = "resources/images/error.png";
 

@@ -15,13 +15,37 @@ const ratingStyles = makeStyles((theme) => ({
     color: THEME.palette.primary.main,
     fontWeight: "bold",
   },
+  startHover: {
+    "&:hover": {
+      "-webkit-filter": "brightness(50%)",
+    },
+  },
 }));
 
 function Rating(props) {
   const classes = ratingStyles();
 
-  let decimalPart = Math.round((props.value - Math.floor(props.value)) * 2);
-  const starsCount = Math.floor(Math.floor(props.value) + decimalPart / 2);
+  const [value, setValue] = React.useState(0);
+
+  let reviewValue = props.input ? value : props.value;
+
+  let decimalPart = Math.round((reviewValue - Math.floor(reviewValue)) * 2);
+  const starsCount = Math.floor(Math.floor(reviewValue) + decimalPart / 2);
+
+  function onClick(event) {
+    if (props.input) {
+      let rect = $(event.target)
+        .closest(".review_container")
+        .get(0)
+        .getBoundingClientRect();
+      let x = event.clientX - rect.left;
+      let review = Math.round((x / rect.width) * 10 * 2) / 2;
+      setValue(review);
+      if (props.changeReview) {
+        props.changeReview(review);
+      }
+    }
+  }
 
   function getSvg(key, type) {
     let type_url = "";
@@ -32,7 +56,16 @@ function Rating(props) {
     }
     const url = `resources/Rating/${type_url}star.svg`;
 
-    return <img className={classes.icon} src={url} key={key}></img>;
+    return (
+      <img
+        className={makeClass(
+          classes.icon,
+          props.input ? classes.startHover : ""
+        )}
+        src={url}
+        key={key}
+      ></img>
+    );
   }
 
   let stars = [];
@@ -47,13 +80,27 @@ function Rating(props) {
     }
   }
 
+  function makeViewCount() {
+    if (props.input === 0) {
+      return "(" + props.count + ")";
+    } else {
+      return "";
+    }
+  }
+
   function DisplayRating() {
-    if (props.count > 0) {
+    if (props.count > 0 || props.count === undefined || props.input) {
       return (
         <div className={classes.flex}>
-          <div className={classes.margin}>{stars}</div>
+          <div
+            className={makeClass(classes.margin, "review_container")}
+            onClick={onClick}
+          >
+            {stars}
+          </div>
           <Typography className={makeClass(classes.margin, classes.text)}>
-            {props.value} ({props.count})
+            {reviewValue}
+            {makeViewCount()}
           </Typography>
         </div>
       );

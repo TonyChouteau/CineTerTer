@@ -284,6 +284,15 @@ function MoviePage(props) {
           data: cast
         })
       )
+    ),
+    React.createElement(
+      "div",
+      { className: classes.paperList },
+      React.createElement(
+        Paper,
+        { className: classes.titlePaper },
+        React.createElement(MovieReviews, { lang: props.lang, movieId: id })
+      )
     )
   );
 }

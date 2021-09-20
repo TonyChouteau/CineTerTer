@@ -93,6 +93,10 @@ function getLoginUrl() {
   return API_BASE_URL + LOGIN_PAGE_URL;
 }
 
+function getReviewsUrl(id) {
+  return REVIEWS_URL + "/" + id;
+}
+
 // Page
 
 function getMoviePage(id, query) {

@@ -15,7 +15,7 @@ def allowed_file(filename):
          filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-class AvatarHandler(MethodView):
+class AnonymousAvatarHandler(MethodView):
 
   def get(self):
     if not OAuthHandler.isAuthorized():
@@ -38,3 +38,10 @@ class AvatarHandler(MethodView):
       id = flask_session.get("user_id")
       file.save(os.path.join('./server/images/avatars/', str(id)))
       return makeResponse("File saved", 201)
+
+class AvatarHandler(MethodView):
+   def get(self, user_id):
+    if not OAuthHandler.isAuthorized():
+      return makeResponse("You need to be logged do this", 401, True)
+
+    return send_from_directory('./images/avatars/', str(user_id))

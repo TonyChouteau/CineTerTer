@@ -19,6 +19,7 @@ def session_scope():
   session = Session()
   try:
     yield session
+    print("commit")
     session.commit()
   except BaseException:
     session.rollback()

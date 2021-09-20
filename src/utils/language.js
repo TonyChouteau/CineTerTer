@@ -768,6 +768,17 @@ const APP_CONTENT = {
     lang: ["Langue :", "Language:", "Idioma:"],
     revenue: ["Revenu :", "Revenue:", "Ingresos:"],
     budget: ["Budget :", "Budget:", "Presupuesto:"],
+    review: ["Critiques", "Reviews", "Comentarios"],
+    review_title: [
+      "Titre de la critique",
+      "Title of the review",
+      "Título de la crítica",
+    ],
+    review_comment: [
+      "Entrez votre critique",
+      "Enter your review",
+      "Introduzca su comentario",
+    ],
   },
   login: {
     login: ["Connexion", "Login", "Inicio de sesión"],
@@ -775,6 +786,23 @@ const APP_CONTENT = {
     username: ["Nom d'utilisateur", "Username", "Nombre de usuario"],
     password: ["Mot de passe", "Password", "Contraseña"],
     user: ["Compte", "Account", "Cuenta"],
+  },
+  user_page: {
+    change_password: [
+      "Changer de mot de passe",
+      "Change password",
+      "Cambiar contraseña",
+    ],
+    change_username: [
+      "Changer de pseudo",
+      "Change username",
+      "Cambiar el nombre de usuario",
+    ],
+    save: ["Sauvegarder", "Save", "Guardar"],
+    new_username: ["Nouveau pseudo", "New username", "Nuevo nombre de usuario"],
+    new_password: ["Nouveau mot de passe", "New password", "Nueva contraseña"],
+    new_email: ["Nouvel email", "New email", "Nuevo correo electrónico"],
+    create: ["Créer", "Create", "crear"],
   },
 };
 
@@ -809,4 +837,8 @@ function translateMoviePage(element, lang, variables) {
 
 function translateLogin(element, lang, variables) {
   return translate("login", element, lang, variables);
+}
+
+function translateUserPage(element, lang, variable) {
+  return translate("user_page", element, lang, variable);
 }

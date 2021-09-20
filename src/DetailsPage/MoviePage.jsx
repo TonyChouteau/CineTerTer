@@ -210,6 +210,11 @@ function MoviePage(props) {
           ></ScrollableCardList>
         </Paper>
       </div>
+      <div className={classes.paperList}>
+        <Paper className={classes.titlePaper}>
+          <MovieReviews lang={props.lang} movieId={id}></MovieReviews>
+        </Paper>
+      </div>
     </div>
   );
 }

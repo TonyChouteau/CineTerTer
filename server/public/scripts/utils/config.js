@@ -45,6 +45,7 @@ var IMAGE_PNG = ".png";
 
 var USERS_URL = API_BASE_URL + "/users";
 var USER_URL = API_BASE_URL + "/user";
+var REVIEWS_URL = API_BASE_URL + "/reviews";
 
 var IMG_ERROR = "resources/images/error.png";
 

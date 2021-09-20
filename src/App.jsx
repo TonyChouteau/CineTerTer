@@ -46,6 +46,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setUser(data.data);
+        console.log(data);
       });
   }
 

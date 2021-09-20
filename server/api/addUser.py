@@ -20,4 +20,4 @@ def addUser(name, email, password):
 
 
 addUser("Tony", "hello@tonychouteau.fr",
-        "c8f2d6702b555fe3996cc15c46a4a633528968637fa1730197570c6fa0a4adaa")
+        "<sha256 from JS>")
