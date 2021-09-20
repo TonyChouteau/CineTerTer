@@ -2,7 +2,7 @@ import os
 
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.schema import Column
-from sqlalchemy.sql.sqltypes import Boolean, DateTime
+from sqlalchemy.sql.sqltypes import Boolean, DateTime, Text
 from sqlalchemy.types import Integer, String, Integer
 from sqlalchemy import ForeignKey
 from sqlalchemy.sql import func
@@ -24,7 +24,7 @@ class Review(Base):
   movie_id = Column(String(255))
 
   title = Column(String(255))
-  content = Column(String(255))
+  content = Column(Text())
   grade = Column(Integer)
 
   in_cinema = Column(Boolean)
