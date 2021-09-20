@@ -142,6 +142,12 @@ function LoginPage(props) {
   } else {
     return (
       <div className={makeClass(classes.root, classes.flex, props.logInfo.logged ? "" : classes.fullHeight)}>
+        <Typography
+            variant="h3"
+            className={makeClass(classes.whiteText, classes.title)}
+          >
+            CineTerTer
+          </Typography>
         <Card className={makeClass(classes.cardContainer, classes.flex)}>
           <Typography
             variant="h5"

@@ -148,6 +148,14 @@ function LoginPage(props) {
       "div",
       { className: makeClass(classes.root, classes.flex, props.logInfo.logged ? "" : classes.fullHeight) },
       React.createElement(
+        Typography,
+        {
+          variant: "h3",
+          className: makeClass(classes.whiteText, classes.title)
+        },
+        "CineTerTer"
+      ),
+      React.createElement(
         Card,
         { className: makeClass(classes.cardContainer, classes.flex) },
         React.createElement(
