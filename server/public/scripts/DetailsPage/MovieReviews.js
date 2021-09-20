@@ -233,7 +233,9 @@ function MovieReviews(props) {
         React.createElement(
           CardContent,
           { className: classes.overlayContainer },
-          React.createElement("div", { className: makeClass("new_review_overlay", classes.overlay) }),
+          React.createElement("div", {
+            className: makeClass("new_review_overlay", classes.overlay)
+          }),
           React.createElement(
             Typography,
             {

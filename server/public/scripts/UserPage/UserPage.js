@@ -1,91 +1,52 @@
-var _slicedToArray = (function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-    try {
-      for (
-        var _i = arr[Symbol.iterator](), _s;
-        !(_n = (_s = _i.next()).done);
-        _n = true
-      ) {
-        _arr.push(_s.value);
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-    return _arr;
-  }
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if (Symbol.iterator in Object(arr)) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError(
-        "Invalid attempt to destructure non-iterable instance"
-      );
-    }
-  };
-})();
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var userStyles = makeStyles(function (theme) {
   return {
     root: {
-      minHeight:
-        "calc(100vh - " + THEME.size.appBar + " - " + THEME.size.footer + ")",
+      minHeight: "calc(100vh - " + THEME.size.appBar + " - " + THEME.size.footer + ")"
     },
     paper: {
       margin: "10px",
       padding: theme.spacing(2),
-      background: THEME.palette.secondary.background,
+      background: THEME.palette.secondary.background
     },
     grid: {
-      padding: theme.spacing(1),
+      padding: theme.spacing(1)
     },
     gridImage: {
-      maxWidth: "400px",
+      maxWidth: "400px"
     },
     gridFlex: {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "center"
     },
     whiteText: {
-      color: THEME.palette.primary.text,
+      color: THEME.palette.primary.text
     },
     inputRoot: {
       margin: theme.spacing(1),
       width: "250px",
       "& label": {
-        color: THEME.palette.primary.text,
+        color: THEME.palette.primary.text
       },
       "& input": {
-        color: THEME.palette.primary.text,
-      },
+        color: THEME.palette.primary.text
+      }
     },
     submitButton: {
       width: "200px",
-      height: "50px",
+      height: "50px"
     },
     textAlign: {
-      textAlign: "center",
+      textAlign: "center"
     },
     flex: {
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",
-      alignItems: "center",
+      alignItems: "center"
     },
     imageContainer: {
       width: "100%",
@@ -97,7 +58,7 @@ var userStyles = makeStyles(function (theme) {
       alignItems: "center",
       justifyContent: "center",
       borderRadius: "10px",
-      overflow: "hidden",
+      overflow: "hidden"
     },
     imageAlt: {
       position: "absolute",
@@ -110,23 +71,23 @@ var userStyles = makeStyles(function (theme) {
       justifyContent: "center",
       opacity: 0,
       "&:hover": {
-        opacity: 0.7,
-      },
+        opacity: 0.7
+      }
     },
     imageAltButton: {
       background: THEME.palette.primary.main,
       color: THEME.palette.primary.text,
       "&:hover": {
-        background: THEME.palette.secondary.main,
-      },
+        background: THEME.palette.secondary.main
+      }
     },
     image: {
       position: "absolute",
       width: "100%",
       height: "100%",
       top: "0",
-      objectFit: "cover",
-    },
+      objectFit: "cover"
+    }
   };
 });
 
@@ -135,14 +96,14 @@ function UserPage(props) {
   var user = props.user;
 
   var _React$useState = React.useState(false),
-    _React$useState2 = _slicedToArray(_React$useState, 2),
-    errorChange = _React$useState2[0],
-    setErrorChange = _React$useState2[1];
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      errorChange = _React$useState2[0],
+      setErrorChange = _React$useState2[1];
 
   var _React$useState3 = React.useState(false),
-    _React$useState4 = _slicedToArray(_React$useState3, 2),
-    errorNew = _React$useState4[0],
-    setErrorNew = _React$useState4[1];
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      errorNew = _React$useState4[0],
+      setErrorNew = _React$useState4[1];
 
   function avatarChange(event) {
     var input = event.target;
@@ -151,16 +112,14 @@ function UserPage(props) {
     file.append("file", input.files[0]);
     fetch(AVATAR_URL, {
       method: "POST",
-      body: file,
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        if (data.status === 201) {
-          props.getUser();
-        }
-      });
+      body: file
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      if (data.status === 201) {
+        props.getUser();
+      }
+    });
   }
 
   function passwordChange() {
@@ -170,22 +129,20 @@ function UserPage(props) {
       setErrorChange(false);
       fetch(USER_URL, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         method: "PATCH",
         body: JSON.stringify({
           password: SHA256.hex(password),
-          email: "",
-        }),
-      })
-        .then(function (response) {
-          return response.json();
+          email: ""
         })
-        .then(function (data) {
-          if (data.status === 201) {
-            props.getUser();
-          }
-        });
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (data.status === 201) {
+          props.getUser();
+        }
+      });
     } else {
       setErrorChange(true);
     }
@@ -199,23 +156,21 @@ function UserPage(props) {
       setErrorNew(false);
       fetch(USERS_URL, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         method: "POST",
         body: JSON.stringify({
           username: username,
           password: SHA256.hex(password),
-          email: email,
-        }),
-      })
-        .then(function (response) {
-          return response.json();
+          email: email
         })
-        .then(function (data) {
-          if (data.status === 201) {
-            console.log(data);
-          }
-        });
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (data.status === 201) {
+          console.log(data);
+        }
+      });
     } else {
       setErrorNew(true);
     }
@@ -230,14 +185,18 @@ function UserPage(props) {
         {
           className: classes.imageAltButton,
           variant: "contained",
-          component: "label",
+          component: "label"
         },
-        React.createElement(Typography, null, label),
+        React.createElement(
+          Typography,
+          null,
+          label
+        ),
         React.createElement("input", {
           type: "file",
           className: classes.imageAltButton,
           hidden: true,
-          onChange: avatarChange,
+          onChange: avatarChange
         })
       )
     );
@@ -251,7 +210,7 @@ function UserPage(props) {
       React.createElement("img", {
         className: classes.image,
         alt: "",
-        src: getLocalImage(AVATAR_URL),
+        src: getLocalImage(AVATAR_URL)
       }),
       uploadHtml("Change your avatar")
     );
@@ -276,33 +235,21 @@ function UserPage(props) {
             id: "username",
             label: translateUserPage("new_username", props.lang),
             variant: "outlined",
-            className: makeClass(
-              classes.inputRoot,
-              classes.whiteText,
-              "new_user_username"
-            ),
+            className: makeClass(classes.inputRoot, classes.whiteText, "new_user_username")
           }),
           React.createElement(TextField, {
             error: errorNew,
             id: "password",
             label: translateUserPage("new_password", props.lang),
             variant: "outlined",
-            className: makeClass(
-              classes.inputRoot,
-              classes.whiteText,
-              "new_user_password"
-            ),
+            className: makeClass(classes.inputRoot, classes.whiteText, "new_user_password")
           }),
           React.createElement(TextField, {
             error: errorNew,
             id: "email",
             label: translateUserPage("new_email", props.lang),
             variant: "outlined",
-            className: makeClass(
-              classes.inputRoot,
-              classes.whiteText,
-              "new_user_email"
-            ),
+            className: makeClass(classes.inputRoot, classes.whiteText, "new_user_email")
           })
         ),
         React.createElement(
@@ -314,12 +261,8 @@ function UserPage(props) {
               id: "login",
               variant: "contained",
               color: "primary",
-              className: makeClass(
-                classes.inputRoot,
-                classes.whiteText,
-                classes.submitButton
-              ),
-              onClick: newUser,
+              className: makeClass(classes.inputRoot, classes.whiteText, classes.submitButton),
+              onClick: newUser
             },
             translateUserPage("create", props.lang)
           )
@@ -346,7 +289,7 @@ function UserPage(props) {
             Typography,
             {
               className: makeClass(classes.whiteText, classes.textAlign),
-              variant: "h5",
+              variant: "h5"
             },
             "Welcome ",
             user.name
@@ -367,11 +310,7 @@ function UserPage(props) {
                 label: translateUserPage("change_password", props.lang),
                 autoComplete: "current-password",
                 variant: "outlined",
-                className: makeClass(
-                  classes.inputRoot,
-                  classes.whiteText,
-                  "change_user_password"
-                ),
+                className: makeClass(classes.inputRoot, classes.whiteText, "change_user_password")
               })
             ),
             React.createElement(
@@ -383,12 +322,8 @@ function UserPage(props) {
                   id: "login",
                   variant: "contained",
                   color: "primary",
-                  className: makeClass(
-                    classes.inputRoot,
-                    classes.whiteText,
-                    classes.submitButton
-                  ),
-                  onClick: passwordChange,
+                  className: makeClass(classes.inputRoot, classes.whiteText, classes.submitButton),
+                  onClick: passwordChange
                 },
                 translateUserPage("save", props.lang)
               )
@@ -401,7 +336,7 @@ function UserPage(props) {
           {
             item: true,
             xs: 6,
-            className: makeClass(classes.grid, classes.gridImage),
+            className: makeClass(classes.grid, classes.gridImage)
           },
           avatar
         )

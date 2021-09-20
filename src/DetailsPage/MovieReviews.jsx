@@ -48,7 +48,7 @@ const movieReviewsStyles = makeStyles((theme) => ({
     paddingLeft: "10px",
   },
   overlayContainer: {
-    position: "relative"
+    position: "relative",
   },
   inputRoot: {
     margin: theme.spacing(1),
@@ -97,7 +97,7 @@ const movieReviewsStyles = makeStyles((theme) => ({
     top: 0,
     bottom: 0,
     zIndex: 5,
-  }
+  },
 }));
 
 function MovieReviews(props) {
@@ -214,8 +214,9 @@ function MovieReviews(props) {
           style={{ border: "none", boxShadow: "none" }}
         >
           <CardContent className={classes.overlayContainer}>
-            <div className={makeClass("new_review_overlay", classes.overlay)}>
-            </div>
+            <div
+              className={makeClass("new_review_overlay", classes.overlay)}
+            ></div>
             <Typography
               className={makeClass(classes.margin, classes.whiteText)}
               variant="h6"
