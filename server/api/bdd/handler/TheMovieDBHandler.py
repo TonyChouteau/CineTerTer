@@ -7,7 +7,7 @@ from api.bdd.handler.OAuthHandler import OAuthHandler
 from api.bdd.handler.utils import makeResponse
 
 with open('server/api/bdd/handler/.api_key') as f:
-  API_KEY = f.readline()
+  API_KEY = f.readline().strip("\n")
 
 ROUTES = {
     "data":  "https://api.themoviedb.org/3",
