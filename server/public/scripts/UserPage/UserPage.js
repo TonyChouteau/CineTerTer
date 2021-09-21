@@ -254,8 +254,6 @@ function UserPage(props) {
     );
   }
 
-  console.log(user);
-
   function MakeAdmin() {
     if (user.admin) {
       return React.createElement(
@@ -320,7 +318,6 @@ function UserPage(props) {
       return "";
     }
   }
-  console.log(changeState);
 
   return React.createElement(
     "div",

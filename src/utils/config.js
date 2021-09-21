@@ -32,6 +32,7 @@ const MOVIE_PAGE_URL = "/movie/";
 
 const LOGIN_PAGE_URL = "/login";
 const USER_PAGE_URL = "/user";
+const USERS_PAGE_URL = "/users";
 
 const ID_PARAM = "id=";
 

@@ -379,7 +379,7 @@ function MovieReviews(props) {
                 },
                 review.user.name,
                 " - ",
-                review.create_time
+                DateFormatter(review.create_time)
               ),
               React.createElement(Rating, { value: review.grade }),
               React.createElement(

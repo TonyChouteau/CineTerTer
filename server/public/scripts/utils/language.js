@@ -751,7 +751,8 @@ var APP_CONTENT = {
     search: ["Rechercher", "Search", "Buscar"],
     lang: ["Langue", "Language", "Idioma"],
     stats: ["Statistiques", "Statistics", "Estadísticas"],
-    changelog: ["Journal des modifications", "Changelog", "Registro de cambios"]
+    changelog: ["Journal des modifications", "Changelog", "Registro de cambios"],
+    users: ["Utilisateurs", "Users", "Usuarios"]
   },
   search_page: {
     results_count: ["{0} resultat{1} trouvé{1} ({2} visible{1}).", "{0} result{1} found ({2} shown).", "{0} resultado{1} encontrado{1} ({2} mostrado{1})."]
@@ -800,7 +801,9 @@ var APP_CONTENT = {
     new_password: ["Nouveau mot de passe", "New password", "Nueva contraseña"],
     new_email: ["Nouvel email", "New email", "Nuevo correo electrónico"],
     create: ["Créer", "Create", "crear"],
-    success: ["Succès", "Success", "Éxito"]
+    success: ["Succès", "Success", "Éxito"],
+    level: ["Niveau ", "Level ", "Nivel "],
+    next_level: ["Prochain niveau : ", "Next level : ", "Siguiente nivel: "]
   }
 };
 

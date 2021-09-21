@@ -32,6 +32,7 @@ var MOVIE_PAGE_URL = "/movie/";
 
 var LOGIN_PAGE_URL = "/login";
 var USER_PAGE_URL = "/user";
+var USERS_PAGE_URL = "/users";
 
 var ID_PARAM = "id=";
 

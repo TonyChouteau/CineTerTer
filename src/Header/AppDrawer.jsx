@@ -53,6 +53,10 @@ const drawerStyles = makeStyles((theme) => ({
     flexDirection: "row",
     padding: theme.spacing(1) + "px " + theme.spacing(3) + "px",
   },
+  divider: {
+    height: "2px",
+    backgroundColor: "rgba(255, 255, 255, 0.35)",
+  },
 }));
 
 function AppDrawer(props) {
@@ -69,6 +73,12 @@ function AppDrawer(props) {
       icon: "insert_chart",
       text: "stats",
       url: "/stats",
+      divider: true,
+    },
+    {
+      icon: "people",
+      text: "users",
+      url: "/users",
       divider: true,
     },
     {
@@ -104,7 +114,11 @@ function AppDrawer(props) {
                 <Typography>{translateMenu(item.text, props.lang)}</Typography>
               </ListItemText>
             </RLink>
-            {item.divider ? <Divider></Divider> : ""}
+            {item.divider ? (
+              <Divider className={classes.divider}></Divider>
+            ) : (
+              ""
+            )}
           </React.Fragment>
         ))}
         <ListItem>

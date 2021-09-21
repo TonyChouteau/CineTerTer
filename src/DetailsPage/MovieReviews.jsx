@@ -358,7 +358,7 @@ function MovieReviews(props) {
                   <Typography
                     className={makeClass(classes.margin, classes.greyText)}
                   >
-                    {review.user.name} - {review.create_time}
+                    {review.user.name} - {DateFormatter(review.create_time)}
                   </Typography>
                   <Rating value={review.grade}></Rating>
                   <Typography

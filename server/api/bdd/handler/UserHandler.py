@@ -45,7 +45,17 @@ class UserHandler(MethodView):
 class UsersHandler(MethodView):
 
   def get(self):
-    return "get"
+    if not OAuthHandler.isAuthorized():
+      return makeResponse("You need to be admin to do this", 401, True)
+    
+    with session_scope() as session:
+      users = session.execute(select(User)).scalars().all()
+
+      users_json = []
+      for user in users:
+        users_json.append(user.to_dict())
+      
+      return makeResponse(users_json, 200)
 
   def post(self):
     if not OAuthHandler.isAdmin():

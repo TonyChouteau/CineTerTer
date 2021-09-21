@@ -53,6 +53,10 @@ var drawerStyles = makeStyles(function (theme) {
       display: "flex",
       flexDirection: "row",
       padding: theme.spacing(1) + "px " + theme.spacing(3) + "px"
+    },
+    divider: {
+      height: "2px",
+      backgroundColor: "rgba(255, 255, 255, 0.35)"
     }
   };
 });
@@ -69,6 +73,11 @@ function AppDrawer(props) {
     icon: "insert_chart",
     text: "stats",
     url: "/stats",
+    divider: true
+  }, {
+    icon: "people",
+    text: "users",
+    url: "/users",
     divider: true
   }, {
     icon: "update",
@@ -117,7 +126,7 @@ function AppDrawer(props) {
               )
             )
           ),
-          item.divider ? React.createElement(Divider, null) : ""
+          item.divider ? React.createElement(Divider, { className: classes.divider }) : ""
         );
       }),
       React.createElement(

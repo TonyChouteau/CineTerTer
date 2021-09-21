@@ -18,8 +18,8 @@ const changelogStyles = makeStyles((theme) => ({
   whiteText: {
     color: "white",
   },
-  grey: {
-    color: "#DDD",
+  greyText: {
+    color: THEME.palette.secondary.text,
   },
   multiline: {
     whiteSpace: "pre-wrap",

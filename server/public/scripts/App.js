@@ -104,6 +104,9 @@ function App() {
   var changelogPage = function changelogPage() {
     return React.createElement(ChangelogPage, { lang: lang });
   };
+  var usersPage = function usersPage() {
+    return React.createElement(UsersPage, { lang: lang, user: user });
+  };
 
   function RedirectIf401() {
     if (logInfo.logged === false && !getCurrentUrl().includes("login")) {
@@ -140,6 +143,7 @@ function App() {
         React.createElement(Route, { path: "/login", render: loginPage }),
         React.createElement(Route, { path: "/user", component: userPage }),
         React.createElement(Route, { path: "/movie", component: moviePage }),
+        React.createElement(Route, { path: "/users", component: usersPage }),
         React.createElement(Route, { path: "/changelog", component: changelogPage }),
         React.createElement(Route, { path: "/", exact: true, component: searchPage }),
         React.createElement(Footer, { lang: lang })

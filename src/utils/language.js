@@ -766,6 +766,7 @@ const APP_CONTENT = {
       "Changelog",
       "Registro de cambios",
     ],
+    users: ["Utilisateurs", "Users", "Usuarios"],
   },
   search_page: {
     results_count: [
@@ -855,6 +856,8 @@ const APP_CONTENT = {
     new_email: ["Nouvel email", "New email", "Nuevo correo electrónico"],
     create: ["Créer", "Create", "crear"],
     success: ["Succès", "Success", "Éxito"],
+    level: ["Niveau ", "Level ", "Nivel "],
+    next_level: ["Prochain niveau : ", "Next level : ", "Siguiente nivel: "],
   },
 };
 

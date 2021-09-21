@@ -238,8 +238,6 @@ function UserPage(props) {
     );
   }
 
-  console.log(user);
-
   function MakeAdmin() {
     if (user.admin) {
       return (
@@ -308,7 +306,6 @@ function UserPage(props) {
       return "";
     }
   }
-  console.log(changeState);
 
   return (
     <div className={classes.root}>
