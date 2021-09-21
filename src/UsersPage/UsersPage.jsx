@@ -106,22 +106,20 @@ function UsersPage(props) {
   }
 
   function MakeLevel(props) {
-    const level = new Level(props.xp);
-
     return (
       <React.Fragment>
         <Typography className={makeClass(classes.marginLeft, classes.level)}>
-          {translateUserPage("level", props.lang) + level.level}
+          {translateUserPage("level", props.lang) + props.level}
         </Typography>
         <div className={classes.progressBarContainer}>
           <LinearProgress
             variant="determinate"
-            value={level.progress}
+            value={props.level.progress}
             className={makeClass(classes.progressBar, classes.marginLeft)}
           >
           </LinearProgress>
           <div className={classes.progressBarLabel}>
-            <Typography className={classes.progressBarLabelTypo}>{translateUserPage("next_level", props.lang) + level.progress + "%"}</Typography>
+            <Typography className={classes.progressBarLabelTypo}>{translateUserPage("next_level", props.lang) + props.level.progress + "%"}</Typography>
           </div>
         </div>
       </React.Fragment>
@@ -130,7 +128,12 @@ function UsersPage(props) {
 
   return (
     <div className={classes.root}>
-      {users.map((user, id) => {
+      {users.map(user => {
+        return {
+          ...user, 
+          level: new Level(user.xp)
+        }
+      }).sort((a, b) => (b.xp - a.xp)).map((user, id) => {
         return (
           <Card className={classes.card} key={id}>
             <CardContent className={classes.cardContainer}>
@@ -142,7 +145,7 @@ function UsersPage(props) {
                 <div className={classes.cardLine}>
                   <Typography variant="h5">{user.name}</Typography>
                   <MakeAdmin admin={user.admin}></MakeAdmin>
-                  <MakeLevel xp={user.xp} lang={props.lang}></MakeLevel>
+                  <MakeLevel level={user.level} lang={props.lang}></MakeLevel>
                 </div>
                 <div className={classes.cardLine}>
                   <Typography className={makeClass(classes.greyText)}>

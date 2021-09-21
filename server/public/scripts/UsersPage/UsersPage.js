@@ -113,22 +113,20 @@ function UsersPage(props) {
   }
 
   function MakeLevel(props) {
-    var level = new Level(props.xp);
-
     return React.createElement(
       React.Fragment,
       null,
       React.createElement(
         Typography,
         { className: makeClass(classes.marginLeft, classes.level) },
-        translateUserPage("level", props.lang) + level.level
+        translateUserPage("level", props.lang) + props.level
       ),
       React.createElement(
         "div",
         { className: classes.progressBarContainer },
         React.createElement(LinearProgress, {
           variant: "determinate",
-          value: level.progress,
+          value: props.level.progress,
           className: makeClass(classes.progressBar, classes.marginLeft)
         }),
         React.createElement(
@@ -137,7 +135,7 @@ function UsersPage(props) {
           React.createElement(
             Typography,
             { className: classes.progressBarLabelTypo },
-            translateUserPage("next_level", props.lang) + level.progress + "%"
+            translateUserPage("next_level", props.lang) + props.level.progress + "%"
           )
         )
       )
@@ -147,7 +145,13 @@ function UsersPage(props) {
   return React.createElement(
     "div",
     { className: classes.root },
-    users.map(function (user, id) {
+    users.map(function (user) {
+      return Object.assign({}, user, {
+        level: new Level(user.xp)
+      });
+    }).sort(function (a, b) {
+      return b.xp - a.xp;
+    }).map(function (user, id) {
       return React.createElement(
         Card,
         { className: classes.card, key: id },
@@ -170,7 +174,7 @@ function UsersPage(props) {
                 user.name
               ),
               React.createElement(MakeAdmin, { admin: user.admin }),
-              React.createElement(MakeLevel, { xp: user.xp, lang: props.lang })
+              React.createElement(MakeLevel, { level: user.level, lang: props.lang })
             ),
             React.createElement(
               "div",
