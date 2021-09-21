@@ -113,20 +113,22 @@ function UsersPage(props) {
   }
 
   function MakeLevel(props) {
+    var level = props.level;
+
     return React.createElement(
       React.Fragment,
       null,
       React.createElement(
         Typography,
         { className: makeClass(classes.marginLeft, classes.level) },
-        translateUserPage("level", props.lang) + props.level
+        translateUserPage("level", props.lang) + level.level
       ),
       React.createElement(
         "div",
         { className: classes.progressBarContainer },
         React.createElement(LinearProgress, {
           variant: "determinate",
-          value: props.level.progress,
+          value: level.progress,
           className: makeClass(classes.progressBar, classes.marginLeft)
         }),
         React.createElement(
@@ -135,7 +137,7 @@ function UsersPage(props) {
           React.createElement(
             Typography,
             { className: classes.progressBarLabelTypo },
-            translateUserPage("next_level", props.lang) + props.level.progress + "%"
+            translateUserPage("next_level", props.lang) + level.progress + "%"
           )
         )
       )

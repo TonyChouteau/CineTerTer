@@ -106,20 +106,22 @@ function UsersPage(props) {
   }
 
   function MakeLevel(props) {
+    const level = props.level;
+
     return (
       <React.Fragment>
         <Typography className={makeClass(classes.marginLeft, classes.level)}>
-          {translateUserPage("level", props.lang) + props.level}
+          {translateUserPage("level", props.lang) + level.level}
         </Typography>
         <div className={classes.progressBarContainer}>
           <LinearProgress
             variant="determinate"
-            value={props.level.progress}
+            value={level.progress}
             className={makeClass(classes.progressBar, classes.marginLeft)}
           >
           </LinearProgress>
           <div className={classes.progressBarLabel}>
-            <Typography className={classes.progressBarLabelTypo}>{translateUserPage("next_level", props.lang) + props.level.progress + "%"}</Typography>
+            <Typography className={classes.progressBarLabelTypo}>{translateUserPage("next_level", props.lang) + level.progress + "%"}</Typography>
           </div>
         </div>
       </React.Fragment>
