@@ -52,17 +52,15 @@ function ChangelogPage(props) {
       <Paper className={classes.paper}>
         {VERSIONS.reverse().map((version, id) => {
           return (
-            <React.Fragment>
+            <React.Fragment key={id}>
               {version[0] === 0 ? <hr className={classes.hr} /> : ""}
               <Typography
                 variant={"h" + (version[0] + 4)}
-                key={id}
                 className={classes.whiteText}
               >
                 {"Beta " + version[1]}
               </Typography>
               <Typography
-                key={id}
                 className={makeClass(classes.grey, classes.multiline)}
               >
                 {version[2]}

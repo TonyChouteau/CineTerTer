@@ -46,13 +46,12 @@ function ChangelogPage(props) {
       VERSIONS.reverse().map(function (version, id) {
         return React.createElement(
           React.Fragment,
-          null,
+          { key: id },
           version[0] === 0 ? React.createElement("hr", { className: classes.hr }) : "",
           React.createElement(
             Typography,
             {
               variant: "h" + (version[0] + 4),
-              key: id,
               className: classes.whiteText
             },
             "Beta " + version[1]
@@ -60,7 +59,6 @@ function ChangelogPage(props) {
           React.createElement(
             Typography,
             {
-              key: id,
               className: makeClass(classes.grey, classes.multiline)
             },
             version[2]
