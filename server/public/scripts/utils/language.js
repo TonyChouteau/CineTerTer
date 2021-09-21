@@ -750,7 +750,8 @@ var APP_CONTENT = {
   menu: {
     search: ["Rechercher", "Search", "Buscar"],
     lang: ["Langue", "Language", "Idioma"],
-    stats: ["Statistiques", "Statistics", "Estadísticas"]
+    stats: ["Statistiques", "Statistics", "Estadísticas"],
+    changelog: ["Journal des modifications", "Changelog", "Registro de cambios"]
   },
   search_page: {
     results_count: ["{0} resultat{1} trouvé{1} ({2} visible{1}).", "{0} result{1} found ({2} shown).", "{0} resultado{1} encontrado{1} ({2} mostrado{1})."]

@@ -12,7 +12,7 @@ const drawerStyles = makeStyles((theme) => ({
     color: THEME.palette.primary.text,
   },
   itemText: {
-    width: "150px",
+    width: "200px",
   },
   formControl: {
     margin: theme.spacing(1),
@@ -63,11 +63,19 @@ function AppDrawer(props) {
       icon: "search",
       text: "search",
       url: "/",
+      divider: false,
     },
     {
       icon: "insert_chart",
       text: "stats",
       url: "/stats",
+      divider: true,
+    },
+    {
+      icon: "update",
+      text: "changelog",
+      url: "/changelog",
+      divider: false,
     },
   ];
 
@@ -96,7 +104,7 @@ function AppDrawer(props) {
                 <Typography>{translateMenu(item.text, props.lang)}</Typography>
               </ListItemText>
             </RLink>
-            <Divider></Divider>
+            {item.divider ? <Divider></Divider> : ""}
           </React.Fragment>
         ))}
         <ListItem>

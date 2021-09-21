@@ -186,13 +186,25 @@ function UserPage(props) {
         return response.json();
       }).then(function (data) {
         if (data.status === 201) {
-          setNewState(Object.assign({}, newState, { error: null, errorMessage: null, success: true }));
+          setNewState(Object.assign({}, newState, {
+            error: null,
+            errorMessage: null,
+            success: true
+          }));
         } else {
-          setNewState(Object.assign({}, newState, { error: true, errorMessage: data.error || translateAll("error", props.lang), success: false }));
+          setNewState(Object.assign({}, newState, {
+            error: true,
+            errorMessage: data.error || translateAll("error", props.lang),
+            success: false
+          }));
         }
       });
     } else {
-      setNewState(Object.assign({}, newState, { error: true, errorMessage: translateAll("at_least_8", props.lang), success: false }));
+      setNewState(Object.assign({}, newState, {
+        error: true,
+        errorMessage: translateAll("at_least_8", props.lang),
+        success: false
+      }));
     }
   }
 

@@ -13,7 +13,7 @@ var drawerStyles = makeStyles(function (theme) {
       color: THEME.palette.primary.text
     },
     itemText: {
-      width: "150px"
+      width: "200px"
     },
     formControl: {
       margin: theme.spacing(1),
@@ -63,11 +63,18 @@ function AppDrawer(props) {
   var menu = [{
     icon: "search",
     text: "search",
-    url: "/"
+    url: "/",
+    divider: false
   }, {
     icon: "insert_chart",
     text: "stats",
-    url: "/stats"
+    url: "/stats",
+    divider: true
+  }, {
+    icon: "update",
+    text: "changelog",
+    url: "/changelog",
+    divider: false
   }];
 
   return React.createElement(
@@ -110,7 +117,7 @@ function AppDrawer(props) {
               )
             )
           ),
-          React.createElement(Divider, null)
+          item.divider ? React.createElement(Divider, null) : ""
         );
       }),
       React.createElement(

@@ -761,6 +761,11 @@ const APP_CONTENT = {
     search: ["Rechercher", "Search", "Buscar"],
     lang: ["Langue", "Language", "Idioma"],
     stats: ["Statistiques", "Statistics", "Estadísticas"],
+    changelog: [
+      "Journal des modifications",
+      "Changelog",
+      "Registro de cambios",
+    ],
   },
   search_page: {
     results_count: [

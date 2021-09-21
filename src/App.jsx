@@ -28,7 +28,7 @@ function App() {
     admin: g_is_admin,
   });
   const [user, setUser] = React.useState("");
-  
+
   if (!logInfo.logged && user) {
     setUser("");
   }
@@ -77,6 +77,7 @@ function App() {
   );
   const searchPage = () => <SearchPage query={query} lang={lang}></SearchPage>;
   const moviePage = () => <MoviePage lang={lang}></MoviePage>;
+  const changelogPage = () => <ChangelogPage lang={lang}></ChangelogPage>;
 
   function RedirectIf401() {
     if (logInfo.logged === false && !getCurrentUrl().includes("login")) {
@@ -108,6 +109,7 @@ function App() {
           <Route path="/login" render={loginPage}></Route>
           <Route path="/user" component={userPage}></Route>
           <Route path="/movie" component={moviePage}></Route>
+          <Route path="/changelog" component={changelogPage}></Route>
           <Route path="/" exact component={searchPage}></Route>
           <Footer lang={lang}></Footer>
         </HashRouter>

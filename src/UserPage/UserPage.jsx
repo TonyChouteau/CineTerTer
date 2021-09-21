@@ -175,13 +175,28 @@ function UserPage(props) {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === 201) {
-            setNewState({...newState, error: null, errorMessage: null, success: true});
+            setNewState({
+              ...newState,
+              error: null,
+              errorMessage: null,
+              success: true,
+            });
           } else {
-            setNewState({...newState, error: true, errorMessage: data.error || translateAll("error", props.lang), success: false});
+            setNewState({
+              ...newState,
+              error: true,
+              errorMessage: data.error || translateAll("error", props.lang),
+              success: false,
+            });
           }
         });
     } else {
-      setNewState({...newState, error: true, errorMessage: translateAll("at_least_8", props.lang), success: false});
+      setNewState({
+        ...newState,
+        error: true,
+        errorMessage: translateAll("at_least_8", props.lang),
+        success: false,
+      });
     }
   }
 
@@ -293,7 +308,7 @@ function UserPage(props) {
       return "";
     }
   }
-  console.log(changeState)
+  console.log(changeState);
 
   return (
     <div className={classes.root}>
@@ -328,9 +343,11 @@ function UserPage(props) {
                     classes.whiteText,
                     "change_user_password"
                   )}
-                  autoComplete='new-password'
+                  autoComplete="new-password"
                 ></TextField>
-                <Error error={changeState.error}>{changeState.errorMessage}</Error>
+                <Error error={changeState.error}>
+                  {changeState.errorMessage}
+                </Error>
                 <Success success={changeState.success}>
                   {translateUserPage("success", props.lang)}
                 </Success>
