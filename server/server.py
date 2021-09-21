@@ -53,8 +53,7 @@ app.add_url_rule('/api/login', view_func=OAuthHandler.as_view('login'),
                  methods=['GET', 'POST', 'DELETE'])
 
 if __name__ == "__main__":
-  app.run()
-  if os.path.isfile("./fullchain.pem"):
+  if os.path.isfile("./fullchain.pem"): 
     app.run(host="vps.tonychouteau.fr", port=7999, debug=True, ssl_context=("./fullchain.pem", "./privkey.pem"))
   else:
     app.run()
