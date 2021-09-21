@@ -60,6 +60,12 @@ class UsersHandler(MethodView):
               or body["password"] is None:
         return makeResponse("Invalid data given", 400, True)
 
+      user_with_same_name = session.execute(select(User).filter_by(
+        name=body["username"])).scalar_one_or_none()
+
+      if user_with_same_name is not None:
+        return makeResponse("This username is not available", 409, True)
+
       hash, salt = Hash(body["password"]).get()
 
       session.add(User(

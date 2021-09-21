@@ -21,7 +21,7 @@ def index(filename):
     filename = 'public/' + filename
     return send_from_directory('.', filename)
   else:
-    return render_template('index.html', isLogged=str(OAuthHandler.isAuthorized()).lower())
+    return render_template('index.html', isLogged=str(OAuthHandler.isAuthorized()).lower(), isAdmin=str(OAuthHandler.isAdmin()).lower())
 
 
 # MovieDB

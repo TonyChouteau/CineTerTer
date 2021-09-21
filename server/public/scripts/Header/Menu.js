@@ -212,7 +212,8 @@ function Menu(props) {
               inputProps: { "aria-label": "search" },
               onChange: onKeyPress,
               onKeyPress: onKeyPress,
-              value: props.query
+              value: props.query,
+              autoComplete: "off"
             })
           )
         ),

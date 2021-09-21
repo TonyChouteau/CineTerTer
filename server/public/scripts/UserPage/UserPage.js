@@ -94,16 +94,27 @@ var userStyles = makeStyles(function (theme) {
 function UserPage(props) {
   var classes = userStyles();
   var user = props.user;
+  //errorChange
 
-  var _React$useState = React.useState(false),
+  var _React$useState = React.useState({
+    error: null,
+    errorMessage: null,
+    success: null
+  }),
       _React$useState2 = _slicedToArray(_React$useState, 2),
-      errorChange = _React$useState2[0],
-      setErrorChange = _React$useState2[1];
+      changeState = _React$useState2[0],
+      setChangeState = _React$useState2[1];
+  //errorNew
 
-  var _React$useState3 = React.useState(false),
+
+  var _React$useState3 = React.useState({
+    error: null,
+    errorMessage: null,
+    success: null
+  }),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
-      errorNew = _React$useState4[0],
-      setErrorNew = _React$useState4[1];
+      newState = _React$useState4[0],
+      setNewState = _React$useState4[1];
 
   function avatarChange(event) {
     var input = event.target;
@@ -125,7 +136,6 @@ function UserPage(props) {
   function passwordChange() {
     password = $("input", ".change_user_password").val();
     if (password.length >= 8) {
-      setErrorChange(false);
       fetch(USER_URL, {
         headers: {
           "Content-Type": "application/json"
@@ -138,12 +148,22 @@ function UserPage(props) {
       }).then(function (response) {
         return response.json();
       }).then(function (data) {
-        if (data.status === 201) {
+        if (data.status === 200) {
           props.getUser();
+          setChangeState(Object.assign({}, changeState, { success: true, error: false }));
+          $("input", ".change_password").val("");
+        } else {
+          setChangeState(Object.assign({}, changeState, {
+            error: true,
+            errorMessage: data.error || translateAll("error", props.lang)
+          }));
         }
       });
     } else {
-      setErrorChange(true);
+      setChangeState(Object.assign({}, changeState, {
+        error: true,
+        errorMessage: translateAll("at_least_8", props.lang)
+      }));
     }
   }
 
@@ -152,7 +172,6 @@ function UserPage(props) {
     password = $("input", ".new_user_password").val();
     email = $("input", ".new_user_email").val();
     if (username.length >= 1 && password.length >= 8 && email.length >= 6) {
-      setErrorNew(false);
       fetch(USERS_URL, {
         headers: {
           "Content-Type": "application/json"
@@ -166,10 +185,14 @@ function UserPage(props) {
       }).then(function (response) {
         return response.json();
       }).then(function (data) {
-        if (data.status === 201) {}
+        if (data.status === 201) {
+          setNewState(Object.assign({}, newState, { error: null, errorMessage: null, success: true }));
+        } else {
+          setNewState(Object.assign({}, newState, { error: true, errorMessage: data.error || translateAll("error", props.lang), success: false }));
+        }
       });
     } else {
-      setErrorNew(true);
+      setNewState(Object.assign({}, newState, { error: true, errorMessage: translateAll("at_least_8", props.lang), success: false }));
     }
   }
 
@@ -219,7 +242,9 @@ function UserPage(props) {
     );
   }
 
-  function makeAdmin() {
+  console.log(user);
+
+  function MakeAdmin() {
     if (user.admin) {
       return React.createElement(
         Grid,
@@ -228,26 +253,40 @@ function UserPage(props) {
           Grid,
           { item: true, container: true, className: classes.gridFlex },
           React.createElement(TextField, {
-            error: errorNew,
+            error: newState.error,
             id: "username",
             label: translateUserPage("new_username", props.lang),
             variant: "outlined",
-            className: makeClass(classes.inputRoot, classes.whiteText, "new_user_username")
+            className: makeClass(classes.inputRoot, classes.whiteText, "new_user_username"),
+            autoComplete: "off"
           }),
           React.createElement(TextField, {
-            error: errorNew,
+            error: newState.error,
             id: "password",
             label: translateUserPage("new_password", props.lang),
             variant: "outlined",
-            className: makeClass(classes.inputRoot, classes.whiteText, "new_user_password")
+            className: makeClass(classes.inputRoot, classes.whiteText, "new_user_password"),
+            type: "password",
+            autoComplete: "off"
           }),
           React.createElement(TextField, {
-            error: errorNew,
+            error: newState.error,
             id: "email",
             label: translateUserPage("new_email", props.lang),
             variant: "outlined",
-            className: makeClass(classes.inputRoot, classes.whiteText, "new_user_email")
-          })
+            className: makeClass(classes.inputRoot, classes.whiteText, "new_user_email"),
+            autoComplete: "off"
+          }),
+          React.createElement(
+            Error,
+            { error: newState.error },
+            newState.errorMessage
+          ),
+          React.createElement(
+            Success,
+            { success: newState.success },
+            translateUserPage("success", props.lang)
+          )
         ),
         React.createElement(
           Grid,
@@ -269,6 +308,7 @@ function UserPage(props) {
       return "";
     }
   }
+  console.log(changeState);
 
   return React.createElement(
     "div",
@@ -302,13 +342,24 @@ function UserPage(props) {
               Grid,
               { item: true, container: true, className: classes.gridFlex },
               React.createElement(TextField, {
-                error: errorChange,
+                error: changeState.error,
                 id: "password",
                 label: translateUserPage("change_password", props.lang),
-                autoComplete: "current-password",
                 variant: "outlined",
-                className: makeClass(classes.inputRoot, classes.whiteText, "change_user_password")
-              })
+                type: "password",
+                className: makeClass(classes.inputRoot, classes.whiteText, "change_user_password"),
+                autoComplete: "new-password"
+              }),
+              React.createElement(
+                Error,
+                { error: changeState.error },
+                changeState.errorMessage
+              ),
+              React.createElement(
+                Success,
+                { success: changeState.success },
+                translateUserPage("success", props.lang)
+              )
             ),
             React.createElement(
               Grid,
@@ -326,7 +377,7 @@ function UserPage(props) {
               )
             )
           ),
-          makeAdmin()
+          React.createElement(MakeAdmin, null)
         ),
         React.createElement(
           Grid,

@@ -120,7 +120,8 @@ function MovieReviews(props) {
   var _React$useState = React.useState({
     reviews: null,
     error: false,
-    submit: false
+    submit: false,
+    errorMessage: null
   }),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       state = _React$useState2[0],
@@ -168,7 +169,10 @@ function MovieReviews(props) {
     var title = $("input", ".review_title").val();
     var content = $("textarea", ".review_content").val();
     if (title.length < 3 || content.length < 20) {
-      setState(Object.assign({}, state, { error: true }));
+      setState(Object.assign({}, state, {
+        error: true,
+        errorMessage: translateAll("not_enough", props.lang)
+      }));
       return "";
     }
     fetch(getReviewsUrl(props.movieId), {
@@ -188,7 +192,16 @@ function MovieReviews(props) {
       return response.json();
     }).then(function (data) {
       if (data.status === 201) {
-        setState(Object.assign({}, state, { error: false, submit: true, reviews: null }));
+        setState(Object.assign({}, state, {
+          error: false,
+          submit: true,
+          reviews: null,
+          errorMessage: null
+        }));
+      } else {
+        setState(Object.assign({}, state, {
+          errorMessage: data.error || translateAll("error", props.lang)
+        }));
       }
     });
   }
@@ -201,36 +214,18 @@ function MovieReviews(props) {
     }).then(function (data) {
       if (data.status === 200) {
         setState(Object.assign({}, state, { reviews: data.data }));
-        console.log(data.data);
       }
     });
-  }
-
-  function RenderError() {
-    if (state.error) {
-      return React.createElement(
-        Typography,
-        { className: makeClass(classes.error, classes.marginLeft) },
-        translateMoviePage("error", props.lang)
-      );
-    } else {
-      return "";
-    }
   }
 
   function RenderSubmit() {
     if (state.submit) {
       return React.createElement(
         "div",
-        {
-          className: makeClass(classes.overlay, classes.flexRow)
-        },
+        { className: makeClass(classes.overlay, classes.flexRow) },
         React.createElement(
           Typography,
-          {
-            className: classes.whiteText,
-            variant: "h6"
-          },
+          { className: classes.whiteText, variant: "h6" },
           translateMoviePage("submit", props.lang)
         )
       );
@@ -239,7 +234,6 @@ function MovieReviews(props) {
     }
   }
 
-  console.log(state.submit);
   return React.createElement(
     "div",
     { className: classes.root },
@@ -262,7 +256,9 @@ function MovieReviews(props) {
         },
         React.createElement(
           CardContent,
-          { className: makeClass(classes.overlayContainer, state.submit ? classes.height : "") },
+          {
+            className: makeClass(classes.overlayContainer, state.submit ? classes.height : "")
+          },
           React.createElement(RenderSubmit, null),
           React.createElement(
             Typography,
@@ -318,7 +314,14 @@ function MovieReviews(props) {
               changeReview: onRatingChange
             })
           ),
-          React.createElement(RenderError, null),
+          React.createElement(
+            Error,
+            {
+              error: state.error,
+              className: makeClass(classes.error, classes.marginLeft)
+            },
+            state.errorMessage || translateMoviePage("error", props.lang)
+          ),
           React.createElement(
             Button,
             {

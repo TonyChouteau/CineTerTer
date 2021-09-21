@@ -100,18 +100,6 @@ function LoginPage(props) {
     });
   }
 
-  function RenderError() {
-    if (props.logInfo.error) {
-      return (
-        <Typography className={classes.error}>
-          The username or the password is incorrect
-        </Typography>
-      );
-    } else {
-      return <div></div>;
-    }
-  }
-
   if (props.logInfo.logged) {
     return (
       <div className={makeClass(classes.root, classes.flex)}>
@@ -141,13 +129,19 @@ function LoginPage(props) {
     );
   } else {
     return (
-      <div className={makeClass(classes.root, classes.flex, props.logInfo.logged ? "" : classes.fullHeight)}>
+      <div
+        className={makeClass(
+          classes.root,
+          classes.flex,
+          props.logInfo.logged ? "" : classes.fullHeight
+        )}
+      >
         <Typography
-            variant="h3"
-            className={makeClass(classes.whiteText, classes.title)}
-          >
-            CineTerTer
-          </Typography>
+          variant="h3"
+          className={makeClass(classes.whiteText, classes.title)}
+        >
+          CineTerTer
+        </Typography>
         <Card className={makeClass(classes.cardContainer, classes.flex)}>
           <Typography
             variant="h5"
@@ -174,7 +168,9 @@ function LoginPage(props) {
             className={makeClass(classes.inputRoot, classes.whiteText)}
             onKeyPress={onKeyPress}
           />
-          <RenderError></RenderError>
+          <Error error={props.logInfo.error}>
+            The username or the password is incorrect
+          </Error>
           <Button
             id="login"
             variant="contained"

@@ -117,7 +117,8 @@ function MovieReviews(props) {
     reviews: null,
     error: false,
     submit: false,
-  })
+    errorMessage: null,
+  });
   const newReviewData = {
     reviewRating: 0,
     reviewIsRating: true,
@@ -160,7 +161,11 @@ function MovieReviews(props) {
     const title = $("input", ".review_title").val();
     const content = $("textarea", ".review_content").val();
     if (title.length < 3 || content.length < 20) {
-      setState({...state, error: true});
+      setState({
+        ...state,
+        error: true,
+        errorMessage: translateAll("not_enough", props.lang),
+      });
       return "";
     }
     fetch(getReviewsUrl(props.movieId), {
@@ -182,7 +187,18 @@ function MovieReviews(props) {
       .then((response) => response.json())
       .then((data) => {
         if (data.status === 201) {
-          setState({...state, error: false, submit: true, reviews: null});
+          setState({
+            ...state,
+            error: false,
+            submit: true,
+            reviews: null,
+            errorMessage: null,
+          });
+        } else {
+          setState({
+            ...state,
+            errorMessage: data.error || translateAll("error", props.lang),
+          });
         }
       });
   }
@@ -194,34 +210,16 @@ function MovieReviews(props) {
       .then((response) => response.json())
       .then((data) => {
         if (data.status === 200) {
-          setState({...state, reviews: data.data});
-          console.log(data.data);
+          setState({ ...state, reviews: data.data });
         }
       });
-  }
-
-  function RenderError() {
-    if (state.error) {
-      return (
-        <Typography className={makeClass(classes.error, classes.marginLeft)}>
-          {translateMoviePage("error", props.lang)}
-        </Typography>
-      );
-    } else {
-      return "";
-    }
   }
 
   function RenderSubmit() {
     if (state.submit) {
       return (
-        <div
-          className={makeClass(classes.overlay, classes.flexRow)}
-        >
-          <Typography 
-            className={classes.whiteText}
-            variant="h6"
-          >
+        <div className={makeClass(classes.overlay, classes.flexRow)}>
+          <Typography className={classes.whiteText} variant="h6">
             {translateMoviePage("submit", props.lang)}
           </Typography>
         </div>
@@ -231,7 +229,6 @@ function MovieReviews(props) {
     }
   }
 
-  console.log(state.submit)
   return (
     <div className={classes.root}>
       <div className={classes.head}>
@@ -245,7 +242,12 @@ function MovieReviews(props) {
           className={classes.card}
           style={{ border: "none", boxShadow: "none" }}
         >
-          <CardContent className={makeClass(classes.overlayContainer, (state.submit ? classes.height : ""))}>
+          <CardContent
+            className={makeClass(
+              classes.overlayContainer,
+              state.submit ? classes.height : ""
+            )}
+          >
             <RenderSubmit></RenderSubmit>
             <Typography
               className={makeClass(classes.margin, classes.whiteText)}
@@ -304,7 +306,12 @@ function MovieReviews(props) {
                 changeReview={onRatingChange}
               ></Rating>
             </div>
-            <RenderError></RenderError>
+            <Error
+              error={state.error}
+              className={makeClass(classes.error, classes.marginLeft)}
+            >
+              {state.errorMessage || translateMoviePage("error", props.lang)}
+            </Error>
             <Button
               id="login"
               variant="contained"
@@ -355,7 +362,11 @@ function MovieReviews(props) {
                   </Typography>
                   <Rating value={review.grade}></Rating>
                   <Typography
-                    className={makeClass(classes.margin, classes.whiteText, classes.multiline)}
+                    className={makeClass(
+                      classes.margin,
+                      classes.whiteText,
+                      classes.multiline
+                    )}
                   >
                     {review.content.replace("\n")}
                   </Typography>

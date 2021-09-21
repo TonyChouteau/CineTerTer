@@ -740,6 +740,23 @@ function getLanguage(code) {
 const LANGUAGE_AVAILABLE = ["fr", "en", "es"];
 
 const APP_CONTENT = {
+  all: {
+    error: [
+      "Contactez l'admin",
+      "Contact the admin",
+      "contacte con el administrador",
+    ],
+    at_least_8: [
+      "Un minimum de 8 caractères est requis",
+      "A minimum of 8 character is required",
+      "Se requiere un mínimo de 8 caracteres",
+    ],
+    not_enough: [
+      "Le titre ou le contenu ne contient pas assez de caractère",
+      "The title or the content doesn't contain enough character",
+      "El título o el contenido no tiene suficientes caracteres",
+    ],
+  },
   menu: {
     search: ["Rechercher", "Search", "Buscar"],
     lang: ["Langue", "Language", "Idioma"],
@@ -806,8 +823,8 @@ const APP_CONTENT = {
     submit: [
       "Votre critique à été ajoutée",
       "Your review has been added",
-      "Su opinión ha sido añadida"
-    ]
+      "Su opinión ha sido añadida",
+    ],
   },
   login: {
     login: ["Connexion", "Login", "Inicio de sesión"],
@@ -832,6 +849,7 @@ const APP_CONTENT = {
     new_password: ["Nouveau mot de passe", "New password", "Nueva contraseña"],
     new_email: ["Nouvel email", "New email", "Nuevo correo electrónico"],
     create: ["Créer", "Create", "crear"],
+    success: ["Succès", "Success", "Éxito"],
   },
 };
 
@@ -846,6 +864,10 @@ function translate(component, element, lang, variables) {
   } else {
     return "";
   }
+}
+
+function translateAll(element, lang, variables) {
+  return translate("all", element, lang, variables);
 }
 
 function translateMenu(element, lang, variables) {

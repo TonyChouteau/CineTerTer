@@ -25,8 +25,13 @@ function App() {
     error: false,
     logged: g_is_logged,
     logging: false,
+    admin: g_is_admin,
   });
   const [user, setUser] = React.useState("");
+  
+  if (!logInfo.logged && user) {
+    setUser("");
+  }
 
   function onSearch(event) {
     if (event.key === "Enter" && window.location.hash !== "#/") {

@@ -45,7 +45,8 @@
   <body style="background: #333">
     <script>
       let g_is_logged = {{isLogged}};
-      let VERSION = "Beta 1.0";
+      let g_is_admin = {{isAdmin}};
+      let VERSION = "Beta 1.01";
     </script>
 
     <div id="app"></div>
@@ -74,6 +75,14 @@
     ></script>
     <script
       src="./scripts/Components/Version.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="./scripts/Components/Error.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="./scripts/Components/Success.js"
       type="text/javascript"
     ></script>
 

@@ -181,6 +181,7 @@ function Menu(props) {
                   onChange={onKeyPress}
                   onKeyPress={onKeyPress}
                   value={props.query}
+                  autoComplete="off"
                 />
               </div>
             </div>

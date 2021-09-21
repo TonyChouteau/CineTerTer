@@ -102,7 +102,7 @@ class OAuthHandler(MethodView):
 
   def isAdmin():
     if not OAuthHandler.isAuthorized():
-      return makeResponse("You need to be logged do this", 401, True)
+      return False
 
     user_id = flask_session.get("user_id")
     if user_id is None:

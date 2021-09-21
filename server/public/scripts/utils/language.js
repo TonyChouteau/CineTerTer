@@ -742,6 +742,11 @@ function getLanguage(code) {
 var LANGUAGE_AVAILABLE = ["fr", "en", "es"];
 
 var APP_CONTENT = {
+  all: {
+    error: ["Contactez l'admin", "Contact the admin", "contacte con el administrador"],
+    at_least_8: ["Un minimum de 8 caractères est requis", "A minimum of 8 character is required", "Se requiere un mínimo de 8 caracteres"],
+    not_enough: ["Le titre ou le contenu ne contient pas assez de caractère", "The title or the content doesn't contain enough character", "El título o el contenido no tiene suficientes caracteres"]
+  },
   menu: {
     search: ["Rechercher", "Search", "Buscar"],
     lang: ["Langue", "Language", "Idioma"],
@@ -793,7 +798,8 @@ var APP_CONTENT = {
     new_username: ["Nouveau pseudo", "New username", "Nuevo nombre de usuario"],
     new_password: ["Nouveau mot de passe", "New password", "Nueva contraseña"],
     new_email: ["Nouvel email", "New email", "Nuevo correo electrónico"],
-    create: ["Créer", "Create", "crear"]
+    create: ["Créer", "Create", "crear"],
+    success: ["Succès", "Success", "Éxito"]
   }
 };
 
@@ -809,6 +815,10 @@ function translate(component, element, lang, variables) {
   } else {
     return "";
   }
+}
+
+function translateAll(element, lang, variables) {
+  return translate("all", element, lang, variables);
 }
 
 function translateMenu(element, lang, variables) {

@@ -90,9 +90,18 @@ const userStyles = makeStyles((theme) => ({
 function UserPage(props) {
   const classes = userStyles();
   const user = props.user;
-
-  const [errorChange, setErrorChange] = React.useState(false);
-  const [errorNew, setErrorNew] = React.useState(false);
+  //errorChange
+  const [changeState, setChangeState] = React.useState({
+    error: null,
+    errorMessage: null,
+    success: null,
+  });
+  //errorNew
+  const [newState, setNewState] = React.useState({
+    error: null,
+    errorMessage: null,
+    success: null,
+  });
 
   function avatarChange(event) {
     var input = event.target;
@@ -114,7 +123,6 @@ function UserPage(props) {
   function passwordChange() {
     password = $("input", ".change_user_password").val();
     if (password.length >= 8) {
-      setErrorChange(false);
       fetch(USER_URL, {
         headers: {
           "Content-Type": "application/json",
@@ -127,12 +135,24 @@ function UserPage(props) {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data.status === 201) {
+          if (data.status === 200) {
             props.getUser();
+            setChangeState({ ...changeState, success: true, error: false });
+            $("input", ".change_password").val("");
+          } else {
+            setChangeState({
+              ...changeState,
+              error: true,
+              errorMessage: data.error || translateAll("error", props.lang),
+            });
           }
         });
     } else {
-      setErrorChange(true);
+      setChangeState({
+        ...changeState,
+        error: true,
+        errorMessage: translateAll("at_least_8", props.lang),
+      });
     }
   }
 
@@ -141,7 +161,6 @@ function UserPage(props) {
     password = $("input", ".new_user_password").val();
     email = $("input", ".new_user_email").val();
     if (username.length >= 1 && password.length >= 8 && email.length >= 6) {
-      setErrorNew(false);
       fetch(USERS_URL, {
         headers: {
           "Content-Type": "application/json",
@@ -156,10 +175,13 @@ function UserPage(props) {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === 201) {
+            setNewState({...newState, error: null, errorMessage: null, success: true});
+          } else {
+            setNewState({...newState, error: true, errorMessage: data.error || translateAll("error", props.lang), success: false});
           }
         });
     } else {
-      setErrorNew(true);
+      setNewState({...newState, error: true, errorMessage: translateAll("at_least_8", props.lang), success: false});
     }
   }
 
@@ -201,13 +223,15 @@ function UserPage(props) {
     );
   }
 
-  function makeAdmin() {
+  console.log(user);
+
+  function MakeAdmin() {
     if (user.admin) {
       return (
         <Grid item container className={classes.gridFlex}>
           <Grid item container className={classes.gridFlex}>
             <TextField
-              error={errorNew}
+              error={newState.error}
               id="username"
               label={translateUserPage("new_username", props.lang)}
               variant="outlined"
@@ -216,9 +240,10 @@ function UserPage(props) {
                 classes.whiteText,
                 "new_user_username"
               )}
+              autoComplete="off"
             ></TextField>
             <TextField
-              error={errorNew}
+              error={newState.error}
               id="password"
               label={translateUserPage("new_password", props.lang)}
               variant="outlined"
@@ -227,9 +252,11 @@ function UserPage(props) {
                 classes.whiteText,
                 "new_user_password"
               )}
+              type="password"
+              autoComplete="off"
             ></TextField>
             <TextField
-              error={errorNew}
+              error={newState.error}
               id="email"
               label={translateUserPage("new_email", props.lang)}
               variant="outlined"
@@ -238,7 +265,12 @@ function UserPage(props) {
                 classes.whiteText,
                 "new_user_email"
               )}
+              autoComplete="off"
             ></TextField>
+            <Error error={newState.error}>{newState.errorMessage}</Error>
+            <Success success={newState.success}>
+              {translateUserPage("success", props.lang)}
+            </Success>
           </Grid>
           <Grid item container className={classes.gridFlex}>
             <Button
@@ -261,6 +293,7 @@ function UserPage(props) {
       return "";
     }
   }
+  console.log(changeState)
 
   return (
     <div className={classes.root}>
@@ -285,17 +318,22 @@ function UserPage(props) {
                   className={makeClass(classes.inputRoot, classes.whiteText)}
                 ></TextField> */}
                 <TextField
-                  error={errorChange}
+                  error={changeState.error}
                   id="password"
                   label={translateUserPage("change_password", props.lang)}
-                  autoComplete="current-password"
                   variant="outlined"
+                  type="password"
                   className={makeClass(
                     classes.inputRoot,
                     classes.whiteText,
                     "change_user_password"
                   )}
+                  autoComplete='new-password'
                 ></TextField>
+                <Error error={changeState.error}>{changeState.errorMessage}</Error>
+                <Success success={changeState.success}>
+                  {translateUserPage("success", props.lang)}
+                </Success>
               </Grid>
               <Grid item container className={classes.gridFlex}>
                 <Button
@@ -313,7 +351,7 @@ function UserPage(props) {
                 </Button>
               </Grid>
             </Grid>
-            {makeAdmin()}
+            <MakeAdmin></MakeAdmin>
           </Grid>
           <Grid
             item

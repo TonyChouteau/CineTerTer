@@ -102,18 +102,6 @@ function LoginPage(props) {
     });
   }
 
-  function RenderError() {
-    if (props.logInfo.error) {
-      return React.createElement(
-        Typography,
-        { className: classes.error },
-        "The username or the password is incorrect"
-      );
-    } else {
-      return React.createElement("div", null);
-    }
-  }
-
   if (props.logInfo.logged) {
     return React.createElement(
       "div",
@@ -146,7 +134,9 @@ function LoginPage(props) {
   } else {
     return React.createElement(
       "div",
-      { className: makeClass(classes.root, classes.flex, props.logInfo.logged ? "" : classes.fullHeight) },
+      {
+        className: makeClass(classes.root, classes.flex, props.logInfo.logged ? "" : classes.fullHeight)
+      },
       React.createElement(
         Typography,
         {
@@ -185,7 +175,11 @@ function LoginPage(props) {
           className: makeClass(classes.inputRoot, classes.whiteText),
           onKeyPress: onKeyPress
         }),
-        React.createElement(RenderError, null),
+        React.createElement(
+          Error,
+          { error: props.logInfo.error },
+          "The username or the password is incorrect"
+        ),
         React.createElement(
           Button,
           {

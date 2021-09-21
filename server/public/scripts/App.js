@@ -37,7 +37,8 @@ function App() {
     password: "",
     error: false,
     logged: g_is_logged,
-    logging: false
+    logging: false,
+    admin: g_is_admin
   }),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
       logInfo = _React$useState6[0],
@@ -47,6 +48,10 @@ function App() {
       _React$useState8 = _slicedToArray(_React$useState7, 2),
       user = _React$useState8[0],
       setUser = _React$useState8[1];
+
+  if (!logInfo.logged && user) {
+    setUser("");
+  }
 
   function onSearch(event) {
     if (event.key === "Enter" && window.location.hash !== "#/") {
