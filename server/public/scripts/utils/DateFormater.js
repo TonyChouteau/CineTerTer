@@ -1,10 +1,11 @@
 function DateFormater(date) {
-	if (!date) {
-		date = new Date();
-	}
+  if (!date) {
+    date = new Date();
+  }
 
-	var dateFormatted = date.toLocaleDateString();
-	var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+  var dateFormatted = date.toLocaleDateString();
+  var time =
+    date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
-	return dateFormatted + " " + time;
+  return dateFormatted + " " + time;
 }

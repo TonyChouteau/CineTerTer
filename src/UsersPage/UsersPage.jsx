@@ -35,7 +35,7 @@ const usersPageStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     margin: "5px 0",
-    position: "relative"
+    position: "relative",
   },
   greyText: {
     color: THEME.palette.secondary.text,
@@ -47,17 +47,17 @@ const usersPageStyles = makeStyles((theme) => ({
     color: THEME.palette.primary.main,
     fontSize: "20px",
     position: "absolute",
-    right: "210px"
+    right: "210px",
   },
   progressBarContainer: {
     position: "absolute",
-    right: 0
+    right: 0,
   },
   progressBar: {
     height: "20px",
     borderRadius: "10px",
     width: "200px",
-    background: THEME.palette.primary.background
+    background: THEME.palette.primary.background,
   },
   progressBarLabel: {
     position: "absolute",
@@ -66,10 +66,10 @@ const usersPageStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
     textAlign: "center",
-  }, 
+  },
   progressBarLabelTypo: {
-    lineHeight: "20px"
-  }
+    lineHeight: "20px",
+  },
 }));
 
 function UsersPage(props) {
@@ -118,10 +118,13 @@ function UsersPage(props) {
             variant="determinate"
             value={level.progress}
             className={makeClass(classes.progressBar, classes.marginLeft)}
-          >
-          </LinearProgress>
+          ></LinearProgress>
           <div className={classes.progressBarLabel}>
-            <Typography className={classes.progressBarLabelTypo}>{translateUserPage("next_level", props.lang) + level.progress + "%"}</Typography>
+            <Typography className={classes.progressBarLabelTypo}>
+              {translateUserPage("next_level", props.lang) +
+                level.progress +
+                "%"}
+            </Typography>
           </div>
         </div>
       </React.Fragment>
@@ -130,35 +133,38 @@ function UsersPage(props) {
 
   return (
     <div className={classes.root}>
-      {users.map(user => {
-        return {
-          ...user, 
-          level: new Level(user.xp)
-        }
-      }).sort((a, b) => (b.xp - a.xp)).map((user, id) => {
-        return (
-          <Card className={classes.card} key={id}>
-            <CardContent className={classes.cardContainer}>
-              <CardMedia
-                className={classes.avatarLarge}
-                image={getLocalImage(AVATAR_URL + "/" + user.id)}
-              />
-              <div className={classes.cardContent}>
-                <div className={classes.cardLine}>
-                  <Typography variant="h5">{user.name}</Typography>
-                  <MakeAdmin admin={user.admin}></MakeAdmin>
-                  <MakeLevel level={user.level} lang={props.lang}></MakeLevel>
+      {users
+        .map((user) => {
+          return {
+            ...user,
+            level: new Level(user.xp),
+          };
+        })
+        .sort((a, b) => b.xp - a.xp)
+        .map((user, id) => {
+          return (
+            <Card className={classes.card} key={id}>
+              <CardContent className={classes.cardContainer}>
+                <CardMedia
+                  className={classes.avatarLarge}
+                  image={getLocalImage(AVATAR_URL + "/" + user.id)}
+                />
+                <div className={classes.cardContent}>
+                  <div className={classes.cardLine}>
+                    <Typography variant="h5">{user.name}</Typography>
+                    <MakeAdmin admin={user.admin}></MakeAdmin>
+                    <MakeLevel level={user.level} lang={props.lang}></MakeLevel>
+                  </div>
+                  <div className={classes.cardLine}>
+                    <Typography className={makeClass(classes.greyText)}>
+                      {DateFormatter(new Date(user.create_time))}
+                    </Typography>
+                  </div>
                 </div>
-                <div className={classes.cardLine}>
-                  <Typography className={makeClass(classes.greyText)}>
-                    {DateFormatter(new Date(user.create_time))}
-                  </Typography>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        );
-      })}
+              </CardContent>
+            </Card>
+          );
+        })}
     </div>
   );
 }

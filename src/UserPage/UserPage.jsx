@@ -85,6 +85,9 @@ const userStyles = makeStyles((theme) => ({
     top: "0",
     objectFit: "cover",
   },
+  hidden: {
+    display: "none",
+  },
 }));
 
 function UserPage(props) {
@@ -102,6 +105,7 @@ function UserPage(props) {
     errorMessage: null,
     success: null,
   });
+  let password = getRandomString();
 
   function avatarChange(event) {
     var input = event.target;
@@ -158,9 +162,9 @@ function UserPage(props) {
 
   function newUser() {
     username = $("input", ".new_user_username").val();
-    password = $("input", ".new_user_password").val();
+    copyToClipboard(password);
     email = $("input", ".new_user_email").val();
-    if (username.length >= 1 && password.length >= 8 && email.length >= 6) {
+    if (username.length >= 1 && email.length >= 6) {
       fetch(USERS_URL, {
         headers: {
           "Content-Type": "application/json",
@@ -253,19 +257,6 @@ function UserPage(props) {
                 classes.whiteText,
                 "new_user_username"
               )}
-              autoComplete="off"
-            ></TextField>
-            <TextField
-              error={newState.error}
-              id="password"
-              label={translateUserPage("new_password", props.lang)}
-              variant="outlined"
-              className={makeClass(
-                classes.inputRoot,
-                classes.whiteText,
-                "new_user_password"
-              )}
-              type="password"
               autoComplete="off"
             ></TextField>
             <TextField

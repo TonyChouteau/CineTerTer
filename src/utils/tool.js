@@ -36,3 +36,15 @@ function getCookie(cname) {
 function getRandomString() {
   return Math.random().toString(36);
 }
+
+function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  if (!navigator.clipboard) {
+    document.execCommand("copy");
+  } else {
+    navigator.clipboard.writeText(element)
+  }
+  $temp.remove();
+}

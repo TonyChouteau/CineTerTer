@@ -87,6 +87,9 @@ var userStyles = makeStyles(function (theme) {
       height: "100%",
       top: "0",
       objectFit: "cover"
+    },
+    hidden: {
+      display: "none"
     }
   };
 });
@@ -115,6 +118,8 @@ function UserPage(props) {
       _React$useState4 = _slicedToArray(_React$useState3, 2),
       newState = _React$useState4[0],
       setNewState = _React$useState4[1];
+
+  var password = getRandomString();
 
   function avatarChange(event) {
     var input = event.target;
@@ -169,9 +174,9 @@ function UserPage(props) {
 
   function newUser() {
     username = $("input", ".new_user_username").val();
-    password = $("input", ".new_user_password").val();
+    copyToClipboard(password);
     email = $("input", ".new_user_email").val();
-    if (username.length >= 1 && password.length >= 8 && email.length >= 6) {
+    if (username.length >= 1 && email.length >= 6) {
       fetch(USERS_URL, {
         headers: {
           "Content-Type": "application/json"
@@ -268,15 +273,6 @@ function UserPage(props) {
             label: translateUserPage("new_username", props.lang),
             variant: "outlined",
             className: makeClass(classes.inputRoot, classes.whiteText, "new_user_username"),
-            autoComplete: "off"
-          }),
-          React.createElement(TextField, {
-            error: newState.error,
-            id: "password",
-            label: translateUserPage("new_password", props.lang),
-            variant: "outlined",
-            className: makeClass(classes.inputRoot, classes.whiteText, "new_user_password"),
-            type: "password",
             autoComplete: "off"
           }),
           React.createElement(TextField, {

@@ -209,11 +209,16 @@ function Menu(props) {
                 root: classes.inputRoot,
                 input: classes.inputInput
               },
-              inputProps: { "aria-label": "search" },
+              inputProps: {
+                "aria-label": "search",
+                autoComplete: "new-password",
+                form: {
+                  autoComplete: "off"
+                }
+              },
               onChange: onKeyPress,
               onKeyPress: onKeyPress,
-              value: props.query,
-              autoComplete: "off"
+              value: props.query
             })
           )
         ),
