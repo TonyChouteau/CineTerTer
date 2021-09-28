@@ -53,75 +53,75 @@ const IMG_ERROR = "resources/images/error.png";
 // Theme
 
 const THEME = {
-  palette: {
-    primary: {
-      main: "#5970f3",
-      background: "#333",
-      text: "#fff",
-      border: "#fff",
-      borderHover: "#ccc",
+    palette: {
+        primary: {
+            main: "#5970f3",
+            background: "#333",
+            text: "#fff",
+            border: "#fff",
+            borderHover: "#ccc",
+        },
+        secondary: {
+            main: "#3a50cf",
+            background: "#424242",
+            text: "#ccc",
+        },
+        third: {
+            background: "#222",
+        },
     },
-    secondary: {
-      main: "#3a50cf",
-      background: "#424242",
-      text: "#ccc",
+    size: {
+        appBar: "70px",
+        footer: "125px",
     },
-    third: {
-      background: "#222",
-    },
-  },
-  size: {
-    appBar: "70px",
-    footer: "125px",
-  },
 };
 
 THEME["overrides"] = {
-  MuiOutlinedInput: {
-    root: {
-      position: "relative",
-      "& $notchedOutline": {
-        borderWidth: "2px",
-        borderColor: THEME.palette.primary.border,
-      },
-      "&:hover:not($disabled):not($focused):not($error) $notchedOutline": {
-        borderWidth: "2px",
-        borderColor: THEME.palette.primary.borderHover,
-        // Reset on touch devices, it doesn't add specificity
-        "@media (hover: none)": {
-          borderWidth: "2px",
-          borderColor: THEME.palette.primary.border,
+    MuiOutlinedInput: {
+        root: {
+            position: "relative",
+            "& $notchedOutline": {
+                borderWidth: "2px",
+                borderColor: THEME.palette.primary.border,
+            },
+            "&:hover:not($disabled):not($focused):not($error) $notchedOutline": {
+                borderWidth: "2px",
+                borderColor: THEME.palette.primary.borderHover,
+                // Reset on touch devices, it doesn't add specificity
+                "@media (hover: none)": {
+                    borderWidth: "2px",
+                    borderColor: THEME.palette.primary.border,
+                },
+            },
+            "&$focused $notchedOutline": {
+                borderWidth: "2px",
+                borderColor: THEME.palette.secondary.main,
+            },
         },
-      },
-      "&$focused $notchedOutline": {
-        borderWidth: "2px",
-        borderColor: THEME.palette.secondary.main,
-      },
     },
-  },
-  MuiFormLabel: {
-    root: {
-      "&$focused": {
-        borderWidth: 1,
-        borderColor: THEME.palette.secondary.main,
-      },
-    },
-  },
-  MuiFormControlLabel: {
-    root: {
-      "& svg": {
-        color: THEME.palette.primary.text,
-      },
-      "& .Mui-checked": {
-        "& svg": {
-          color: THEME.palette.primary.main,
+    MuiFormLabel: {
+        root: {
+            "&$focused": {
+                borderWidth: 1,
+                borderColor: THEME.palette.secondary.main,
+            },
         },
-      },
-      "& span": {
-        color: THEME.palette.primary.text,
-      },
     },
-  },
+    MuiFormControlLabel: {
+        root: {
+            "& svg": {
+                color: THEME.palette.primary.text,
+            },
+            "& .Mui-checked": {
+                "& svg": {
+                    color: THEME.palette.primary.main,
+                },
+            },
+            "& span": {
+                color: THEME.palette.primary.text,
+            },
+        },
+    },
 };
 
 // Create the jsHash instance

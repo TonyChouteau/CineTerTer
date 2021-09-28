@@ -1,160 +1,160 @@
 const drawerStyles = makeStyles((theme) => ({
-  root: {
-    background: THEME.palette.primary.background,
-    color: THEME.palette.primary.text,
-  },
-  item: {
-    "&:hover": {
-      background: THEME.palette.secondary.background,
+    root: {
+        background: THEME.palette.primary.background,
+        color: THEME.palette.primary.text,
     },
-  },
-  itemIcon: {
-    color: THEME.palette.primary.text,
-  },
-  itemText: {
-    width: "200px",
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    width: "100%",
-  },
-  whiteText: {
-    color: THEME.palette.primary.text,
-    "& label.Mui-focused": {
-      color: THEME.palette.primary.main,
+    item: {
+        "&:hover": {
+            background: THEME.palette.secondary.background,
+        },
     },
-  },
-  selectEmpty: {
-    "&:before": {
-      borderColor: THEME.palette.primary.text,
+    itemIcon: {
+        color: THEME.palette.primary.text,
     },
-    "&:after": {
-      borderColor: THEME.palette.primary.text,
+    itemText: {
+        width: "200px",
     },
-    "&:hover:not(.Mui-disabled):before": {
-      borderColor: THEME.palette.primary.text,
+    formControl: {
+        margin: theme.spacing(1),
+        width: "100%",
     },
-  },
-  selectRoot: {
-    padding: "10px",
-    color: "white",
-    borderColor: "white",
-  },
-  icon: {
-    fill: THEME.palette.primary.text,
-  },
-  rLink: {
-    textDecoration: "none",
-    color: "inherit",
-    "&:hover": {
-      color: "inherit",
+    whiteText: {
+        color: THEME.palette.primary.text,
+        "& label.Mui-focused": {
+            color: THEME.palette.primary.main,
+        },
     },
-    display: "flex",
-    flexDirection: "row",
-    padding: theme.spacing(1) + "px " + theme.spacing(3) + "px",
-  },
-  divider: {
-    height: "2px",
-    backgroundColor: "rgba(255, 255, 255, 0.35)",
-  },
+    selectEmpty: {
+        "&:before": {
+            borderColor: THEME.palette.primary.text,
+        },
+        "&:after": {
+            borderColor: THEME.palette.primary.text,
+        },
+        "&:hover:not(.Mui-disabled):before": {
+            borderColor: THEME.palette.primary.text,
+        },
+    },
+    selectRoot: {
+        padding: "10px",
+        color: "white",
+        borderColor: "white",
+    },
+    icon: {
+        fill: THEME.palette.primary.text,
+    },
+    rLink: {
+        textDecoration: "none",
+        color: "inherit",
+        "&:hover": {
+            color: "inherit",
+        },
+        display: "flex",
+        flexDirection: "row",
+        padding: theme.spacing(1) + "px " + theme.spacing(3) + "px",
+    },
+    divider: {
+        height: "2px",
+        backgroundColor: "rgba(255, 255, 255, 0.35)",
+    },
 }));
 
 function AppDrawer(props) {
-  const classes = drawerStyles();
+    const classes = drawerStyles();
 
-  const menu = [
-    {
-      icon: "search",
-      text: "search",
-      url: "/",
-      divider: false,
-    },
-    {
-      icon: "insert_chart",
-      text: "stats",
-      url: "/stats",
-      divider: true,
-    },
-    {
-      icon: "people",
-      text: "users",
-      url: "/users",
-      divider: true,
-    },
-    {
-      icon: "update",
-      text: "changelog",
-      url: "/changelog",
-      divider: false,
-    },
-  ];
+    const menu = [
+        {
+            icon: "search",
+            text: "search",
+            url: "/",
+            divider: false,
+        },
+        {
+            icon: "insert_chart",
+            text: "stats",
+            url: "/stats",
+            divider: true,
+        },
+        {
+            icon: "people",
+            text: "users",
+            url: "/users",
+            divider: true,
+        },
+        {
+            icon: "update",
+            text: "changelog",
+            url: "/changelog",
+            divider: false,
+        },
+    ];
 
-  return (
-    <Drawer
-      open={props.open}
-      onClose={props.closeDrawer}
-      classes={{ paperAnchorLeft: classes.root }}
-    >
-      <List>
-        {menu.map((item) => (
-          <React.Fragment key={item.icon}>
-            <RLink
-              className={makeClass(
-                classes.rLink,
-                classes.item,
-                classes.itemText
-              )}
-              to={item.url}
-              onClick={props.closeDrawer}
-            >
-              <ListItemIcon className={classes.itemIcon}>
-                <span className="material-icons">{item.icon}</span>
-              </ListItemIcon>
-              <ListItemText className={classes.itemText}>
-                <Typography>{translateMenu(item.text, props.lang)}</Typography>
-              </ListItemText>
-            </RLink>
-            {item.divider ? (
-              <Divider className={classes.divider}></Divider>
-            ) : (
-              ""
-            )}
-          </React.Fragment>
-        ))}
-        <ListItem>
-          <FormControl
-            variant="outlined"
-            className={makeClass(classes.formControl, classes.whiteText)}
-          >
-            <InputLabel
-              shrink={true}
-              id="input-language-label"
-              className={makeClass(classes.whiteText)} //padding 10px
-            >
-              {translateMenu("lang", props.lang)}
-            </InputLabel>
-            <Select
-              labelId="input-language-label"
-              id="select-language"
-              value={props.lang}
-              onChange={props.onLanguageChange}
-              className={makeClass(classes.selectEmpty, classes.whiteText)}
-              label={"Language"}
-              classes={{
-                root: classes.selectRoot,
-                icon: classes.icon,
-              }}
-            >
-              {LANGUAGE_AVAILABLE.map((lang) => (
-                <MenuItem value={lang} key={lang}>
-                  <em>{getLanguage(lang).name}</em>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </ListItem>
-      </List>
-      <Version></Version>
-    </Drawer>
-  );
+    return (
+        <Drawer
+            open={props.open}
+            onClose={props.closeDrawer}
+            classes={{paperAnchorLeft: classes.root}}
+        >
+            <List>
+                {menu.map((item) => (
+                    <React.Fragment key={item.icon}>
+                        <RLink
+                            className={makeClass(
+                                classes.rLink,
+                                classes.item,
+                                classes.itemText
+                            )}
+                            to={item.url}
+                            onClick={props.closeDrawer}
+                        >
+                            <ListItemIcon className={classes.itemIcon}>
+                                <span className="material-icons">{item.icon}</span>
+                            </ListItemIcon>
+                            <ListItemText className={classes.itemText}>
+                                <Typography>{translateMenu(item.text, props.lang)}</Typography>
+                            </ListItemText>
+                        </RLink>
+                        {item.divider ? (
+                            <Divider className={classes.divider}></Divider>
+                        ) : (
+                            ""
+                        )}
+                    </React.Fragment>
+                ))}
+                <ListItem>
+                    <FormControl
+                        variant="outlined"
+                        className={makeClass(classes.formControl, classes.whiteText)}
+                    >
+                        <InputLabel
+                            shrink={true}
+                            id="input-language-label"
+                            className={makeClass(classes.whiteText)} //padding 10px
+                        >
+                            {translateMenu("lang", props.lang)}
+                        </InputLabel>
+                        <Select
+                            labelId="input-language-label"
+                            id="select-language"
+                            value={props.lang}
+                            onChange={props.onLanguageChange}
+                            className={makeClass(classes.selectEmpty, classes.whiteText)}
+                            label={"Language"}
+                            classes={{
+                                root: classes.selectRoot,
+                                icon: classes.icon,
+                            }}
+                        >
+                            {LANGUAGE_AVAILABLE.map((lang) => (
+                                <MenuItem value={lang} key={lang}>
+                                    <em>{getLanguage(lang).name}</em>
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </ListItem>
+            </List>
+            <Version></Version>
+        </Drawer>
+    );
 }

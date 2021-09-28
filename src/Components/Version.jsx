@@ -1,12 +1,12 @@
 const versionStyles = makeStyles((theme) => ({
-  root: {
-    margin: "10px",
-    textAlign: "center",
-  },
+    root: {
+        margin: "10px",
+        textAlign: "center",
+    },
 }));
 
 function Version() {
-  const classes = versionStyles();
+    const classes = versionStyles();
 
-  return <Typography className={classes.root}>{VERSION}</Typography>;
+    return <Typography className={classes.root}>{VERSION}</Typography>;
 }
