@@ -1,18 +1,18 @@
 var versionStyles = makeStyles(function (theme) {
-  return {
-    root: {
-      margin: "10px",
-      textAlign: "center"
-    }
-  };
+    return {
+        root: {
+            margin: "10px",
+            textAlign: "center"
+        }
+    };
 });
 
 function Version() {
-  var classes = versionStyles();
+    var classes = versionStyles();
 
-  return React.createElement(
-    Typography,
-    { className: classes.root },
-    VERSION
-  );
+    return React.createElement(
+        Typography,
+        { className: classes.root },
+        VERSION
+    );
 }

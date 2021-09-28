@@ -192,6 +192,7 @@ function MovieReviews(props) {
       return response.json();
     }).then(function (data) {
       if (data.status === 201) {
+        console.log(data);
         setState(Object.assign({}, state, {
           error: false,
           submit: true,

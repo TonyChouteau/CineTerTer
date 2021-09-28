@@ -5,7 +5,7 @@ from flask import Flask, send_from_directory, render_template
 from api.bdd.definitions.Hash import Hash
 from api.bdd.handler.ImageHandler import AnonymousAvatarHandler, AvatarHandler
 from api.bdd.handler.OAuthHandler import OAuthHandler
-from api.bdd.handler.ReviewHandler import ReviewsHandler
+from api.bdd.handler.ReviewHandler import ReviewsHandler, ReviewHandler
 from api.bdd.handler.TheMovieDBHandler import TheMovieDBHandler
 from api.bdd.handler.UserHandler import UserHandler, UsersHandler, AnonymousUserHandler
 
@@ -47,6 +47,8 @@ app.add_url_rule(
 # Reviews
 app.add_url_rule(
     '/api/reviews/<int:movie_id>', view_func=ReviewsHandler.as_view('reviews'), methods=['GET', 'POST'])
+app.add_url_rule(
+    '/api/review/<int:review_id>', view_func=ReviewHandler.as_view('review'), methods=['PATCH'])
 
 # Login
 app.add_url_rule('/api/login', view_func=OAuthHandler.as_view('login'),

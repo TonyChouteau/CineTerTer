@@ -1,6 +1,5 @@
 from flask import session as flask_session, request
 from flask.views import MethodView
-
 from sqlalchemy.sql.expression import select
 
 from api.bdd.connector import session_scope
@@ -33,8 +32,6 @@ class ReviewsHandler(MethodView):
         with session_scope() as session:
             body = request.get_json()
 
-            print(body)
-
             if body is None \
                     or body["title"] is None \
                     or body["content"] is None \
@@ -44,8 +41,6 @@ class ReviewsHandler(MethodView):
                 return makeResponse("Invalid data given", 400, True)
 
             user_id = flask_session.get("user_id")
-
-            print(body["rating"])
 
             session.add(Review(
                 title=body["title"],
@@ -67,3 +62,42 @@ class ReviewsHandler(MethodView):
             })
 
             return makeResponse("A new user has been created", 201)
+
+
+class ReviewHandler(MethodView):
+
+    def patch(self, review_id):
+        if not OAuthHandler.isAuthorized():
+            return makeResponse("You need to be logged to see this", 401, True)
+
+        with session_scope() as session:
+            body = request.get_json()
+
+            # if body is None \
+            #         or body["title"] is None \
+            #         or body["content"] is None \
+            #         or body["isFirstTime"] is None \
+            #         or body["inCinema"] is None \
+            #         or body["isSpoiler"] is None:
+            #     return makeResponse("Invalid data given", 400, True)
+
+            review_query = session.query(Review).filter(Review.id == review_id)
+
+            review = review_query.scalar_one_or_none()
+
+            user_id = flask_session.get("user_id")
+            if review is None or user_id != user_id:
+                return makeResponse("You can't edit a review you don't own", 401, True)
+
+            patched_review = {
+                "title": body.get("title") or review.title,
+                "content": body.get("content") or review.content,
+                "grade": body.get("grade") or review.grade,
+                "in_cinema": body.get("in_cinema") or review.in_cinema,
+                "already_seen": body.get("already_seen") or review.already_seen,
+                "spoiler": body.get("spoiler") or review.spoiler,
+            }
+
+            review_query.update(patched_review)
+
+            return makeResponse("Review edited successfully", 201)
