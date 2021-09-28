@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx babel --watch src --out-dir server/public/scripts --presets react-app/prod",
-    "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
+    "pretty": "prettier --write \"./src/**/*.{js,jsx,json}\"",
     "autopep": "find . -name '*.py' -exec autopep8 --in-place '{}' \\;"
   },
   "repository": {

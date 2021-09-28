@@ -1,14 +1,13 @@
+import os.path
+
 from flask import Flask, send_from_directory, render_template
 
-from api.bdd.handler.UserHandler import UserHandler, UsersHandler, AnonymousUserHandler
-from api.bdd.handler.ReviewHandler import ReviewsHandler
-from api.bdd.handler.OAuthHandler import OAuthHandler
-from api.bdd.handler.ImageHandler import AnonymousAvatarHandler, AvatarHandler
-
-from api.bdd.handler.TheMovieDBHandler import TheMovieDBHandler
 from api.bdd.definitions.Hash import Hash
-
-import os.path
+from api.bdd.handler.ImageHandler import AnonymousAvatarHandler, AvatarHandler
+from api.bdd.handler.OAuthHandler import OAuthHandler
+from api.bdd.handler.ReviewHandler import ReviewsHandler
+from api.bdd.handler.TheMovieDBHandler import TheMovieDBHandler
+from api.bdd.handler.UserHandler import UserHandler, UsersHandler, AnonymousUserHandler
 
 app = Flask(__name__)
 
@@ -19,11 +18,12 @@ app.config['SESSION_TYPE'] = 'filesystem'
 @app.route('/', defaults=dict(filename=None))
 @app.route('/<path:filename>', methods=['GET'])
 def index(filename):
-  if filename:
-    filename = 'public/' + filename
-    return send_from_directory('.', filename)
-  else:
-    return render_template('index.html', isLogged=str(OAuthHandler.isAuthorized()).lower(), isAdmin=str(OAuthHandler.isAdmin()).lower())
+    if filename:
+        filename = 'public/' + filename
+        return send_from_directory('.', filename)
+    else:
+        return render_template('index.html', isLogged=str(OAuthHandler.isAuthorized()).lower(),
+                               isAdmin=str(OAuthHandler.isAdmin()).lower())
 
 
 # MovieDB
@@ -53,7 +53,7 @@ app.add_url_rule('/api/login', view_func=OAuthHandler.as_view('login'),
                  methods=['GET', 'POST', 'DELETE'])
 
 if __name__ == "__main__":
-  if os.path.isfile("./fullchain.pem"): 
-    app.run(host="vps.tonychouteau.fr", port=7999, debug=True, ssl_context=("./fullchain.pem", "./privkey.pem"))
-  else:
-    app.run()
+    if os.path.isfile("./fullchain.pem"):
+        app.run(host="vps.tonychouteau.fr", port=7999, debug=True, ssl_context=("./fullchain.pem", "./privkey.pem"))
+    else:
+        app.run()

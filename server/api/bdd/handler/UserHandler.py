@@ -12,111 +12,111 @@ from api.bdd.definitions.Hash import Hash
 
 class UserHandler(MethodView):
 
-  def get(self, id):
-    if not OAuthHandler.isAuthorized():
-      return makeResponse("You need to be logged to see this", 401, True)
+    def get(self, id):
+        if not OAuthHandler.isAuthorized():
+            return makeResponse("You need to be logged to see this", 401, True)
 
-    if not id.isnumeric():
-      return self.getByName(id)
+        if not id.isnumeric():
+            return self.getByName(id)
 
-    with session_scope() as session:
-      user = session.execute(
-          select(User).filter_by(id=id)).scalar_one_or_none()
+        with session_scope() as session:
+            user = session.execute(
+                select(User).filter_by(id=id)).scalar_one_or_none()
 
-      if user is None:
-        return makeResponse("This use doesn't exist", 404, True)
+            if user is None:
+                return makeResponse("This use doesn't exist", 404, True)
 
-      return makeResponse(user.to_dict(), 200)
+            return makeResponse(user.to_dict(), 200)
 
-  def getByName(self, username):
-    with session_scope() as session:
-      user = session.execute(select(User).filter_by(
-          name=username)).scalar_one_or_none()
+    def getByName(self, username):
+        with session_scope() as session:
+            user = session.execute(select(User).filter_by(
+                name=username)).scalar_one_or_none()
 
-      if user is None:
-        return makeResponse("This use doesn't exist", 404, True)
+            if user is None:
+                return makeResponse("This use doesn't exist", 404, True)
 
-      return makeResponse(user.to_dict(), 200)
+            return makeResponse(user.to_dict(), 200)
 
-  def patch(self, id):
-    return "patch"
+    def patch(self, id):
+        return "patch"
 
 
 class UsersHandler(MethodView):
 
-  def get(self):
-    if not OAuthHandler.isAuthorized():
-      return makeResponse("You need to be admin to do this", 401, True)
-    
-    with session_scope() as session:
-      users = session.execute(select(User)).scalars().all()
+    def get(self):
+        if not OAuthHandler.isAuthorized():
+            return makeResponse("You need to be admin to do this", 401, True)
 
-      users_json = []
-      for user in users:
-        users_json.append(user.to_dict())
-      
-      return makeResponse(users_json, 200)
+        with session_scope() as session:
+            users = session.execute(select(User)).scalars().all()
 
-  def post(self):
-    if not OAuthHandler.isAdmin():
-      return makeResponse("You need to be admin to do this", 401, True)
+            users_json = []
+            for user in users:
+                users_json.append(user.to_dict())
 
-    with session_scope() as session:
-      body = request.get_json()
+            return makeResponse(users_json, 200)
 
-      if body is None \
-              or body["username"] is None \
-              or body["email"] is None \
-              or body["password"] is None:
-        return makeResponse("Invalid data given", 400, True)
+    def post(self):
+        if not OAuthHandler.isAdmin():
+            return makeResponse("You need to be admin to do this", 401, True)
 
-      user_with_same_name = session.execute(select(User).filter_by(
-        name=body["username"])).scalar_one_or_none()
+        with session_scope() as session:
+            body = request.get_json()
 
-      if user_with_same_name is not None:
-        return makeResponse("This username is not available", 409, True)
+            if body is None \
+                    or body["username"] is None \
+                    or body["email"] is None \
+                    or body["password"] is None:
+                return makeResponse("Invalid data given", 400, True)
 
-      hash, salt = Hash(body["password"]).get()
+            user_with_same_name = session.execute(select(User).filter_by(
+                name=body["username"])).scalar_one_or_none()
 
-      session.add(User(
-          name=body["username"],
-          email=body["email"],
-          password=hash,
-          salt=salt
-      ))
+            if user_with_same_name is not None:
+                return makeResponse("This username is not available", 409, True)
 
-      return makeResponse("A new user has been created", 201)
+            hash, salt = Hash(body["password"]).get()
+
+            session.add(User(
+                name=body["username"],
+                email=body["email"],
+                password=hash,
+                salt=salt
+            ))
+
+            return makeResponse("A new user has been created", 201)
 
 
 class AnonymousUserHandler(MethodView):
 
-  def get(self):
-    if not OAuthHandler.isAuthorized():
-      return makeResponse("You need to be logged to see this", 401, True)
+    def get(self):
+        if not OAuthHandler.isAuthorized():
+            return makeResponse("You need to be logged to see this", 401, True)
 
-    user_id = flask_session.get("user_id")
-    with session_scope() as session:
-      user = session.execute(select(User).filter_by(
-          id=user_id)).scalar_one_or_none()
+        user_id = flask_session.get("user_id")
+        with session_scope() as session:
+            user = session.execute(select(User).filter_by(
+                id=user_id)).scalar_one_or_none()
 
-      return makeResponse(user.to_dict(), 200)
+            return makeResponse(user.to_dict(), 200)
 
-  def patch(self):
-    if not OAuthHandler.isAuthorized():
-      return makeResponse("You need to be logged to see this", 401, True)
+    def patch(self):
+        if not OAuthHandler.isAuthorized():
+            return makeResponse("You need to be logged to see this", 401, True)
 
-    user_id = flask_session.get("user_id")
-    with session_scope() as session:
-      body = request.get_json()
-      if body is None or body["password"] is None:
-        return makeResponse("Invalid data given", 400, True)
+        user_id = flask_session.get("user_id")
+        with session_scope() as session:
+            body = request.get_json()
+            if body is None or body["password"] is None:
+                return makeResponse("Invalid data given", 400, True)
 
-      hash, salt = Hash(body["password"]).get()
+            hash, salt = Hash(body["password"]).get()
 
-      session.query(User).filter(User.id == user_id) \
-          .update({
-              "password": hash,
-              "salt": salt
-          })
+            session.query(User).filter(User.id == user_id) \
+                .update({
+                "password": hash,
+                "salt": salt
+            })
 
-      return makeResponse("Password changed", 200)
+            return makeResponse("Password changed", 200)

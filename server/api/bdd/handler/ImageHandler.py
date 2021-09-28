@@ -11,37 +11,38 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
 def allowed_file(filename):
-  return '.' in filename and \
-         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 class AnonymousAvatarHandler(MethodView):
 
-  def get(self):
-    if not OAuthHandler.isAuthorized():
-      return makeResponse("You need to be logged do this", 401, True)
+    def get(self):
+        if not OAuthHandler.isAuthorized():
+            return makeResponse("You need to be logged do this", 401, True)
 
-    id = flask_session.get("user_id")
-    return send_from_directory('./images/avatars/', str(id))
+        id = flask_session.get("user_id")
+        return send_from_directory('./images/avatars/', str(id))
 
-  def post(self):
-    if not OAuthHandler.isAuthorized():
-      return makeResponse("You need to be logged do this", 401, True)
+    def post(self):
+        if not OAuthHandler.isAuthorized():
+            return makeResponse("You need to be logged do this", 401, True)
 
-    if 'file' not in request.files:
-      return makeResponse("No file part", 400, True)
+        if 'file' not in request.files:
+            return makeResponse("No file part", 400, True)
 
-    file = request.files['file']
-    if file.filename == '':
-      return makeResponse("No selected file", 400, True)
-    if file and allowed_file(file.filename):
-      id = flask_session.get("user_id")
-      file.save(os.path.join('./server/images/avatars/', str(id)))
-      return makeResponse("File saved", 201)
+        file = request.files['file']
+        if file.filename == '':
+            return makeResponse("No selected file", 400, True)
+        if file and allowed_file(file.filename):
+            id = flask_session.get("user_id")
+            file.save(os.path.join('./server/images/avatars/', str(id)))
+            return makeResponse("File saved", 201)
+
 
 class AvatarHandler(MethodView):
-   def get(self, user_id):
-    if not OAuthHandler.isAuthorized():
-      return makeResponse("You need to be logged do this", 401, True)
+    def get(self, user_id):
+        if not OAuthHandler.isAuthorized():
+            return makeResponse("You need to be logged do this", 401, True)
 
-    return send_from_directory('./images/avatars/', str(user_id))
+        return send_from_directory('./images/avatars/', str(user_id))
